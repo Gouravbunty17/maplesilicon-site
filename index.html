@@ -59,6 +59,68 @@
                 radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
         }
 
+        /* Floating Text Animation */
+        .floating-text-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-text {
+            position: absolute;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 4rem;
+            font-weight: 700;
+            color: rgba(59, 158, 255, 0.03);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            white-space: nowrap;
+            animation: floatText 20s ease-in-out infinite;
+            user-select: none;
+        }
+
+        @keyframes floatText {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.03;
+            }
+            25% {
+                transform: translateY(-20px) rotate(2deg);
+                opacity: 0.05;
+            }
+            50% {
+                transform: translateY(-40px) rotate(-2deg);
+                opacity: 0.07;
+            }
+            75% {
+                transform: translateY(-20px) rotate(1deg);
+                opacity: 0.05;
+            }
+        }
+
+        .floating-text:nth-child(even) {
+            color: rgba(139, 92, 246, 0.04);
+            animation-direction: alternate-reverse;
+        }
+
+        @media (max-width: 968px) {
+            .floating-text {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .floating-text {
+                font-size: 1.5rem;
+                letter-spacing: 0.1em;
+            }
+        }
+
         /* Header */
         header {
             position: fixed;
@@ -655,12 +717,24 @@
 <body>
     <canvas class="network-canvas" id="networkCanvas"></canvas>
     <div class="bg-pattern"></div>
+    
+    <!-- Animated Floating Text Background -->
+    <div class="floating-text-container">
+        <div class="floating-text" style="top: 10%; left: 5%; animation-delay: 0s;">SPARSITY</div>
+        <div class="floating-text" style="top: 25%; right: 10%; animation-delay: 2s;">N:M</div>
+        <div class="floating-text" style="top: 40%; left: 15%; animation-delay: 4s;">MLIR</div>
+        <div class="floating-text" style="top: 55%; right: 5%; animation-delay: 1s;">COMPILER</div>
+        <div class="floating-text" style="top: 70%; left: 8%; animation-delay: 3s;">2:4</div>
+        <div class="floating-text" style="top: 85%; right: 15%; animation-delay: 5s;">VERIFICATION</div>
+        <div class="floating-text" style="top: 15%; right: 25%; animation-delay: 2.5s;">SPARSE</div>
+        <div class="floating-text" style="top: 60%; left: 25%; animation-delay: 4.5s;">IR</div>
+    </div>
 
     <!-- Header with Maple Silicon Company Branding -->
     <header>
         <nav>
             <div class="logo-container">
-                <img src="maplesilicon.png" alt="Maple Silicon" class="logo-img">
+                <img src="assets/maplesilicon.png" alt="Maple Silicon" class="logo-img">
                 <span class="brand-text">Maple Silicon</span>
             </div>
             <ul class="nav-links">
@@ -676,7 +750,7 @@
     <!-- Hero Section with SparseFlow Product Branding -->
     <section class="hero">
         <div class="product-logo-container">
-            <img src="sparseflow.png" alt="SparseFlow" class="product-logo">
+            <img src="assets/sparseflow.png" alt="SparseFlow" class="product-logo">
         </div>
         <h1>SparseFlow<span class="trademark">™</span></h1>
         <p class="subtitle">A compiler platform for verified structured sparsity</p>
@@ -878,7 +952,7 @@
     <!-- About Maple Silicon -->
     <section>
         <div class="company-section">
-            <img src="maplesilicon.png" alt="Maple Silicon Inc." class="company-logo">
+            <img src="assets/maplesilicon.png" alt="Maple Silicon Inc." class="company-logo">
             <h2>About Maple Silicon Inc.</h2>
             <p>
                 Maple Silicon Inc. is a Canadian technology company focused on compiler infrastructure 
