@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SparseFlow™ - A Compiler Platform for Verified Structured Sparsity | Maple Silicon Inc.</title>
+    <meta name="description" content="SparseFlow is an early-stage compiler platform developed by Maple Silicon Inc., focusing on making structured N:M sparsity a verifiable, end-to-end property in machine learning compilation pipelines.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #0a0d14;
+            --secondary-dark: #151922;
+            --accent-blue: #3b9eff;
+            --accent-purple: #8b5cf6;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-subtle: rgba(59, 158, 255, 0.15);
+            --card-bg: rgba(21, 25, 34, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Animated Network Background */
+        .network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--primary-dark);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(59, 158, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.25rem 0;
+            background: rgba(10, 13, 20, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 1000;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            height: 45px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .brand-text {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: 1.75rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero .intro {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 850px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .trademark {
+            font-size: 0.7em;
+            vertical-align: super;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1.25rem;
+            background: rgba(59, 158, 255, 0.1);
+            border: 1px solid rgba(59, 158, 255, 0.3);
+            border-radius: 6px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            color: var(--accent-blue);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(59, 158, 255, 0.4);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 8px rgba(59, 158, 255, 0);
+                transform: scale(1.02);
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+        }
+
+        /* Content Card with Icons */
+        .content-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .content-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 10px;
+            font-size: 1.5rem;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .content-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Bullet List with animated bullets */
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 1.5rem 0;
+        }
+
+        .bullet-list li {
+            padding: 0.75rem 0;
+            padding-left: 1.75rem;
+            position: relative;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.4s ease;
+        }
+
+        .bullet-list li.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1.1rem;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            animation: bulletPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes bulletPulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(59, 158, 255, 0.7);
+            }
+            50% { 
+                box-shadow: 0 0 0 4px rgba(59, 158, 255, 0);
+            }
+        }
+
+        /* Principles Grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .principle-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .principle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s ease;
+        }
+
+        .principle-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .principle-card.visible::before {
+            transform: scaleX(1);
+        }
+
+        .principle-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .principle-icon {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 12px;
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
+            animation: iconRotate 4s ease-in-out infinite;
+        }
+
+        @keyframes iconRotate {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-5deg) scale(1.05); }
+            75% { transform: rotate(5deg) scale(1.05); }
+        }
+
+        .principle-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .principle-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Emphasis Box */
+        .emphasis-box {
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .emphasis-box.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .emphasis-box h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Company Info */
+        .company-section {
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.6s ease;
+        }
+
+        .company-section.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .company-logo {
+            height: 80px;
+            width: auto;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .company-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .company-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Contact */
+        .contact-info {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .contact-info.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .contact-info p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .contact-info a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+            color: var(--accent-purple);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-dark);
+            border-top: 1px solid var(--border-subtle);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-content p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.4rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            .content-card {
+                padding: 1.75rem;
+            }
+
+            .principle-icon, .card-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="network-canvas" id="networkCanvas"></canvas>
+    <div class="bg-pattern"></div>
+
+    <header>
+        <nav>
+            <div class="logo-container">
+                <img src="maplesilicon.png" alt="Maple Silicon" class="logo-img">
+                <span class="brand-text">SparseFlow</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#status">Status</a></li>
+                <li><a href="#approach">Approach</a></li>
+                <li><a href="#scope">Scope</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>SparseFlow<span class="trademark">™</span></h1>
+        <p class="subtitle">A compiler platform for verified structured sparsity</p>
+        <p class="intro">
+            SparseFlow™ is an early-stage compiler platform being developed by Maple Silicon Inc. 
+            The project focuses on making structured N:M sparsity a verifiable, end-to-end property 
+            in modern machine learning compilation pipelines.
+        </p>
+        <p class="intro">
+            Rather than relying on backend-specific kernel optimizations, SparseFlow approaches sparsity 
+            as a compiler responsibility — preserving intent, verifying constraints, and enabling safe 
+            lowering to sparse execution paths only when correctness can be guaranteed.
+        </p>
+        <div class="status-badge">ACTIVE DEVELOPMENT</div>
+    </section>
+
+    <!-- Current Status -->
+    <section id="status">
+        <div class="section-header">
+            <h2>Current Status</h2>
+        </div>
+
+        <div class="content-card">
+            <h3>
+                <div class="card-icon">🔬</div>
+                Research & Development Phase
+            </h3>
+            <p style="font-size: 1.15rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--text-primary);">
+                SparseFlow is currently in active development.
+            </p>
+            <p>
+                At this stage, the work is focused on building and validating the compiler foundations 
+                required to support structured sparsity safely and correctly. This includes:
+            </p>
+            <ul class="bullet-list">
+                <li>Designing MLIR-based compiler passes to represent and propagate structured N:M sparsity</li>
+                <li>Implementing verification checks for shape, layout, and alignment constraints</li>
+                <li>Ensuring that transformations only occur when correctness conditions are satisfied</li>
+                <li>Maintaining a guaranteed fallback to dense execution when sparse constraints are not met</li>
+            </ul>
+            <p>
+                The current emphasis is on correctness, reproducibility, and architectural soundness, 
+                rather than headline performance numbers.
+            </p>
+        </div>
+    </section>
+
+    <!-- The Problem -->
+    <section>
+        <div class="section-header">
+            <h2>The Problem</h2>
+        </div>
+
+        <div class="content-card">
+            <h3>
+                <div class="card-icon">⚠️</div>
+                Fragmented Sparsity Support
+            </h3>
+            <p>
+                Many modern machine learning models exhibit structured sparsity, such as N:M patterns, 
+                either through training techniques or hardware-driven constraints.
+            </p>
+            <p>
+                However, most existing software stacks treat sparsity as a backend optimization problem. 
+                This often leads to fragile implementations, limited portability, and difficulty validating 
+                whether sparse execution is actually correct or applicable in a given context.
+            </p>
+            <p>
+                As a result, structurally sparse models are frequently executed as dense workloads, 
+                leaving potential efficiency gains unrealized.
+            </p>
+        </div>
+    </section>
+
+    <!-- The SparseFlow Approach -->
+    <section id="approach">
+        <div class="section-header">
+            <h2>The SparseFlow Approach</h2>
+        </div>
+
+        <div class="content-card">
+            <h3>
+                <div class="card-icon">🎯</div>
+                Compiler-First Philosophy
+            </h3>
+            <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                SparseFlow treats structured sparsity as a first-class compiler concern.
+            </p>
+            <p>The platform is designed around the following principles:</p>
+        </div>
+
+        <div class="principles-grid">
+            <div class="principle-card">
+                <div class="principle-icon">📐</div>
+                <h4>Explicit Representation</h4>
+                <p>Structured N:M sparsity patterns are represented explicitly in the compiler IR, making sparsity intent visible throughout the compilation pipeline.</p>
+            </div>
+            <div class="principle-card">
+                <div class="principle-icon">✓</div>
+                <h4>Constraint Verification</h4>
+                <p>All required constraints are verified before any sparse transformation, ensuring that optimizations are only applied when safety can be guaranteed.</p>
+            </div>
+            <div class="principle-card">
+                <div class="principle-icon">🔄</div>
+                <h4>Controlled Rewriting</h4>
+                <p>Dense operations are rewritten to sparse equivalents only when verification passes, maintaining correctness as the primary goal.</p>
+            </div>
+            <div class="principle-card">
+                <div class="principle-icon">🛡️</div>
+                <h4>Guaranteed Fallback</h4>
+                <p>A fallback path to dense execution is always available when verification fails, ensuring no correctness compromises.</p>
+            </div>
+        </div>
+
+        <div class="content-card" style="margin-top: 2rem;">
+            <p>
+                This approach prioritizes correctness and transparency, making sparsity behavior 
+                predictable, auditable, and easier to reason about across different targets.
+            </p>
+        </div>
+    </section>
+
+    <!-- Technical Scope -->
+    <section id="scope">
+        <div class="section-header">
+            <h2>Technical Scope</h2>
+        </div>
+
+        <div class="content-card">
+            <h3>
+                <div class="card-icon">🔧</div>
+                Current Capabilities
+            </h3>
+            <p>The current technical scope of SparseFlow includes:</p>
+            <ul class="bullet-list">
+                <li>MLIR-based compiler infrastructure for sparsity propagation and verification</li>
+                <li>Initial support for structured N:M sparsity patterns (starting with 2:4)</li>
+                <li>CPU-based validation and correctness testing</li>
+                <li>Deterministic test cases and baseline comparisons</li>
+                <li>A modular design intended to support future GPU and accelerator backends</li>
+            </ul>
+            <p>
+                SparseFlow is not a hardware-specific solution. The goal is to provide a portable, 
+                compiler-level foundation that can integrate with multiple runtime and backend environments.
+            </p>
+        </div>
+    </section>
+
+    <!-- What We Are Not Claiming -->
+    <section>
+        <div class="emphasis-box">
+            <h3>
+                <div class="card-icon">📋</div>
+                What SparseFlow Is Not (Yet)
+            </h3>
+            <p style="font-size: 1.05rem; margin-bottom: 1.5rem;">
+                SparseFlow is currently an early-stage research and development effort.
+            </p>
+            <p>At this stage, the project does not claim:</p>
+            <ul class="bullet-list">
+                <li>Production deployment at scale</li>
+                <li>Guaranteed performance improvements across all workloads</li>
+                <li>Full GPU backend coverage</li>
+                <li>Turnkey integration into existing frameworks</li>
+            </ul>
+            <p>
+                These areas are intentionally being approached incrementally, following 
+                correctness validation and reproducible benchmarking.
+            </p>
+        </div>
+    </section>
+
+    <!-- Next Steps / Roadmap -->
+    <section id="roadmap">
+        <div class="section-header">
+            <h2>Next Steps</h2>
+        </div>
+
+        <div class="content-card">
+            <h3>
+                <div class="card-icon">🗺️</div>
+                Development Roadmap
+            </h3>
+            <p>The next phase of SparseFlow development focuses on validation and expansion:</p>
+            <ul class="bullet-list">
+                <li>Expanding correctness testing across a broader set of models and shapes</li>
+                <li>Establishing reproducible benchmarking against dense baselines</li>
+                <li>Validating sparse lowering behavior on GPU hardware using controlled test environments</li>
+                <li>Extending support to additional N:M sparsity configurations</li>
+                <li>Improving documentation and developer-facing visibility into compiler decisions</li>
+            </ul>
+            <p>
+                These steps are aimed at building confidence in the architecture before pursuing 
+                broader adoption or performance claims.
+            </p>
+        </div>
+    </section>
+
+    <!-- About Maple Silicon -->
+    <section>
+        <div class="company-section">
+            <img src="maplesilicon.png" alt="Maple Silicon Inc." class="company-logo">
+            <h2>About Maple Silicon Inc.</h2>
+            <p>
+                Maple Silicon Inc. is a Canadian technology company focused on compiler infrastructure 
+                and systems-level optimization for machine learning and high-performance computing workloads.
+            </p>
+            <p>
+                SparseFlow™ is the company's initial platform, developed as part of ongoing research 
+                and engineering efforts into structured sparsity and efficient execution.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="contact-info">
+            <h3>
+                <div class="card-icon">💬</div>
+                Contact
+            </h3>
+            <p>
+                Maple Silicon Inc. is open to research collaboration, pilot evaluations, and discussions 
+                related to Canadian innovation and funding programs, including NRC IRAP.
+            </p>
+            <p>
+                <strong>Email:</strong> <a href="mailto:info@maplesilicon.co">info@maplesilicon.co</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Maple Silicon Inc. All rights reserved.</p>
+            <p>SparseFlow™ is a trademark of Maple Silicon Inc.</p>
+            <div class="footer-links">
+                <a href="https://github.com/MapleSilicon/SparseFlow">GitHub</a>
+                <a href="https://github.com/MapleSilicon/SparseFlow/blob/main/LICENSE">License</a>
+                <a href="https://github.com/MapleSilicon">Company</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Network Canvas Animation
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        const nodes = [];
+        const maxNodes = 50;
+        const connectionDistance = 150;
+
+        class Node {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 1;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(59, 158, 255, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        // Initialize nodes
+        for (let i = 0; i < maxNodes; i++) {
+            nodes.push(new Node());
+        }
+
+        function drawConnections() {
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        const opacity = (1 - distance / connectionDistance) * 0.3;
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.strokeStyle = `rgba(139, 92, 246, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            drawConnections();
+            
+            nodes.forEach(node => {
+                node.update();
+                node.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate bullet points with stagger
+                    if (entry.target.classList.contains('content-card') || 
+                        entry.target.classList.contains('emphasis-box')) {
+                        const bullets = entry.target.querySelectorAll('.bullet-list li');
+                        bullets.forEach((bullet, index) => {
+                            setTimeout(() => {
+                                bullet.classList.add('visible');
+                            }, index * 100);
+                        });
+                    }
+                    
+                    // Animate principle cards with stagger
+                    if (entry.target.classList.contains('principles-grid')) {
+                        const cards = entry.target.querySelectorAll('.principle-card');
+                        cards.forEach((card, index) => {
+                            setTimeout(() => {
+                                card.classList.add('visible');
+                            }, index * 150);
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.section-header, .content-card, .emphasis-box, .company-section, .contact-info').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Observe principles grid separately
+        document.querySelectorAll('.principles-grid').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
