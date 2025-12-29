@@ -925,7 +925,7 @@
                 Maple Silicon Inc. is open to collaboration, pilot evaluations, and discussions related to Canadian innovation and funding programs, including NRC IRAP.
             </p>
             <p>
-                <strong>Email:</strong> <a href="mailto:info@maplesilicon.co">info@maplesilicon.co</a>
+                <strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#c9a0a7afa689a4a8b9a5acbaa0a5a0aaa6a7e7aaa6"><span class="__cf_email__" data-cfemail="60090e060f200d01100c0513090c09030f0e4e030f">[email&#160;protected]</span></a>
             </p>
         </div>
     </section>
@@ -943,7 +943,7 @@
         </div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Network Canvas Animation
         const canvas = document.getElementById('networkCanvas');
         const ctx = canvas.getContext('2d');
@@ -1055,4 +1055,11 @@
                 if (target) {
                     const headerOffset = 80;
                     const elementPosition = target.getBoundingClientRect().top;
-        
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
