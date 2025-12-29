@@ -158,6 +158,29 @@
             z-index: 1;
         }
 
+        .product-logo-container {
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .product-logo {
+            height: 110px;
+            width: auto;
+            filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.4)) brightness(1.15);
+            transition: all 0.4s ease;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        .product-logo:hover {
+            transform: scale(1.08);
+            filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.6)) brightness(1.25);
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
         .hero h1 {
             font-size: 4rem;
             font-weight: 700;
@@ -361,9 +384,15 @@
         /* Principles Grid */
         .principles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
             margin-top: 2rem;
+        }
+
+        @media (max-width: 968px) {
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .principle-card {
@@ -618,6 +647,10 @@
                 font-size: 1.2rem;
             }
 
+            .product-logo {
+                height: 70px;
+            }
+
             section {
                 padding: 3rem 1.5rem;
             }
@@ -656,6 +689,9 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <div class="product-logo-container">
+            <img src="sparseflow.png" alt="SparseFlow" class="product-logo">
+        </div>
         <h1>SparseFlow<span class="trademark">™</span></h1>
         <p class="subtitle">High-performance compiler and runtime infrastructure for sparse and structured GPU compute</p>
         <p class="intro">
@@ -889,7 +925,7 @@
                 Maple Silicon Inc. is open to collaboration, pilot evaluations, and discussions related to Canadian innovation and funding programs, including NRC IRAP.
             </p>
             <p>
-                <strong>Email:</strong> <a href="mailto:info@maplesilicon.co">info@maplesilicon.co</a>
+                <strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#1b72757d745b767a6b777e68727772787475357874"><span class="__cf_email__" data-cfemail="462f282029062b27362a23352f2a2f252928682529">[email&#160;protected]</span></a>
             </p>
         </div>
     </section>
@@ -907,7 +943,7 @@
         </div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Network Canvas Animation
         const canvas = document.getElementById('networkCanvas');
         const ctx = canvas.getContext('2d');
@@ -1019,11 +1055,4 @@
                 if (target) {
                     const headerOffset = 80;
                     const elementPosition = target.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+        
