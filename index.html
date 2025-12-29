@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SparseFlow™ - A Compiler Platform for Verified Structured Sparsity | Maple Silicon Inc.</title>
-    <meta name="description" content="SparseFlow is an early-stage compiler platform developed by Maple Silicon Inc., focusing on making structured N:M sparsity a verifiable, end-to-end property in machine learning compilation pipelines.">
+    <title>SparseFlow™ - High-performance compiler & runtime for sparse GPU compute | Maple Silicon Inc.</title>
+    <meta name="description" content="SparseFlow is a systems-level compiler and runtime platform developed by Maple Silicon Inc., focused on making structured N:M sparsity verifiable, reproducible, and efficient across modern GPU architectures.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -99,17 +99,13 @@
         }
 
         .logo-img {
-            height: 55px;
+            height: 45px;
             width: auto;
-            max-width: 200px;
-            object-fit: contain;
-            transition: all 0.3s ease;
-            filter: brightness(1.15) drop-shadow(0 2px 12px rgba(59, 158, 255, 0.25));
+            transition: transform 0.3s ease;
         }
 
         .logo-img:hover {
-            transform: scale(1.08);
-            filter: brightness(1.3) drop-shadow(0 4px 18px rgba(59, 158, 255, 0.45));
+            transform: scale(1.05);
         }
 
         .brand-text {
@@ -160,39 +156,6 @@
             text-align: center;
             position: relative;
             z-index: 1;
-        }
-
-        .product-logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            min-height: 120px;
-        }
-
-        .product-logo {
-            height: 110px;
-            width: auto;
-            max-width: 450px;
-            object-fit: contain;
-            animation: fadeInUp 0.8s ease-out, logoFloat 3s ease-in-out infinite;
-            filter: brightness(1.1) drop-shadow(0 4px 25px rgba(139, 92, 246, 0.4));
-            transition: all 0.4s ease;
-        }
-
-        .product-logo:hover {
-            transform: scale(1.08);
-            filter: brightness(1.25) drop-shadow(0 6px 35px rgba(139, 92, 246, 0.6));
-        }
-
-        @keyframes logoFloat {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-8px);
-            }
         }
 
         .hero h1 {
@@ -398,16 +361,9 @@
         /* Principles Grid */
         .principles-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .principles-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         .principle-card {
@@ -527,19 +483,10 @@
         }
 
         .company-logo {
-            height: 90px;
+            height: 80px;
             width: auto;
-            max-width: 350px;
-            object-fit: contain;
             margin-bottom: 2rem;
             animation: fadeIn 1s ease-out;
-            filter: brightness(1.15) drop-shadow(0 4px 20px rgba(59, 158, 255, 0.3));
-            transition: all 0.3s ease;
-        }
-
-        .company-logo:hover {
-            filter: brightness(1.25) drop-shadow(0 6px 28px rgba(59, 158, 255, 0.5));
-            transform: scale(1.05);
         }
 
         @keyframes fadeIn {
@@ -671,10 +618,6 @@
                 font-size: 1.2rem;
             }
 
-            .product-logo {
-                height: 50px;
-            }
-
             section {
                 padding: 3rem 1.5rem;
             }
@@ -695,71 +638,65 @@
     <canvas class="network-canvas" id="networkCanvas"></canvas>
     <div class="bg-pattern"></div>
 
-    <!-- Header with Maple Silicon Company Branding -->
     <header>
         <nav>
             <div class="logo-container">
-                <img src="assets/maplesilicon.png" alt="Maple Silicon" class="logo-img">
-                <span class="brand-text">Maple Silicon</span>
+                <img src="maplesilicon.png" alt="Maple Silicon" class="logo-img">
+                <span class="brand-text">SparseFlow</span>
             </div>
             <ul class="nav-links">
                 <li><a href="#status">Status</a></li>
                 <li><a href="#approach">Approach</a></li>
                 <li><a href="#scope">Scope</a></li>
-                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#roadmap">Next Steps</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Hero Section with SparseFlow Product Branding -->
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="product-logo-container">
-            <img src="assets/sparseflow.png" alt="SparseFlow" class="product-logo" onerror="this.style.display='none'">
-        </div>
         <h1>SparseFlow<span class="trademark">™</span></h1>
-        <p class="subtitle">A compiler platform for verified structured sparsity</p>
+        <p class="subtitle">High-performance compiler and runtime infrastructure for sparse and structured GPU compute</p>
         <p class="intro">
-            SparseFlow™ is an early-stage compiler platform being developed by Maple Silicon Inc. 
-            The project focuses on making structured N:M sparsity a verifiable, end-to-end property 
-            in modern machine learning compilation pipelines.
+            SparseFlow is a systems-level compiler and runtime platform developed by Maple Silicon, focused on executing structured sparsity efficiently across modern GPU architectures.
         </p>
         <p class="intro">
-            Rather than relying on backend-specific kernel optimizations, SparseFlow approaches sparsity 
-            as a compiler responsibility — preserving intent, verifying constraints, and enabling safe 
-            lowering to sparse execution paths only when correctness can be guaranteed.
+            The platform is built around correctness-first transformations, memory-aware execution, and reproducible performance — enabling sparse compute to operate close to hardware limits rather than relying on heuristic optimizations.
+        </p>
+        <p class="intro" style="font-weight: 500; color: var(--accent-blue);">
+            Recent work demonstrates sustained, high-efficiency GPU kernel execution on Ampere Tensor Cores through low-level optimization.
         </p>
         <div class="status-badge">ACTIVE DEVELOPMENT</div>
+        <div style="margin-top: 2rem;">
+            <a href="https://github.com/MapleSilicon/SparseFlow" style="display: inline-block; padding: 0.875rem 2rem; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 1rem; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 25px rgba(59, 158, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">View on GitHub</a>
+        </div>
     </section>
 
     <!-- Current Status -->
     <section id="status">
         <div class="section-header">
             <h2>Current Status</h2>
+            <p>Active Systems Development & Validation</p>
         </div>
 
         <div class="content-card">
             <h3>
                 <div class="card-icon">🔬</div>
-                Research & Development Phase
+                Systems Development & Validation
             </h3>
             <p style="font-size: 1.15rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--text-primary);">
-                SparseFlow is currently in active development.
+                SparseFlow is in active systems development, with a focus on validating correctness, performance, and architectural soundness across sparse and structured compute workloads.
             </p>
             <p>
-                At this stage, the work is focused on building and validating the compiler foundations 
-                required to support structured sparsity safely and correctly. This includes:
+                Recent milestones include sustained high-efficiency GPU kernel execution, reproducible performance measurement, and end-to-end compiler-to-runtime validation.
             </p>
             <ul class="bullet-list">
-                <li>Designing MLIR-based compiler passes to represent and propagate structured N:M sparsity</li>
-                <li>Implementing verification checks for shape, layout, and alignment constraints</li>
-                <li>Ensuring that transformations only occur when correctness conditions are satisfied</li>
-                <li>Maintaining a guaranteed fallback to dense execution when sparse constraints are not met</li>
+                <li>Designing structured sparsity-aware compiler passes with correctness guarantees</li>
+                <li>Validating GPU execution paths through low-level, memory-aware kernel design</li>
+                <li>Measuring performance using reproducible, architecture-grounded benchmarks</li>
+                <li>Building a foundation for automating performance-critical decisions in sparse compute pipelines</li>
             </ul>
-            <p>
-                The current emphasis is on correctness, reproducibility, and architectural soundness, 
-                rather than headline performance numbers.
-            </p>
         </div>
     </section>
 
@@ -775,17 +712,30 @@
                 Fragmented Sparsity Support
             </h3>
             <p>
-                Many modern machine learning models exhibit structured sparsity, such as N:M patterns, 
-                either through training techniques or hardware-driven constraints.
+                Structured sparsity is increasingly supported by modern hardware, but its practical adoption remains fragmented across frameworks, compilers, and runtimes.
             </p>
             <p>
-                However, most existing software stacks treat sparsity as a backend optimization problem. 
-                This often leads to fragile implementations, limited portability, and difficulty validating 
-                whether sparse execution is actually correct or applicable in a given context.
+                As a result, sparse execution often relies on fragile, hardware-specific implementations that are difficult to verify, reproduce, or maintain at scale.
             </p>
             <p>
-                As a result, structurally sparse models are frequently executed as dense workloads, 
+                Structurally sparse models are frequently executed as dense workloads, 
                 leaving potential efficiency gains unrealized.
+            </p>
+        </div>
+    </section>
+
+    <!-- Why SparseFlow -->
+    <section>
+        <div class="section-header">
+            <h2>Why SparseFlow</h2>
+        </div>
+
+        <div class="content-card">
+            <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                SparseFlow approaches sparsity as a systems problem, not a collection of isolated optimizations.
+            </p>
+            <p>
+                By integrating compiler transformations, runtime execution, and performance validation into a single pipeline, SparseFlow aims to make sparse and structured compute predictable, reproducible, and scalable across hardware generations.
             </p>
         </div>
     </section>
@@ -853,7 +803,7 @@
             <ul class="bullet-list">
                 <li>MLIR-based compiler infrastructure for sparsity propagation and verification</li>
                 <li>Initial support for structured N:M sparsity patterns (starting with 2:4)</li>
-                <li>CPU-based validation and correctness testing</li>
+                <li>CPU and GPU validation paths, with reproducible correctness testing</li>
                 <li>Deterministic test cases and baseline comparisons</li>
                 <li>A modular design intended to support future GPU and accelerator backends</li>
             </ul>
@@ -869,21 +819,20 @@
         <div class="emphasis-box">
             <h3>
                 <div class="card-icon">📋</div>
-                What SparseFlow Is Not (Yet)
+                What SparseFlow Is Not Claiming
             </h3>
             <p style="font-size: 1.05rem; margin-bottom: 1.5rem;">
-                SparseFlow is currently an early-stage research and development effort.
+                SparseFlow is an active systems effort. It is not positioned as a turnkey, production-deployed solution today.
             </p>
             <p>At this stage, the project does not claim:</p>
             <ul class="bullet-list">
-                <li>Production deployment at scale</li>
+                <li>Turnkey production deployment at scale</li>
                 <li>Guaranteed performance improvements across all workloads</li>
-                <li>Full GPU backend coverage</li>
-                <li>Turnkey integration into existing frameworks</li>
+                <li>Full framework integration out of the box</li>
+                <li>Complete GPU backend coverage across all operators</li>
             </ul>
             <p>
-                These areas are intentionally being approached incrementally, following 
-                correctness validation and reproducible benchmarking.
+                These areas are being approached incrementally, following correctness validation and reproducible benchmarking.
             </p>
         </div>
     </section>
@@ -908,8 +857,7 @@
                 <li>Improving documentation and developer-facing visibility into compiler decisions</li>
             </ul>
             <p>
-                These steps are aimed at building confidence in the architecture before pursuing 
-                broader adoption or performance claims.
+                These steps are aimed at building confidence in the architecture before pursuing broader adoption claims.
             </p>
         </div>
     </section>
@@ -917,15 +865,15 @@
     <!-- About Maple Silicon -->
     <section>
         <div class="company-section">
-            <img src="assets/maplesilicon.png" alt="Maple Silicon Inc." class="company-logo">
+            <img src="maplesilicon.png" alt="Maple Silicon Inc." class="company-logo">
             <h2>About Maple Silicon Inc.</h2>
             <p>
-                Maple Silicon Inc. is a Canadian technology company focused on compiler infrastructure 
+                Maple Silicon Inc. is a Canadian technology company focused on compiler infrastructure
                 and systems-level optimization for machine learning and high-performance computing workloads.
             </p>
             <p>
-                SparseFlow™ is the company's initial platform, developed as part of ongoing research 
-                and engineering efforts into structured sparsity and efficient execution.
+                SparseFlow™ is the company's initial platform, built as part of ongoing engineering efforts
+                into structured sparsity and efficient execution.
             </p>
         </div>
     </section>
@@ -938,8 +886,7 @@
                 Contact
             </h3>
             <p>
-                Maple Silicon Inc. is open to research collaboration, pilot evaluations, and discussions 
-                related to Canadian innovation and funding programs, including NRC IRAP.
+                Maple Silicon Inc. is open to collaboration, pilot evaluations, and discussions related to Canadian innovation and funding programs, including NRC IRAP.
             </p>
             <p>
                 <strong>Email:</strong> <a href="mailto:info@maplesilicon.co">info@maplesilicon.co</a>
@@ -953,8 +900,8 @@
             <p>&copy; 2025 Maple Silicon Inc. All rights reserved.</p>
             <p>SparseFlow™ is a trademark of Maple Silicon Inc.</p>
             <div class="footer-links">
-                <a href="https://github.com/Gouravbunty17/maplesilicon-site">GitHub</a>
-                <a href="https://github.com/Gouravbunty17/maplesilicon-site/blob/main/LICENSE">License</a>
+                <a href="https://github.com/MapleSilicon/SparseFlow">GitHub</a>
+                <a href="https://github.com/MapleSilicon/SparseFlow/blob/main/LICENSE">License</a>
                 <a href="https://github.com/MapleSilicon">Company</a>
             </div>
         </div>
@@ -964,14 +911,14 @@
         // Network Canvas Animation
         const canvas = document.getElementById('networkCanvas');
         const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
 
-        window.addEventListener('resize', () => {
+        function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-        });
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
         const nodes = [];
         const maxNodes = 50;
@@ -1003,10 +950,7 @@
             }
         }
 
-        // Initialize nodes
-        for (let i = 0; i < maxNodes; i++) {
-            nodes.push(new Node());
-        }
+        for (let i = 0; i < maxNodes; i++) nodes.push(new Node());
 
         function drawConnections() {
             for (let i = 0; i < nodes.length; i++) {
@@ -1030,63 +974,42 @@
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
             drawConnections();
-            
-            nodes.forEach(node => {
-                node.update();
-                node.draw();
-            });
-
+            nodes.forEach(node => { node.update(); node.draw(); });
             requestAnimationFrame(animate);
         }
-
         animate();
 
         // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    
-                    // Animate bullet points with stagger
-                    if (entry.target.classList.contains('content-card') || 
+
+                    if (entry.target.classList.contains('content-card') ||
                         entry.target.classList.contains('emphasis-box')) {
                         const bullets = entry.target.querySelectorAll('.bullet-list li');
                         bullets.forEach((bullet, index) => {
-                            setTimeout(() => {
-                                bullet.classList.add('visible');
-                            }, index * 100);
+                            setTimeout(() => bullet.classList.add('visible'), index * 100);
                         });
                     }
-                    
-                    // Animate principle cards with stagger
+
                     if (entry.target.classList.contains('principles-grid')) {
                         const cards = entry.target.querySelectorAll('.principle-card');
                         cards.forEach((card, index) => {
-                            setTimeout(() => {
-                                card.classList.add('visible');
-                            }, index * 150);
+                            setTimeout(() => card.classList.add('visible'), index * 150);
                         });
                     }
                 }
             });
         }, observerOptions);
 
-        // Observe all animated elements
-        document.querySelectorAll('.section-header, .content-card, .emphasis-box, .company-section, .contact-info').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Observe principles grid separately
-        document.querySelectorAll('.principles-grid').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.section-header, .content-card, .emphasis-box, .company-section, .contact-info')
+            .forEach(el => observer.observe(el));
+        document.querySelectorAll('.principles-grid')
+            .forEach(el => observer.observe(el));
 
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1097,11 +1020,7 @@
                     const headerOffset = 80;
                     const elementPosition = target.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                 }
             });
         });
