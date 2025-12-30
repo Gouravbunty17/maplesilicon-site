@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SparseFlow™ - High-performance compiler & runtime for sparse GPU compute | Maple Silicon Inc.</title>
-    <meta name="description" content="SparseFlow is a systems-level compiler and runtime platform developed by Maple Silicon Inc., focused on making structured N:M sparsity verifiable, reproducible, and efficient across modern GPU architectures.">
+    <meta name="description" content="Compiler + runtime for verifiable structured sparsity (N:M). Reproducible performance. Open-source. Built by Maple Silicon.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -21,11 +21,7 @@
             --card-bg: rgba(21, 25, 34, 0.8);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -35,23 +31,18 @@
             overflow-x: hidden;
         }
 
-        /* Animated Network Background */
         .network-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 0;
             pointer-events: none;
         }
 
         .bg-pattern {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
             background: var(--primary-dark);
             background-image:
@@ -59,7 +50,6 @@
                 radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
         }
 
-        /* Header */
         header {
             position: fixed;
             top: 0;
@@ -73,14 +63,8 @@
         }
 
         @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         nav {
@@ -92,21 +76,14 @@
             align-items: center;
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+        .logo-container { display: flex; align-items: center; gap: 1rem; }
 
         .logo-img {
             height: 45px;
             width: auto;
             transition: transform 0.3s ease;
         }
-
-        .logo-img:hover {
-            transform: scale(1.05);
-        }
+        .logo-img:hover { transform: scale(1.05); }
 
         .brand-text {
             font-weight: 600;
@@ -114,11 +91,7 @@
             color: var(--text-primary);
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
 
         .nav-links a {
             color: var(--text-secondary);
@@ -132,23 +105,15 @@
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
+            bottom: -5px; left: 0;
+            width: 0; height: 2px;
             background: var(--accent-blue);
             transition: width 0.3s ease;
         }
 
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a:hover::after { width: 100%; }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
         .hero {
             padding: 10rem 2rem 4rem;
             max-width: 1200px;
@@ -156,6 +121,26 @@
             text-align: center;
             position: relative;
             z-index: 1;
+        }
+
+        .product-logo-container { margin-bottom: 2rem; animation: fadeInUp 0.8s ease-out; }
+
+        .product-logo {
+            height: 110px;
+            width: auto;
+            filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.4)) brightness(1.15);
+            transition: all 0.4s ease;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        .product-logo:hover {
+            transform: scale(1.08);
+            filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.6)) brightness(1.25);
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         .hero h1 {
@@ -179,26 +164,37 @@
             font-size: 1.1rem;
             color: var(--text-secondary);
             max-width: 850px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 1.5rem;
             line-height: 1.8;
             animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .hero .proofline {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--accent-blue);
+            max-width: 900px;
+            margin: 0 auto 0.75rem;
+            animation: fadeInUp 0.8s ease-out 0.55s both;
         }
 
-        .trademark {
-            font-size: 0.7em;
-            vertical-align: super;
+        .hero .proofline a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(59, 158, 255, 0.35);
+            transition: all 0.25s ease;
         }
+        .hero .proofline a:hover {
+            color: #cfe6ff;
+            border-bottom-color: rgba(207, 230, 255, 0.8);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .trademark { font-size: 0.7em; vertical-align: super; }
 
         .status-badge {
             display: inline-block;
@@ -214,17 +210,108 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 0 0 rgba(59, 158, 255, 0.4);
-                transform: scale(1);
-            }
-            50% {
-                box-shadow: 0 0 0 8px rgba(59, 158, 255, 0);
-                transform: scale(1.02);
-            }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 158, 255, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 0 8px rgba(59, 158, 255, 0); transform: scale(1.02); }
         }
 
-        /* Section Styles */
+        .hero-cta-row {
+            margin-top: 1.75rem;
+            display: flex;
+            gap: 0.85rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary, .cta-secondary {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+        }
+
+        .cta-secondary {
+            background: rgba(21, 25, 34, 0.45);
+            color: var(--text-primary);
+            border: 1px solid rgba(59, 158, 255, 0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-primary:hover, .cta-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 158, 255, 0.22);
+        }
+
+        .hero-proof {
+            max-width: 980px;
+            margin: 2.5rem auto 0;
+            text-align: left;
+        }
+
+        .proof-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.75rem 2rem;
+            animation: fadeInUp 0.8s ease-out 0.65s both;
+        }
+
+        .proof-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .proof-item {
+            background: rgba(10, 13, 20, 0.35);
+            border: 1px solid rgba(59, 158, 255, 0.14);
+            border-radius: 10px;
+            padding: 1rem 1rem;
+        }
+
+        .proof-item strong {
+            display: block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.95rem;
+            color: #dbeafe;
+            margin-bottom: 0.35rem;
+        }
+
+        .proof-item span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .proof-item a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(59, 158, 255, 0.35);
+        }
+
+        .proof-item a:hover {
+            color: #cfe6ff;
+            border-bottom-color: rgba(207, 230, 255, 0.8);
+        }
+
         section {
             padding: 5rem 2rem;
             max-width: 1200px;
@@ -240,10 +327,7 @@
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
-        .section-header.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .section-header.visible { opacity: 1; transform: translateY(0); }
 
         .section-header h2 {
             font-size: 2.5rem;
@@ -259,7 +343,6 @@
             max-width: 800px;
         }
 
-        /* Content Card with Icons */
         .content-card {
             background: var(--card-bg);
             backdrop-filter: blur(10px);
@@ -272,10 +355,7 @@
             transition: all 0.6s ease;
         }
 
-        .content-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .content-card.visible { opacity: 1; transform: translateY(0); }
 
         .content-card h3 {
             font-size: 1.5rem;
@@ -304,22 +384,10 @@
             50% { transform: translateY(-5px); }
         }
 
-        .content-card p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
+        .content-card p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
+        .content-card p:last-child { margin-bottom: 0; }
 
-        .content-card p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Bullet List with animated bullets */
-        .bullet-list {
-            list-style: none;
-            padding-left: 0;
-            margin: 1.5rem 0;
-        }
+        .bullet-list { list-style: none; padding-left: 0; margin: 1.5rem 0; }
 
         .bullet-list li {
             padding: 0.75rem 0;
@@ -332,10 +400,7 @@
             transition: all 0.4s ease;
         }
 
-        .bullet-list li.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        .bullet-list li.visible { opacity: 1; transform: translateX(0); }
 
         .bullet-list li::before {
             content: '';
@@ -350,18 +415,13 @@
         }
 
         @keyframes bulletPulse {
-            0%, 100% {
-                box-shadow: 0 0 0 0 rgba(59, 158, 255, 0.7);
-            }
-            50% {
-                box-shadow: 0 0 0 4px rgba(59, 158, 255, 0);
-            }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 158, 255, 0.7); }
+            50% { box-shadow: 0 0 0 4px rgba(59, 158, 255, 0); }
         }
 
-        /* Principles Grid */
         .principles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
             margin-top: 2rem;
         }
@@ -382,29 +442,17 @@
         .principle-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
             background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.6s ease;
         }
 
-        .principle-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .principle-card.visible::before {
-            transform: scaleX(1);
-        }
-
-        .principle-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-blue);
-        }
+        .principle-card.visible { opacity: 1; transform: translateY(0); }
+        .principle-card.visible::before { transform: scaleX(1); }
+        .principle-card:hover { transform: translateY(-5px); border-color: var(--accent-blue); }
 
         .principle-icon {
             width: 56px;
@@ -438,7 +486,6 @@
             font-size: 0.95rem;
         }
 
-        /* Emphasis Box */
         .emphasis-box {
             background: rgba(139, 92, 246, 0.08);
             border: 1px solid rgba(139, 92, 246, 0.2);
@@ -450,10 +497,7 @@
             transition: all 0.6s ease;
         }
 
-        .emphasis-box.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .emphasis-box.visible { opacity: 1; transform: translateY(0); }
 
         .emphasis-box h3 {
             font-size: 1.5rem;
@@ -465,7 +509,6 @@
             gap: 1rem;
         }
 
-        /* Company Info */
         .company-section {
             background: var(--secondary-dark);
             border: 1px solid var(--border-subtle);
@@ -477,10 +520,7 @@
             transition: all 0.6s ease;
         }
 
-        .company-section.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
+        .company-section.visible { opacity: 1; transform: scale(1); }
 
         .company-logo {
             height: 80px;
@@ -494,10 +534,7 @@
             to { opacity: 1; }
         }
 
-        .company-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
+        .company-section h2 { font-size: 2rem; margin-bottom: 1.5rem; }
 
         .company-section p {
             color: var(--text-secondary);
@@ -506,7 +543,6 @@
             margin: 0 auto 2rem;
         }
 
-        /* Contact */
         .contact-info {
             text-align: center;
             padding: 2rem;
@@ -518,10 +554,7 @@
             transition: all 0.6s ease;
         }
 
-        .contact-info.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .contact-info.visible { opacity: 1; transform: translateY(0); }
 
         .contact-info h3 {
             font-size: 1.5rem;
@@ -535,7 +568,7 @@
 
         .contact-info p {
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             line-height: 1.8;
         }
 
@@ -547,12 +580,8 @@
             transition: all 0.3s ease;
         }
 
-        .contact-info a:hover {
-            text-decoration: underline;
-            color: var(--accent-purple);
-        }
+        .contact-info a:hover { text-decoration: underline; color: var(--accent-purple); }
 
-        /* Footer */
         footer {
             background: var(--secondary-dark);
             border-top: 1px solid var(--border-subtle);
@@ -568,9 +597,7 @@
             font-size: 0.9rem;
         }
 
-        .footer-content p {
-            margin-bottom: 0.5rem;
-        }
+        .footer-content p { margin-bottom: 0.5rem; }
 
         .footer-links {
             margin-top: 1rem;
@@ -586,51 +613,25 @@
             transition: color 0.3s ease;
         }
 
-        .footer-links a:hover {
-            color: var(--text-primary);
-        }
+        .footer-links a:hover { color: var(--text-primary); }
 
-        /* Responsive */
         @media (max-width: 968px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            .hero .subtitle {
-                font-size: 1.4rem;
-            }
-
-            .section-header h2 {
-                font-size: 2rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
+            .hero h1 { font-size: 3rem; }
+            .hero .subtitle { font-size: 1.4rem; }
+            .section-header h2 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .proof-grid { grid-template-columns: 1fr; }
+            .principles-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 640px) {
-            .hero h1 {
-                font-size: 2.25rem;
-            }
-
-            .hero .subtitle {
-                font-size: 1.2rem;
-            }
-
-            section {
-                padding: 3rem 1.5rem;
-            }
-
-            .content-card {
-                padding: 1.75rem;
-            }
-
-            .principle-icon, .card-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.25rem;
-            }
+            .hero h1 { font-size: 2.25rem; }
+            .hero .subtitle { font-size: 1.2rem; }
+            .product-logo { height: 70px; }
+            section { padding: 3rem 1.5rem; }
+            .content-card { padding: 1.75rem; }
+            .principle-icon, .card-icon { width: 40px; height: 40px; font-size: 1.25rem; }
+            .proof-card { padding: 1.5rem 1.25rem; }
         }
     </style>
 </head>
@@ -654,35 +655,58 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
+        <div class="product-logo-container">
+            <img src="sparseflow.png" alt="SparseFlow" class="product-logo">
+        </div>
+
         <h1>SparseFlow<span class="trademark">™</span></h1>
         <p class="subtitle">High-performance compiler and runtime infrastructure for sparse and structured GPU compute</p>
 
         <p class="intro">
             SparseFlow is a systems-level compiler and runtime platform developed by Maple Silicon, focused on executing structured sparsity efficiently across modern GPU architectures.
         </p>
+
         <p class="intro">
             The platform is built around correctness-first transformations, memory-aware execution, and reproducible performance — enabling sparse compute to operate close to hardware limits rather than relying on heuristic optimizations.
         </p>
 
-        <p class="intro" style="font-weight: 500; color: var(--accent-blue);">
+        <p class="proofline">
             Recent work demonstrates sustained, high-efficiency GPU kernel execution on Ampere Tensor Cores through low-level optimization.
+            <a href="https://github.com/MapleSilicon/SparseFlow#benchmarks">See benchmarks</a>
         </p>
 
         <div class="status-badge">ACTIVE DEVELOPMENT</div>
 
-        <div style="margin-top: 2rem;">
-            <a href="https://github.com/MapleSilicon/SparseFlow"
-               style="display: inline-block; padding: 0.875rem 2rem; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 1rem; transition: transform 0.3s ease, box-shadow 0.3s ease;"
-               onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 25px rgba(59, 158, 255, 0.3)';"
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-               View on GitHub
-            </a>
+        <div class="hero-cta-row">
+            <a class="cta-primary" href="https://github.com/MapleSilicon/SparseFlow">View on GitHub</a>
+            <a class="cta-secondary" href="https://github.com/MapleSilicon/SparseFlow#benchmarks">Benchmark Results</a>
+        </div>
+
+        <div class="hero-proof">
+            <div class="proof-card">
+                <div class="proof-title">
+                    <span style="display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));font-size:1.1rem;">📌</span>
+                    Proof at a glance
+                </div>
+                <div class="proof-grid">
+                    <div class="proof-item">
+                        <strong>Sustained kernel performance</strong>
+                        <span>82.93 TFLOPS (RTX 4090 / Ada Tensor Cores)</span>
+                    </div>
+                    <div class="proof-item">
+                        <strong>Method</strong>
+                        <span>PTX-level tuning + memory hierarchy optimization</span>
+                    </div>
+                    <div class="proof-item">
+                        <strong>Reproducibility</strong>
+                        <span>Open-source code + <a href="https://github.com/MapleSilicon/SparseFlow#benchmarks">benchmark command</a></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Current Status -->
     <section id="status">
         <div class="section-header">
             <h2>Current Status</h2>
@@ -709,7 +733,6 @@
         </div>
     </section>
 
-    <!-- The Problem -->
     <section>
         <div class="section-header">
             <h2>The Problem</h2>
@@ -732,7 +755,6 @@
         </div>
     </section>
 
-    <!-- Why SparseFlow -->
     <section>
         <div class="section-header">
             <h2>Why SparseFlow</h2>
@@ -748,7 +770,6 @@
         </div>
     </section>
 
-    <!-- The SparseFlow Approach -->
     <section id="approach">
         <div class="section-header">
             <h2>The SparseFlow Approach</h2>
@@ -795,7 +816,6 @@
         </div>
     </section>
 
-    <!-- Technical Scope -->
     <section id="scope">
         <div class="section-header">
             <h2>Technical Scope</h2>
@@ -820,22 +840,20 @@
         </div>
     </section>
 
-    <!-- What We Are Not Claiming -->
     <section>
         <div class="emphasis-box">
             <h3>
                 <div class="card-icon">📋</div>
-                What SparseFlow Is Not Claiming
+                Current Limits
             </h3>
             <p style="font-size: 1.05rem; margin-bottom: 1.5rem;">
-                SparseFlow is an active systems effort. It is not positioned as a turnkey, production-deployed solution today.
+                SparseFlow is an active systems effort. At this stage, the following areas are under development:
             </p>
-            <p>At this stage, the project does not claim:</p>
             <ul class="bullet-list">
-                <li>Turnkey production deployment at scale</li>
-                <li>Guaranteed performance improvements across all workloads</li>
-                <li>Full framework integration out of the box</li>
-                <li>Complete GPU backend coverage across all operators</li>
+                <li>Full production deployment at scale</li>
+                <li>Performance guarantees across all workloads</li>
+                <li>Complete framework integration</li>
+                <li>Full GPU backend coverage across all operators</li>
             </ul>
             <p>
                 These areas are being approached incrementally, following correctness validation and reproducible benchmarking.
@@ -843,7 +861,6 @@
         </div>
     </section>
 
-    <!-- Next Steps / Roadmap -->
     <section id="roadmap">
         <div class="section-header">
             <h2>Next Steps</h2>
@@ -868,7 +885,6 @@
         </div>
     </section>
 
-    <!-- About Maple Silicon -->
     <section>
         <div class="company-section">
             <img src="maplesilicon.png" alt="Maple Silicon Inc." class="company-logo">
@@ -884,7 +900,6 @@
         </div>
     </section>
 
-    <!-- Contact -->
     <section id="contact">
         <div class="contact-info">
             <h3>
@@ -895,12 +910,14 @@
                 Maple Silicon Inc. is open to collaboration, pilot evaluations, and discussions related to Canadian innovation and funding programs, including NRC IRAP.
             </p>
             <p>
+                We're open to 1–2 pilot evaluations with teams exploring structured sparsity or compiler/runtime assessment.
+            </p>
+            <p>
                 <strong>Email:</strong> <a href="mailto:info@maplesilicon.co">info@maplesilicon.co</a>
             </p>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <p>&copy; 2025 Maple Silicon Inc. All rights reserved.</p>
@@ -914,7 +931,6 @@
     </footer>
 
     <script>
-        // Network Canvas Animation
         const canvas = document.getElementById('networkCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -986,7 +1002,6 @@
         }
         animate();
 
-        // Scroll animations
         const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
 
         const observer = new IntersectionObserver((entries) => {
@@ -1017,7 +1032,6 @@
         document.querySelectorAll('.principles-grid')
             .forEach(el => observer.observe(el));
 
-        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1026,6 +1040,7 @@
                     const headerOffset = 80;
                     const elementPosition = target.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
                     window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                 }
             });
