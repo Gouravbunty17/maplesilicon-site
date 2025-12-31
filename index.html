@@ -414,34 +414,6 @@
             font-weight: 600;
         }
 
-        .emphasis-box {
-            max-width: 1000px;
-            margin: 0 auto 4rem;
-            background: linear-gradient(135deg, rgba(59, 158, 255, 0.08), rgba(139, 92, 246, 0.08));
-            border: 1px solid rgba(59, 158, 255, 0.2);
-            border-radius: 16px;
-            padding: 3rem;
-            backdrop-filter: blur(12px);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .emphasis-box.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .emphasis-box h3 {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
         .company-section {
             max-width: 800px;
             margin: 0 auto 4rem;
@@ -593,7 +565,7 @@
                 <div class="brand-text">MapleSilicon</div>
             </div>
             <ul class="nav-links">
-                <li><a href="#approach">Advantage</a></li>
+                <li><a href="#advantage">Efficiency Advantage</a></li>
                 <li><a href="#roadmap">Roadmap</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -737,9 +709,9 @@
         </div>
     </section>
 
-    <section id="approach">
+    <section id="advantage">
         <div class="section-header">
-            <h2>The SparseFlow Advantage</h2>
+            <h2>The SparseFlow Efficiency Advantage</h2>
         </div>
 
         <div class="content-card">
@@ -781,8 +753,7 @@
             </ul>
             
             <p style="font-weight: 500; margin-top: 1.5rem; color: var(--text-primary);">
-                SparseFlow is not a framework replacement.<br>
-                It's the <strong>efficiency substrate</strong> underneath them.
+                SparseFlow is not a framework replacement — it is the <strong>efficiency layer beneath them</strong>.
             </p>
             
             <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 1rem; font-style: italic;">
@@ -894,7 +865,7 @@
                     if (distance < connectionDistance) {
                         const opacity = (1 - distance / connectionDistance) * 0.3;
                         ctx.beginPath();
-                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.moveTo(nodes[i].x, nodes[j].y);
                         ctx.lineTo(nodes[j].x, nodes[j].y);
                         ctx.strokeStyle = `rgba(139, 92, 246, ${opacity})`;
                         ctx.lineWidth = 0.5;
@@ -919,8 +890,7 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
 
-                    if (entry.target.classList.contains('content-card') ||
-                        entry.target.classList.contains('emphasis-box')) {
+                    if (entry.target.classList.contains('content-card')) {
                         const bullets = entry.target.querySelectorAll('.bullet-list li');
                         bullets.forEach((bullet, index) => {
                             setTimeout(() => bullet.classList.add('visible'), index * 100);
@@ -930,7 +900,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.section-header, .content-card, .emphasis-box, .company-section, .contact-info')
+        document.querySelectorAll('.section-header, .content-card, .company-section, .contact-info')
             .forEach(el => observer.observe(el));
 
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
