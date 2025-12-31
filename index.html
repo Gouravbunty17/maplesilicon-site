@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SparseFlow™ - High-performance compiler & runtime for sparse GPU compute | Maple Silicon Inc.</title>
-    <meta name="description" content="Compiler + runtime for verifiable structured sparsity (N:M). Reproducible performance. Open-source. Built by Maple Silicon.">
+    <title>SparseFlow™ - The efficiency layer for GPU compute | Maple Silicon Inc.</title>
+    <meta name="description" content="Bare-metal GPU kernels that reduce energy per operation, increase throughput per GPU, and unlock higher-margin AI deployment at scale.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -144,38 +144,43 @@
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             color: var(--text-primary);
             letter-spacing: -0.02em;
             animation: fadeInUp 0.8s ease-out;
+            line-height: 1.1;
         }
 
         .hero .subtitle {
-            font-size: 1.75rem;
-            color: var(--text-secondary);
-            font-weight: 400;
-            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 2.5rem;
             animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
         .hero .intro {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--text-secondary);
-            max-width: 850px;
-            margin: 0 auto 1.5rem;
-            line-height: 1.8;
+            max-width: 750px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
             animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
         .hero .proofline {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 500;
-            color: var(--accent-blue);
-            max-width: 900px;
-            margin: 0 auto 0.75rem;
+            color: var(--text-primary);
+            max-width: 600px;
+            margin: 0 auto 1rem;
             animation: fadeInUp 0.8s ease-out 0.55s both;
+            background: rgba(59, 158, 255, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(59, 158, 255, 0.3);
         }
 
         .hero .proofline a {
@@ -194,8 +199,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .trademark { font-size: 0.7em; vertical-align: super; }
-
         .status-badge {
             display: inline-block;
             padding: 0.5rem 1.25rem;
@@ -210,401 +213,351 @@
         }
 
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 158, 255, 0.4); transform: scale(1); }
-            50% { box-shadow: 0 0 0 8px rgba(59, 158, 255, 0); transform: scale(1.02); }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.02); }
         }
 
         .hero-cta-row {
-            margin-top: 1.75rem;
             display: flex;
-            gap: 0.85rem;
             justify-content: center;
-            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
         }
 
         .cta-primary, .cta-secondary {
-            display: inline-block;
-            padding: 0.875rem 2rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
             text-decoration: none;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
         }
 
         .cta-primary {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            background: var(--accent-blue);
             color: white;
+            border: 1px solid var(--accent-blue);
+        }
+
+        .cta-primary:hover {
+            background: #2c7bd8;
+            transform: translateY(-2px);
         }
 
         .cta-secondary {
-            background: rgba(21, 25, 34, 0.45);
-            color: var(--text-primary);
-            border: 1px solid rgba(59, 158, 255, 0.25);
-            backdrop-filter: blur(10px);
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid rgba(156, 163, 175, 0.3);
         }
 
-        .cta-primary:hover, .cta-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(59, 158, 255, 0.22);
+        .cta-secondary:hover {
+            background: rgba(156, 163, 175, 0.1);
+            color: var(--text-primary);
         }
 
         .hero-proof {
-            max-width: 980px;
-            margin: 2.5rem auto 0;
-            text-align: left;
+            margin-top: 3rem;
+            animation: fadeInUp 0.8s ease-out 1s both;
         }
 
         .proof-card {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
-            padding: 1.75rem 2rem;
-            animation: fadeInUp 0.8s ease-out 0.65s both;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            margin: 0 auto;
+            max-width: 800px;
         }
 
         .proof-title {
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
             display: flex;
-            gap: 0.75rem;
             align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
         }
 
         .proof-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
         }
 
         .proof-item {
-            background: rgba(10, 13, 20, 0.35);
-            border: 1px solid rgba(59, 158, 255, 0.14);
-            border-radius: 10px;
-            padding: 1rem 1rem;
+            text-align: left;
+            padding: 1rem;
+            background: rgba(10, 13, 20, 0.6);
+            border-radius: 8px;
+            border: 1px solid rgba(59, 158, 255, 0.1);
         }
 
         .proof-item strong {
             display: block;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.95rem;
-            color: #dbeafe;
-            margin-bottom: 0.35rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
 
         .proof-item span {
-            display: block;
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .proof-item a {
-            color: var(--accent-blue);
-            text-decoration: none;
-            border-bottom: 1px solid rgba(59, 158, 255, 0.35);
-        }
-
-        .proof-item a:hover {
-            color: #cfe6ff;
-            border-bottom-color: rgba(207, 230, 255, 0.8);
-        }
-
-        section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
+            font-size: 0.85rem;
         }
 
         .section-header {
+            text-align: center;
             margin-bottom: 3rem;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
         }
 
-        .section-header.visible { opacity: 1; transform: translateY(0); }
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .section-header h2 {
             font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .section-header p {
             font-size: 1.1rem;
             color: var(--text-secondary);
-            max-width: 800px;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .content-card {
+            max-width: 1000px;
+            margin: 0 auto 4rem;
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
             border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
+            border-radius: 16px;
+            padding: 3rem;
+            backdrop-filter: blur(12px);
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
             transition: all 0.6s ease;
         }
 
-        .content-card.visible { opacity: 1; transform: translateY(0); }
+        .content-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .content-card h3 {
-            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
             color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
         }
 
         .card-icon {
-            width: 48px;
-            height: 48px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 10px;
-            font-size: 1.5rem;
-            animation: iconFloat 3s ease-in-out infinite;
+            font-size: 1.2rem;
+            flex-shrink: 0;
         }
 
-        @keyframes iconFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+        .content-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+            color: var(--text-secondary);
         }
 
-        .content-card p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
-        .content-card p:last-child { margin-bottom: 0; }
-
-        .bullet-list { list-style: none; padding-left: 0; margin: 1.5rem 0; }
+        .bullet-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
 
         .bullet-list li {
-            padding: 0.75rem 0;
-            padding-left: 1.75rem;
             position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
             color: var(--text-secondary);
-            line-height: 1.7;
             opacity: 0;
-            transform: translateX(-10px);
+            transform: translateX(-20px);
             transition: all 0.4s ease;
         }
 
-        .bullet-list li.visible { opacity: 1; transform: translateX(0); }
+        .bullet-list li.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
 
         .bullet-list li::before {
-            content: '';
+            content: '→';
             position: absolute;
             left: 0;
-            top: 1.1rem;
-            width: 8px;
-            height: 8px;
-            background: var(--accent-blue);
-            border-radius: 50%;
-            animation: bulletPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes bulletPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 158, 255, 0.7); }
-            50% { box-shadow: 0 0 0 4px rgba(59, 158, 255, 0); }
-        }
-
-        .principles-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .principle-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 2rem;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .principle-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 3px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.6s ease;
-        }
-
-        .principle-card.visible { opacity: 1; transform: translateY(0); }
-        .principle-card.visible::before { transform: scaleX(1); }
-        .principle-card:hover { transform: translateY(-5px); border-color: var(--accent-blue); }
-
-        .principle-icon {
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 12px;
-            font-size: 1.75rem;
-            margin-bottom: 1.25rem;
-            animation: iconRotate 4s ease-in-out infinite;
-        }
-
-        @keyframes iconRotate {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-5deg) scale(1.05); }
-            75% { transform: rotate(5deg) scale(1.05); }
-        }
-
-        .principle-card h4 {
-            font-size: 1.1rem;
+            color: var(--accent-blue);
             font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-        }
-
-        .principle-card p {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            font-size: 0.95rem;
         }
 
         .emphasis-box {
-            background: rgba(139, 92, 246, 0.08);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
+            max-width: 1000px;
+            margin: 0 auto 4rem;
+            background: linear-gradient(135deg, rgba(59, 158, 255, 0.08), rgba(139, 92, 246, 0.08));
+            border: 1px solid rgba(59, 158, 255, 0.2);
+            border-radius: 16px;
+            padding: 3rem;
+            backdrop-filter: blur(12px);
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
             transition: all 0.6s ease;
         }
 
-        .emphasis-box.visible { opacity: 1; transform: translateY(0); }
+        .emphasis-box.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .emphasis-box h3 {
-            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
             color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
         }
 
         .company-section {
-            background: var(--secondary-dark);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 3rem;
+            max-width: 800px;
+            margin: 0 auto 4rem;
             text-align: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 3rem;
+            backdrop-filter: blur(12px);
             opacity: 0;
-            transform: scale(0.95);
+            transform: translateY(30px);
             transition: all 0.6s ease;
         }
 
-        .company-section.visible { opacity: 1; transform: scale(1); }
+        .company-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .company-logo {
             height: 80px;
             width: auto;
             margin-bottom: 2rem;
-            animation: fadeIn 1s ease-out;
+            filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.3));
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .company-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
         }
-
-        .company-section h2 { font-size: 2rem; margin-bottom: 1.5rem; }
 
         .company-section p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
             color: var(--text-secondary);
-            line-height: 1.8;
-            max-width: 700px;
-            margin: 0 auto 2rem;
         }
 
         .contact-info {
-            text-align: center;
-            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto 4rem;
             background: var(--card-bg);
             border: 1px solid var(--border-subtle);
-            border-radius: 12px;
+            border-radius: 16px;
+            padding: 3rem;
+            backdrop-filter: blur(12px);
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
             transition: all 0.6s ease;
         }
 
-        .contact-info.visible { opacity: 1; transform: translateY(0); }
+        .contact-info.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .contact-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 1rem;
+            gap: 0.75rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
         }
 
         .contact-info p {
-            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.7;
             margin-bottom: 1.25rem;
-            line-height: 1.8;
+            color: var(--text-secondary);
         }
 
         .contact-info a {
             color: var(--accent-blue);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(59, 158, 255, 0.35);
+            transition: all 0.25s ease;
         }
 
-        .contact-info a:hover { text-decoration: underline; color: var(--accent-purple); }
+        .contact-info a:hover {
+            color: #cfe6ff;
+            border-bottom-color: rgba(207, 230, 255, 0.8);
+        }
+
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
 
         footer {
             background: var(--secondary-dark);
             border-top: 1px solid var(--border-subtle);
-            padding: 2.5rem 2rem;
+            padding: 3rem 2rem;
             text-align: center;
-            margin-top: 4rem;
         }
 
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
-            color: var(--text-muted);
-            font-size: 0.9rem;
         }
 
-        .footer-content p { margin-bottom: 0.5rem; }
+        .footer-content p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
 
         .footer-links {
-            margin-top: 1rem;
             display: flex;
-            gap: 1.5rem;
             justify-content: center;
-            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
         .footer-links a {
@@ -613,43 +566,35 @@
             transition: color 0.3s ease;
         }
 
-        .footer-links a:hover { color: var(--text-primary); }
-
-        @media (max-width: 968px) {
-            .hero h1 { font-size: 3rem; }
-            .hero .subtitle { font-size: 1.4rem; }
-            .section-header h2 { font-size: 2rem; }
-            .nav-links { display: none; }
-            .proof-grid { grid-template-columns: 1fr; }
-            .principles-grid { grid-template-columns: 1fr; }
+        .footer-links a:hover {
+            color: var(--accent-blue);
         }
 
-        @media (max-width: 640px) {
-            .hero h1 { font-size: 2.25rem; }
-            .hero .subtitle { font-size: 1.2rem; }
-            .product-logo { height: 70px; }
-            section { padding: 3rem 1.5rem; }
-            .content-card { padding: 1.75rem; }
-            .principle-icon, .card-icon { width: 40px; height: 40px; font-size: 1.25rem; }
-            .proof-card { padding: 1.5rem 1.25rem; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero .subtitle { font-size: 1.25rem; }
+            .hero .intro { font-size: 1rem; }
+            .section-header h2 { font-size: 2rem; }
+            .content-card { padding: 2rem; }
+            .nav-links { display: none; }
+            .hero-cta-row { flex-direction: column; align-items: center; }
+            .proof-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <canvas class="network-canvas" id="networkCanvas"></canvas>
     <div class="bg-pattern"></div>
+    <canvas id="networkCanvas" class="network-canvas"></canvas>
 
     <header>
         <nav>
             <div class="logo-container">
-                <img src="maplesilicon.png" alt="Maple Silicon" class="logo-img">
-                <span class="brand-text">Maple Silicon Inc.</span>
+                <img src="maplesilicon.png" alt="Maple Silicon Inc." class="logo-img">
+                <div class="brand-text">MapleSilicon</div>
             </div>
             <ul class="nav-links">
-                <li><a href="#status">Status</a></li>
-                <li><a href="#approach">Approach</a></li>
-                <li><a href="#scope">Scope</a></li>
-                <li><a href="#roadmap">Next Steps</a></li>
+                <li><a href="#approach">Advantage</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -660,227 +605,188 @@
             <img src="sparseflow.png" alt="SparseFlow" class="product-logo">
         </div>
 
-        <h1>SparseFlow<span class="trademark">™</span></h1>
-        <p class="subtitle">High-performance compiler and runtime infrastructure for sparse and structured GPU compute</p>
+        <h1>AI infrastructure doesn't fail on FLOPS.<br>It fails on cost.</h1>
+        <p class="subtitle">SparseFlow is the efficiency layer for GPU compute.</p>
 
         <p class="intro">
-            SparseFlow is a systems-level compiler and runtime platform developed by Maple Silicon, focused on executing structured sparsity efficiently across modern GPU architectures.
+            We build <strong>bare-metal GPU kernels</strong> that reduce <strong>energy per operation</strong>, 
+            increase <strong>throughput per GPU</strong>, and unlock <strong>higher-margin AI deployment</strong> at scale.
         </p>
 
-        <p class="intro">
-            The platform is built around correctness-first transformations, memory-aware execution, and reproducible performance — enabling sparse compute to operate close to hardware limits rather than relying on heuristic optimizations.
-        </p>
+        <div class="proofline">
+            <strong>83 TFLOPS is performance.<br>
+            3.6 pJ/FLOP is a business advantage.</strong>
+        </div>
 
-        <p class="proofline">
-            Recent work demonstrates sustained, high-efficiency GPU kernel execution on Ampere Tensor Cores through low-level optimization.
-            <a href="https://github.com/MapleSilicon/SparseFlow#benchmarks">See benchmarks</a>
-        </p>
-
-        <div class="status-badge">ACTIVE DEVELOPMENT</div>
+        <div class="status-badge">
+            <a href="https://github.com/MapleSilicon/SparseFlow" style="color: inherit; text-decoration: none;">
+                View Technical Proof → GitHub
+            </a>
+        </div>
 
         <div class="hero-cta-row">
-            <a class="cta-primary" href="https://github.com/MapleSilicon/SparseFlow">View on GitHub</a>
-            <a class="cta-secondary" href="https://github.com/MapleSilicon/SparseFlow#benchmarks">Benchmark Results</a>
+            <a class="cta-primary" href="https://github.com/MapleSilicon/SparseFlow">Technical Proof</a>
+            <a class="cta-secondary" href="#contact">Partnership Inquiry</a>
         </div>
 
         <div class="hero-proof">
             <div class="proof-card">
                 <div class="proof-title">
-                    <span style="display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));font-size:1.1rem;">📌</span>
-                    Proof at a glance
+                    <span style="display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));font-size:1.1rem;">💰</span>
+                    Measured Business Impact
                 </div>
                 <div class="proof-grid">
                     <div class="proof-item">
-                        <strong>Sustained kernel performance</strong>
-                        <span>82.93 TFLOPS (RTX 3090 / Ada Tensor Cores)</span>
+                        <strong>Performance Achieved</strong>
+                        <span>~83 TFLOPS sustained on RTX 3090</span>
                     </div>
                     <div class="proof-item">
-                        <strong>Method</strong>
-                        <span>PTX-level tuning + memory hierarchy optimization</span>
+                        <strong>Energy Efficiency</strong>
+                        <span>~3.6 pJ/FLOP measured via NVML counters</span>
                     </div>
                     <div class="proof-item">
-                        <strong>Reproducibility</strong>
-                        <span>Open-source code + <a href="https://github.com/MapleSilicon/SparseFlow#benchmarks">benchmark command</a></span>
+                        <strong>Verification</strong>
+                        <span>Boundary-safe, correctness-verified, stable ABI</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="status">
+    <section>
         <div class="section-header">
-            <h2>Current Status</h2>
-            <p>Active Systems Development & Validation</p>
+            <h2>Why SparseFlow Exists</h2>
         </div>
 
         <div class="content-card">
             <h3>
-                <div class="card-icon">🔬</div>
-                Systems Development & Validation
+                <div class="card-icon">🧠</div>
+                AI teams don't lose money because GPUs are slow.
             </h3>
-            <p style="font-size: 1.15rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--text-primary);">
-                SparseFlow is in active systems development, with a focus on validating correctness, performance, and architectural soundness across sparse and structured compute workloads.
+            <p style="font-size: 1.15rem; margin-bottom: 1.5rem;">
+                They lose money because <strong>generic software wastes silicon</strong>.
             </p>
-            <p>
-                Recent milestones include sustained high-efficiency GPU kernel execution, reproducible performance measurement, and end-to-end compiler-to-runtime validation.
-            </p>
+            
+            <p>Most AI stacks:</p>
             <ul class="bullet-list">
-                <li>Designing structured sparsity-aware compiler passes with correctness guarantees</li>
-                <li>Validating GPU execution paths through low-level, memory-aware kernel design</li>
-                <li>Measuring performance using reproducible, architecture-grounded benchmarks</li>
-                <li>Building a foundation for automating performance-critical decisions in sparse compute pipelines</li>
+                <li>bounce data between VRAM and compute units</li>
+                <li>underutilize Tensor Cores</li>
+                <li>generate excess heat</li>
+                <li>throttle under sustained load</li>
             </ul>
+            
+            <p>
+                SparseFlow attacks the problem <strong>below the framework layer</strong> — where efficiency is decided.
+            </p>
         </div>
     </section>
 
     <section>
         <div class="section-header">
-            <h2>The Problem</h2>
+            <h2>What We've Proven</h2>
+            <p>Publicly Verifiable Results</p>
         </div>
 
         <div class="content-card">
             <h3>
-                <div class="card-icon">⚠️</div>
-                Fragmented Sparsity Support
+                <div class="card-icon">📊</div>
+                RTX 3090 benchmark (FP16 × FP16 → FP32 GEMM)
             </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div style="padding: 1rem; background: rgba(59, 158, 255, 0.05); border: 1px solid rgba(59, 158, 255, 0.2); border-radius: 8px;">
+                    <strong style="color: var(--accent-blue);">~83 TFLOPS sustained</strong><br>
+                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Measured performance, not theoretical peaks</span>
+                </div>
+                <div style="padding: 1rem; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 8px;">
+                    <strong style="color: var(--accent-purple);">~3.6 pJ/FLOP</strong><br>
+                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Measured via NVML energy counters</span>
+                </div>
+                <div style="padding: 1rem; background: rgba(34, 197, 94, 0.05); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 8px;">
+                    <strong style="color: #22c55e;">Production-safe</strong><br>
+                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Boundary-safe, correctness-verified, stable ABI</span>
+                </div>
+            </div>
+            
             <p>
-                Structured sparsity is increasingly supported by modern hardware, but its practical adoption remains fragmented across frameworks, compilers, and runtimes.
-            </p>
-            <p>
-                As a result, sparse execution often relies on fragile, hardware-specific implementations that are difficult to verify, reproduce, or maintain at scale.
-            </p>
-            <p>
-                Structurally sparse models are frequently executed as dense workloads, leaving potential efficiency gains unrealized.
+                These are <strong>measured results</strong>, not theoretical peaks.
             </p>
         </div>
     </section>
 
     <section>
         <div class="section-header">
-            <h2>Why SparseFlow</h2>
+            <h2>Why This Matters at Scale</h2>
         </div>
 
         <div class="content-card">
-            <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
-                SparseFlow approaches sparsity as a systems problem, not a collection of isolated optimizations.
-            </p>
-            <p>
-                By integrating compiler transformations, runtime execution, and performance validation into a single pipeline, SparseFlow aims to make sparse and structured compute predictable, reproducible, and scalable across hardware generations.
+            <h3>
+                <div class="card-icon">💰</div>
+                For operators running hundreds to thousands of GPUs
+            </h3>
+            
+            <ul class="bullet-list">
+                <li><strong>OPEX drops:</strong> Lower joules per token = lower power + cooling bills</li>
+                <li><strong>CAPEX stretches:</strong> More throughput on existing hardware</li>
+                <li><strong>SLAs stabilize:</strong> Cooler kernels avoid thermal throttling under load</li>
+            </ul>
+            
+            <p style="font-weight: 500; color: var(--accent-blue); margin-top: 1.5rem; font-size: 1.1rem;">
+                Small efficiency gains <strong>compound massively</strong> at cluster scale.
             </p>
         </div>
     </section>
 
     <section id="approach">
         <div class="section-header">
-            <h2>The SparseFlow Approach</h2>
+            <h2>The SparseFlow Advantage</h2>
         </div>
 
         <div class="content-card">
             <h3>
-                <div class="card-icon">🎯</div>
-                Compiler-First Philosophy
+                <div class="card-icon">🧱</div>
+                Control the entire data path
             </h3>
             <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
-                SparseFlow treats structured sparsity as a first-class compiler concern.
+                SparseFlow controls the <strong>entire data path</strong>:
             </p>
-            <p>The platform is designed around the following principles:</p>
-        </div>
-
-        <div class="principles-grid">
-            <div class="principle-card">
-                <div class="principle-icon">📐</div>
-                <h4>Explicit Representation</h4>
-                <p>Structured N:M sparsity patterns are represented explicitly in the compiler IR, making sparsity intent visible throughout the compilation pipeline.</p>
+            
+            <div style="background: var(--secondary-dark); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-subtle); margin-bottom: 1.5rem;">
+                <code style="font-family: 'IBM Plex Mono', monospace; font-size: 1rem; color: var(--accent-blue);">
+                    Global Memory → Shared Memory → Registers → Tensor Cores
+                </code>
             </div>
-            <div class="principle-card">
-                <div class="principle-icon">✓</div>
-                <h4>Constraint Verification</h4>
-                <p>All required constraints are verified before any sparse transformation, ensuring optimizations are only applied when safety can be guaranteed.</p>
-            </div>
-            <div class="principle-card">
-                <div class="principle-icon">🔄</div>
-                <h4>Controlled Rewriting</h4>
-                <p>Dense operations are rewritten to sparse equivalents only when verification passes, maintaining correctness as the primary goal.</p>
-            </div>
-            <div class="principle-card">
-                <div class="principle-icon">🛡️</div>
-                <h4>Guaranteed Fallback</h4>
-                <p>A fallback path to dense execution is always available when verification fails, ensuring no correctness compromises.</p>
-            </div>
-        </div>
-
-        <div class="content-card" style="margin-top: 2rem;">
+            
             <p>
-                This approach prioritizes correctness and transparency, making sparsity behavior predictable, auditable, and easier to reason about across different targets.
+                By keeping data <strong>on-chip longer</strong>, we eliminate unnecessary memory traffic — 
+                the largest source of wasted energy in modern AI workloads.
             </p>
-        </div>
-    </section>
-
-    <section id="scope">
-        <div class="section-header">
-            <h2>Technical Scope</h2>
-        </div>
-
-        <div class="content-card">
-            <h3>
-                <div class="card-icon">🔧</div>
-                Current Capabilities
-            </h3>
-            <p>The current technical scope of SparseFlow includes:</p>
-            <ul class="bullet-list">
-                <li>MLIR-based compiler infrastructure for sparsity propagation and verification</li>
-                <li>Initial support for structured N:M sparsity patterns (starting with 2:4)</li>
-                <li>CPU and GPU validation paths, with reproducible correctness testing</li>
-                <li>Deterministic test cases and baseline comparisons</li>
-                <li>A modular design intended to support future GPU and accelerator backends</li>
-            </ul>
-            <p>
-                SparseFlow is not a hardware-specific solution. The goal is to provide a portable, compiler-level foundation that can integrate with multiple runtime and backend environments.
-            </p>
-        </div>
-    </section>
-
-    <section>
-        <div class="emphasis-box">
-            <h3>
-                <div class="card-icon">📋</div>
-                Current Limits
-            </h3>
-            <p style="font-size: 1.05rem; margin-bottom: 1.5rem;">
-                SparseFlow is an active systems effort. At this stage, the following areas are under development:
-            </p>
-            <ul class="bullet-list">
-                <li>Full production deployment at scale</li>
-                <li>Performance guarantees across all workloads</li>
-                <li>Complete framework integration</li>
-                <li>Full GPU backend coverage across all operators</li>
-            </ul>
-            <p>
-                These areas are being approached incrementally, following correctness validation and reproducible benchmarking.
+            
+            <p style="font-weight: 500; margin-top: 1rem;">
+                This is where the pJ/FLOP delta comes from.
             </p>
         </div>
     </section>
 
     <section id="roadmap">
         <div class="section-header">
-            <h2>Next Steps</h2>
+            <h2>Roadmap</h2>
         </div>
 
         <div class="content-card">
-            <h3>
-                <div class="card-icon">🗺️</div>
-                Development Roadmap
-            </h3>
-            <p>The next phase of SparseFlow development focuses on validation and expansion:</p>
             <ul class="bullet-list">
-                <li>Expanding correctness testing across a broader set of models and shapes</li>
-                <li>Establishing reproducible benchmarking against dense baselines</li>
-                <li>Validating sparse lowering behavior on GPU hardware using controlled test environments</li>
-                <li>Extending support to additional N:M sparsity configurations</li>
-                <li>Improving documentation and developer-facing visibility into compiler decisions</li>
+                <li><strong>Kernel fusion:</strong> MatMul + Bias + Activation in a single on-chip pass</li>
+                <li><strong>Hopper expansion:</strong> Native paths for H100 / H200 Tensor Cores</li>
+                <li><strong>TCO tooling:</strong> Translate efficiency into dollar savings for CTOs</li>
             </ul>
-            <p>
-                These steps are aimed at building confidence in the architecture before pursuing broader adoption claims.
+            
+            <p style="font-weight: 500; margin-top: 1.5rem; color: var(--text-primary);">
+                SparseFlow is not a framework replacement.<br>
+                It's the <strong>efficiency substrate</strong> underneath them.
+            </p>
+            
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 1rem; font-style: italic;">
+                Each release prioritizes measured efficiency gains and correctness guarantees over feature velocity.
             </p>
         </div>
     </section>
@@ -888,14 +794,13 @@
     <section>
         <div class="company-section">
             <img src="maplesilicon.png" alt="Maple Silicon Inc." class="company-logo">
-            <h2>About Maple Silicon Inc.</h2>
+            <h2>Built by MapleSilicon</h2>
             <p>
-                Maple Silicon Inc. is a Canadian technology company focused on compiler infrastructure
-                and systems-level optimization for machine learning and high-performance computing workloads.
+                SparseFlow is developed by <strong>MapleSilicon</strong>, a systems-focused company building 
+                <strong>honest, measurable, hardware-aware software</strong> for the next generation of AI infrastructure.
             </p>
-            <p>
-                SparseFlow™ is the company's initial platform, built as part of ongoing engineering efforts
-                into structured sparsity and efficient execution.
+            <p style="font-weight: 500; color: var(--accent-blue); margin-top: 1rem;">
+                We optimize what others abstract away.
             </p>
         </div>
     </section>
@@ -907,13 +812,18 @@
                 Contact
             </h3>
             <p>
-                Maple Silicon Inc. is open to collaboration, pilot evaluations, and discussions related to Canadian innovation and funding programs, including NRC IRAP.
+                <strong>Engineering proof → <a href="https://github.com/MapleSilicon/SparseFlow">GitHub</a></strong>
             </p>
             <p>
-                We're open to 1–2 pilot evaluations with teams exploring structured sparsity or compiler/runtime assessment.
+                <strong>Partnerships / early adopters → Contact</strong>
             </p>
             <p>
-                <strong>Email:</strong> <a href="mailto:info@maplesilicon.co">info@maplesilicon.co</a>
+                MapleSilicon is open to collaboration with infrastructure teams running 
+                <strong>hundreds to thousands of GPUs</strong> who want to translate efficiency gains 
+                into measurable cost reductions.
+            </p>
+            <p>
+                <strong>Email:</strong> <a href="mailto:contact@maplesilicon.com">contact@maplesilicon.com</a>
             </p>
         </div>
     </section>
@@ -1016,20 +926,11 @@
                             setTimeout(() => bullet.classList.add('visible'), index * 100);
                         });
                     }
-
-                    if (entry.target.classList.contains('principles-grid')) {
-                        const cards = entry.target.querySelectorAll('.principle-card');
-                        cards.forEach((card, index) => {
-                            setTimeout(() => card.classList.add('visible'), index * 150);
-                        });
-                    }
                 }
             });
         }, observerOptions);
 
         document.querySelectorAll('.section-header, .content-card, .emphasis-box, .company-section, .contact-info')
-            .forEach(el => observer.observe(el));
-        document.querySelectorAll('.principles-grid')
             .forEach(el => observer.observe(el));
 
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1040,7 +941,6 @@
                     const headerOffset = 80;
                     const elementPosition = target.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
                     window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                 }
             });
