@@ -638,6 +638,13 @@
             50% { background-position: 100% 50%; }
         }
 
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
         .content-card {
             max-width: 1000px;
             margin: 0 auto 4rem;
@@ -781,7 +788,7 @@
             font-weight: 500;
         }
 
-        /* Data Flow Animation */
+        /* Data Flow Animation - FIXED */
         .data-path {
             background: var(--secondary-dark);
             padding: 2rem;
@@ -806,6 +813,7 @@
                 var(--accent-blue));
             background-size: 300% 100%;
             animation: dataFlowAnimation 3s linear infinite;
+            z-index: 1;
         }
 
         @keyframes dataFlowAnimation {
@@ -822,6 +830,9 @@
             text-align: center;
             position: relative;
             z-index: 2;
+            background: var(--secondary-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
         }
 
         /* Company Section Enhancement */
