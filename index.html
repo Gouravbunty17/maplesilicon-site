@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +9,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-dark: #0a0d14;
-            --secondary-dark: #151922;
+        /* Theme Variables */
+        :root[data-theme="dark"] {
+            --primary-bg: #0a0d14;
+            --secondary-bg: #151922;
+            --card-bg: rgba(21, 25, 34, 0.8);
             --accent-blue: #3b9eff;
             --accent-purple: #8b5cf6;
             --accent-green: #22c55e;
@@ -19,38 +21,63 @@
             --text-secondary: #9ca3af;
             --text-muted: #6b7280;
             --border-subtle: rgba(59, 158, 255, 0.15);
-            --card-bg: rgba(21, 25, 34, 0.8);
+            --network-node: rgba(59, 158, 255, 0.6);
+            --network-line: rgba(139, 92, 246, 0.3);
+            --gradient-start: rgba(59, 158, 255, 0.05);
+            --gradient-mid: rgba(139, 92, 246, 0.05);
+            --gradient-end: rgba(34, 197, 94, 0.03);
+        }
+
+        :root[data-theme="light"] {
+            --primary-bg: #ffffff;
+            --secondary-bg: #f8fafc;
+            --card-bg: rgba(248, 250, 252, 0.9);
+            --accent-blue: #2563eb;
+            --accent-purple: #7c3aed;
+            --accent-green: #16a34a;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-subtle: rgba(37, 99, 235, 0.15);
+            --network-node: rgba(37, 99, 235, 0.5);
+            --network-line: rgba(124, 58, 237, 0.25);
+            --gradient-start: rgba(37, 99, 235, 0.08);
+            --gradient-mid: rgba(124, 58, 237, 0.08);
+            --gradient-end: rgba(22, 163, 74, 0.05);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--primary-dark);
+            background: var(--primary-bg);
             color: var(--text-primary);
             line-height: 1.7;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Enhanced Background */
+        /* Enhanced Animated Background */
         .bg-pattern {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: -1;
-            background: var(--primary-dark);
+            background: var(--primary-bg);
             background-image:
-                radial-gradient(circle at 20% 30%, rgba(59, 158, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 60% 20%, rgba(34, 197, 94, 0.03) 0%, transparent 40%);
+                radial-gradient(circle at 20% 30%, var(--gradient-start) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, var(--gradient-mid) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, var(--gradient-end) 0%, transparent 40%);
             animation: backgroundPulse 8s ease-in-out infinite;
+            transition: background 0.3s ease;
         }
 
         @keyframes backgroundPulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+            50% { opacity: 0.85; }
         }
 
+        /* Network Canvas with Purple/Blue Animation */
         .network-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -59,17 +86,58 @@
             pointer-events: none;
         }
 
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .theme-toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover .theme-toggle-icon {
+            transform: rotate(20deg);
+        }
+
+        .theme-toggle-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Header with Slide Animation */
         header {
             position: fixed;
             top: 0;
             width: 100%;
             padding: 1.25rem 0;
-            background: rgba(10, 13, 20, 0.95);
+            background: var(--primary-bg);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-subtle);
             z-index: 1000;
             animation: headerSlideDown 1s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         @keyframes headerSlideDown {
@@ -92,13 +160,19 @@
             height: 45px;
             width: auto;
             transition: transform 0.3s ease;
+            filter: drop-shadow(0 2px 8px rgba(59, 158, 255, 0.3));
         }
-        .logo-img:hover { transform: scale(1.05); }
+        
+        .logo-img:hover { 
+            transform: scale(1.08) rotate(2deg);
+            filter: drop-shadow(0 4px 12px rgba(59, 158, 255, 0.5));
+        }
 
         .brand-text {
             font-weight: 600;
             font-size: 1.25rem;
             color: var(--text-primary);
+            transition: color 0.3s ease;
         }
 
         .nav-links { display: flex; gap: 2rem; list-style: none; }
@@ -124,7 +198,7 @@
         .nav-links a:hover { color: var(--text-primary); }
         .nav-links a:hover::after { width: 100%; }
 
-        /* Hero Section */
+        /* Hero Section with Enhanced Animations */
         .hero {
             padding: 10rem 2rem 4rem;
             max-width: 1200px;
@@ -134,7 +208,10 @@
             z-index: 1;
         }
 
-        .product-logo-container { margin-bottom: 2rem; animation: fadeInUp 0.8s ease-out; }
+        .product-logo-container { 
+            margin-bottom: 2rem; 
+            animation: fadeInUp 0.8s ease-out;
+        }
 
         .product-logo {
             height: 110px;
@@ -195,16 +272,23 @@
             font-family: 'IBM Plex Mono', monospace;
             font-size: 0.85rem;
             margin-top: 1rem;
-            color: #22c55e;
+            color: var(--accent-green);
             animation: pulse 2s ease-in-out infinite;
             font-weight: 600;
         }
 
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); transform: scale(1); }
-            50% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); transform: scale(1.02); }
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); 
+                transform: scale(1); 
+            }
+            50% { 
+                box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); 
+                transform: scale(1.02); 
+            }
         }
 
+        /* CTA Buttons with Enhanced Animations */
         .hero-cta-row {
             margin-top: 2rem;
             display: flex;
@@ -220,7 +304,9 @@
             font-weight: 600;
             font-size: 1rem;
             text-decoration: none;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .cta-primary {
@@ -228,18 +314,32 @@
             color: white;
         }
 
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-primary:hover::before {
+            left: 100%;
+        }
+
         .cta-secondary {
-            background: rgba(21, 25, 34, 0.45);
+            background: var(--card-bg);
             color: var(--text-primary);
-            border: 1px solid rgba(59, 158, 255, 0.25);
+            border: 1px solid var(--border-subtle);
             backdrop-filter: blur(10px);
         }
 
         .cta-primary:hover, .cta-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(59, 158, 255, 0.22);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(59, 158, 255, 0.3);
         }
 
+        /* Proof Card with Slide-in Animation */
         .hero-proof {
             max-width: 980px;
             margin: 2.5rem auto 0;
@@ -252,7 +352,18 @@
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
             padding: 1.75rem 2rem;
-            animation: fadeInUp 0.8s ease-out 0.65s both;
+            animation: slideInFromBottom 0.8s ease-out 0.65s both;
+            transition: all 0.3s ease;
+        }
+
+        .proof-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(59, 158, 255, 0.15);
+        }
+
+        @keyframes slideInFromBottom {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .proof-title {
@@ -262,6 +373,7 @@
             display: flex;
             gap: 0.75rem;
             align-items: center;
+            color: var(--text-primary);
         }
 
         .proof-grid {
@@ -271,17 +383,24 @@
         }
 
         .proof-item {
-            background: rgba(10, 13, 20, 0.35);
-            border: 1px solid rgba(59, 158, 255, 0.14);
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-subtle);
             border-radius: 10px;
             padding: 1rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .proof-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 8px 20px rgba(59, 158, 255, 0.15);
         }
 
         .proof-item strong {
             display: block;
             font-family: 'IBM Plex Mono', monospace;
             font-size: 0.95rem;
-            color: #dbeafe;
+            color: var(--accent-blue);
             margin-bottom: 0.35rem;
         }
 
@@ -296,14 +415,15 @@
             color: var(--accent-blue);
             text-decoration: none;
             border-bottom: 1px solid rgba(59, 158, 255, 0.35);
+            transition: all 0.3s ease;
         }
 
         .proof-item a:hover {
-            color: #cfe6ff;
-            border-bottom-color: rgba(207, 230, 255, 0.8);
+            color: var(--accent-purple);
+            border-bottom-color: var(--accent-purple);
         }
 
-        /* Sections */
+        /* Sections with Scroll Animations */
         section {
             padding: 5rem 2rem;
             max-width: 1200px;
@@ -319,7 +439,17 @@
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
-        .section-header.visible { opacity: 1; transform: translateY(0); }
+        .section-header.visible { 
+            opacity: 1; 
+            transform: translateY(0);
+            animation: bounceIn 0.6s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: translateY(20px); opacity: 0; }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); opacity: 1; }
+        }
 
         .section-header h2 {
             font-size: 2.5rem;
@@ -347,7 +477,16 @@
             transition: all 0.6s ease;
         }
 
-        .content-card.visible { opacity: 1; transform: translateY(0); }
+        .content-card.visible { 
+            opacity: 1; 
+            transform: translateY(0);
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 15px 40px rgba(59, 158, 255, 0.1);
+        }
 
         .content-card h3 {
             font-size: 1.5rem;
@@ -376,9 +515,13 @@
             50% { transform: translateY(-5px); }
         }
 
-        .content-card p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
-        .content-card p:last-child { margin-bottom: 0; }
+        .content-card p { 
+            color: var(--text-secondary); 
+            line-height: 1.8; 
+            margin-bottom: 1rem; 
+        }
 
+        /* Animated Bullet List */
         .bullet-list { list-style: none; padding-left: 0; margin: 1.5rem 0; }
 
         .bullet-list li {
@@ -392,7 +535,10 @@
             transition: all 0.4s ease;
         }
 
-        .bullet-list li.visible { opacity: 1; transform: translateX(0); }
+        .bullet-list li.visible { 
+            opacity: 1; 
+            transform: translateX(0);
+        }
 
         .bullet-list li::before {
             content: '';
@@ -411,6 +557,7 @@
             50% { box-shadow: 0 0 0 4px rgba(59, 158, 255, 0); }
         }
 
+        /* Principles Grid with Stagger Animation */
         .principles-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -442,9 +589,20 @@
             transition: transform 0.6s ease;
         }
 
-        .principle-card.visible { opacity: 1; transform: translateY(0); }
-        .principle-card.visible::before { transform: scaleX(1); }
-        .principle-card:hover { transform: translateY(-5px); border-color: var(--accent-blue); }
+        .principle-card.visible { 
+            opacity: 1; 
+            transform: translateY(0);
+        }
+        
+        .principle-card.visible::before { 
+            transform: scaleX(1);
+        }
+        
+        .principle-card:hover { 
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 15px 40px rgba(59, 158, 255, 0.15);
+        }
 
         .principle-icon {
             width: 56px;
@@ -478,6 +636,7 @@
             font-size: 0.95rem;
         }
 
+        /* Emphasis Box */
         .emphasis-box {
             background: rgba(139, 92, 246, 0.08);
             border: 1px solid rgba(139, 92, 246, 0.2);
@@ -489,7 +648,10 @@
             transition: all 0.6s ease;
         }
 
-        .emphasis-box.visible { opacity: 1; transform: translateY(0); }
+        .emphasis-box.visible { 
+            opacity: 1; 
+            transform: translateY(0);
+        }
 
         .emphasis-box h3 {
             font-size: 1.5rem;
@@ -501,8 +663,9 @@
             gap: 1rem;
         }
 
+        /* Company Section */
         .company-section {
-            background: var(--secondary-dark);
+            background: var(--secondary-bg);
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
             padding: 3rem;
@@ -512,13 +675,17 @@
             transition: all 0.6s ease;
         }
 
-        .company-section.visible { opacity: 1; transform: scale(1); }
+        .company-section.visible { 
+            opacity: 1; 
+            transform: scale(1);
+        }
 
         .company-logo {
             height: 80px;
             width: auto;
             margin-bottom: 2rem;
             animation: fadeIn 1s ease-out;
+            filter: drop-shadow(0 4px 12px rgba(59, 158, 255, 0.2));
         }
 
         @keyframes fadeIn {
@@ -526,7 +693,11 @@
             to { opacity: 1; }
         }
 
-        .company-section h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+        .company-section h2 { 
+            font-size: 2rem; 
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
 
         .company-section p {
             color: var(--text-secondary);
@@ -535,6 +706,7 @@
             margin: 0 auto 2rem;
         }
 
+        /* Contact Info */
         .contact-info {
             text-align: center;
             padding: 2rem;
@@ -546,7 +718,10 @@
             transition: all 0.6s ease;
         }
 
-        .contact-info.visible { opacity: 1; transform: translateY(0); }
+        .contact-info.visible { 
+            opacity: 1; 
+            transform: translateY(0);
+        }
 
         .contact-info h3 {
             font-size: 1.5rem;
@@ -572,14 +747,19 @@
             transition: all 0.3s ease;
         }
 
-        .contact-info a:hover { text-decoration: underline; color: var(--accent-purple); }
+        .contact-info a:hover { 
+            text-decoration: underline; 
+            color: var(--accent-purple);
+        }
 
+        /* Footer */
         footer {
-            background: var(--secondary-dark);
+            background: var(--secondary-bg);
             border-top: 1px solid var(--border-subtle);
             padding: 2.5rem 2rem;
             text-align: center;
             margin-top: 4rem;
+            transition: all 0.3s ease;
         }
 
         .footer-content {
@@ -607,6 +787,7 @@
 
         .footer-links a:hover { color: var(--text-primary); }
 
+        /* Responsive Design */
         @media (max-width: 968px) {
             .hero h1 { font-size: 2.5rem; }
             .hero .subtitle { font-size: 1.3rem; }
@@ -614,6 +795,7 @@
             .nav-links { display: none; }
             .proof-grid { grid-template-columns: 1fr; }
             .principles-grid { grid-template-columns: 1fr; }
+            .theme-toggle { top: 10px; right: 10px; }
         }
 
         @media (max-width: 640px) {
@@ -625,9 +807,21 @@
             .principle-icon, .card-icon { width: 40px; height: 40px; font-size: 1.25rem; }
             .proof-card { padding: 1.5rem 1.25rem; }
         }
+
+        /* Smooth Transitions for Theme Switch */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
     </style>
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <span class="theme-toggle-icon" id="themeIcon">🌙</span>
+        <span class="theme-toggle-text" id="themeText">Dark</span>
+    </button>
+
+    <!-- Network Canvas with Purple/Blue Animation -->
     <canvas class="network-canvas" id="networkCanvas"></canvas>
     <div class="bg-pattern"></div>
 
@@ -660,7 +854,7 @@
             SparseFlow v2.0 delivers up to 2× faster inference on Ampere+ GPUs using NVIDIA's native 2:4 structured sparsity — with honest, verifiable benchmarks.
         </p>
 
-        <div style="max-width: 750px; margin: 2rem auto 1.5rem; text-align: left; background: rgba(21, 25, 34, 0.6); border: 1px solid rgba(59, 158, 255, 0.2); border-radius: 10px; padding: 1.5rem;">
+        <div style="max-width: 750px; margin: 2rem auto 1.5rem; text-align: left; background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.5rem; backdrop-filter: blur(10px);">
             <ul style="list-style: none; padding: 0; margin: 0;">
                 <li style="padding: 0.5rem 0; color: var(--text-secondary); display: flex; align-items: baseline; gap: 0.75rem;">
                     <span style="color: var(--accent-green); font-weight: bold;">✅</span>
@@ -708,14 +902,17 @@
         </p>
 
         <!-- Install snippet -->
-        <div style="max-width: 600px; margin: 2.5rem auto 0; background: rgba(21, 25, 34, 0.6); border: 1px solid rgba(59, 158, 255, 0.2); border-radius: 10px; padding: 1.5rem; text-align: left; animation: fadeInUp 0.8s ease-out 0.7s both;">
+        <div style="max-width: 600px; margin: 2.5rem auto 0; background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.5rem; text-align: left; animation: fadeInUp 0.8s ease-out 0.7s both; backdrop-filter: blur(10px);">
             <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
                 <span style="font-size: 1.5rem;">🚀</span>
                 <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: var(--text-primary); font-size: 1.05rem;">Install via PyPI</span>
             </div>
-            <pre style="background: rgba(10, 13, 20, 0.6); padding: 1rem; border-radius: 6px; overflow-x: auto; margin: 0;"><code style="color: #3b9eff; font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem;">pip install sparseflow</code></pre>
+            <pre style="background: var(--secondary-bg); padding: 1rem; border-radius: 6px; overflow-x: auto; margin: 0;"><code style="color: var(--accent-blue); font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem;">pip install sparseflow</code></pre>
             <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
-                <strong>Requirements:</strong> NVIDIA Ampere / Ada / Hopper GPU • CUDA 12.x • PyTorch 2.0+
+                <strong>Requirements:</strong> NVIDIA Ampere (SM80+) or newer • RTX 30-series / A-series / Ada / Hopper • CUDA 12.x • PyTorch 2.0+
+            </p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+                Pre-Ampere GPUs (Volta, Turing, Pascal) are not supported — 2:4 sparsity requires Ampere+ hardware.
             </p>
         </div>
 
@@ -787,17 +984,28 @@
                 Installation
             </h3>
             
-            <pre style="background: rgba(10, 13, 20, 0.6); padding: 1.25rem; border-radius: 8px; overflow-x: auto; margin: 1.5rem 0;"><code style="color: #3b9eff; font-family: 'IBM Plex Mono', monospace; font-size: 1rem;">pip install sparseflow</code></pre>
+            <pre style="background: var(--secondary-bg); padding: 1.25rem; border-radius: 8px; overflow-x: auto; margin: 1.5rem 0;"><code style="color: var(--accent-blue); font-family: 'IBM Plex Mono', monospace; font-size: 1rem;">pip install sparseflow</code></pre>
             
             <p style="font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;">Requirements:</p>
             <ul class="bullet-list">
-                <li>NVIDIA GPU: Ampere (RTX 30-series, A-series) or newer (Ada, Hopper)</li>
+                <li><strong>NVIDIA GPU: Ampere (SM80+) or newer required</strong>
+                    <ul style="list-style: none; padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li style="padding: 0.25rem 0; color: var(--text-secondary);">✅ RTX 30-series (3090, 3080, 3070, etc.)</li>
+                        <li style="padding: 0.25rem 0; color: var(--text-secondary);">✅ A-series (A6000, A5000, A4000, A100)</li>
+                        <li style="padding: 0.25rem 0; color: var(--text-secondary);">✅ RTX 40-series (4090, 4080, Ada)</li>
+                        <li style="padding: 0.25rem 0; color: var(--text-secondary);">✅ H100, H200 (Hopper)</li>
+                        <li style="padding: 0.25rem 0; color: var(--text-muted);">❌ V100, T4, RTX 20-series, Pascal (not supported)</li>
+                    </ul>
+                </li>
                 <li>CUDA 12.x</li>
                 <li>PyTorch 2.0 or later</li>
             </ul>
+            <p style="margin-top: 1rem; padding: 1rem; background: rgba(139, 92, 246, 0.1); border-left: 3px solid var(--accent-purple); border-radius: 6px; font-size: 0.9rem; color: var(--text-secondary);">
+                <strong>⚠️ Important:</strong> SparseFlow requires hardware-native 2:4 Tensor Core support (Ampere SM80+). Pre-Ampere GPUs will fall back to dense execution with a runtime warning.
+            </p>
 
             <p style="font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;">Quick Example:</p>
-            <pre style="background: rgba(10, 13, 20, 0.6); padding: 1.25rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0;"><code style="color: var(--text-secondary); font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;">import torch
+            <pre style="background: var(--secondary-bg); padding: 1.25rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0;"><code style="color: var(--text-secondary); font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;">import torch
 from sparseflow import sparse_matmul
 
 # Your dense matrices
@@ -925,7 +1133,8 @@ C = sparse_matmul(A, B)  # Automatic sparse path selection</code></pre>
                 <li><strong>PyTorch integration:</strong> Drop-in replacement for dense matmul operations</li>
                 <li><strong>Automatic threshold handling:</strong> Dense fallback for M < 2048 where overhead dominates</li>
                 <li><strong>Honest benchmarking tools:</strong> Measure both effective and real-work TFLOPS</li>
-                <li><strong>Hardware support:</strong> Ampere (RTX 30-series, A-series) validated; Ada and Hopper compatible</li>
+                <li><strong>Hardware support:</strong> Ampere (RTX 30/A-series, SM80+) validated; Ada (RTX 40) and Hopper (H100/H200) compatible</li>
+                <li><strong>GPU architecture guard:</strong> Runtime detection prevents crashes on unsupported GPUs (V100, T4, RTX 20-series)</li>
             </ul>
             <p>
                 Designed for production inference workloads — not a research prototype, not a vendor-locked toolkit.
@@ -944,10 +1153,12 @@ C = sparse_matmul(A, B)  # Automatic sparse path selection</code></pre>
                 SparseFlow v2.0 is production-ready for specific workloads. The following are not yet supported:
             </p>
             <ul class="bullet-list">
+                <li><strong>GPU architecture:</strong> Requires Ampere (SM80+) or newer — Volta/Turing/Pascal not supported</li>
                 <li><strong>FP16 accumulation:</strong> Currently uses FP32 accumulation (targeting 90+ TFLOPS real work in v2.1)</li>
                 <li><strong>Arbitrary sparsity patterns:</strong> Only 2:4 structured sparsity (not unstructured or other N:M ratios)</li>
                 <li><strong>Training integration:</strong> Inference-only; no gradient support or training loop integration</li>
                 <li><strong>Automatic model pruning:</strong> Assumes pre-pruned models; no built-in pruning tools</li>
+                <li><strong>Multi-GPU / MIG:</strong> Not yet validated for multi-GPU or MIG configurations</li>
             </ul>
             <p>
                 These are roadmap items, not fundamental limitations. We ship what works and be clear about what doesn't.
@@ -1032,7 +1243,47 @@ C = sparse_matmul(A, B)  # Automatic sparse path selection</code></pre>
     </footer>
 
     <script>
-        // Network Canvas Animation
+        // Theme Toggle Function
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update button text and icon
+            const icon = document.getElementById('themeIcon');
+            const text = document.getElementById('themeText');
+            
+            if (newTheme === 'light') {
+                icon.textContent = '☀️';
+                text.textContent = 'Light';
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Dark';
+            }
+        }
+
+        // Load saved theme on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const text = document.getElementById('themeText');
+            
+            html.setAttribute('data-theme', savedTheme);
+            
+            if (savedTheme === 'light') {
+                icon.textContent = '☀️';
+                text.textContent = 'Light';
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Dark';
+            }
+        });
+
+        // Network Canvas Animation (Purple & Blue)
         const canvas = document.getElementById('networkCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -1045,17 +1296,17 @@ C = sparse_matmul(A, B)  # Automatic sparse path selection</code></pre>
         window.addEventListener('resize', resizeCanvas);
 
         const nodes = [];
-        const maxNodes = 50;
+        const maxNodes = 60;
         const connectionDistance = 150;
 
         class Node {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.radius = Math.random() * 2 + 1;
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
+                this.radius = Math.random() * 2.5 + 1;
+                this.opacity = Math.random() * 0.6 + 0.3;
             }
 
             update() {
@@ -1067,16 +1318,27 @@ C = sparse_matmul(A, B)  # Automatic sparse path selection</code></pre>
             }
 
             draw() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const nodeColor = currentTheme === 'dark' 
+                    ? `rgba(59, 158, 255, ${this.opacity})` 
+                    : `rgba(37, 99, 235, ${this.opacity * 0.8})`;
+                
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(59, 158, 255, ${this.opacity})`;
+                ctx.fillStyle = nodeColor;
                 ctx.fill();
+                
+                // Add glow effect
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = nodeColor;
             }
         }
 
         for (let i = 0; i < maxNodes; i++) nodes.push(new Node());
 
         function drawConnections() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            
             for (let i = 0; i < nodes.length; i++) {
                 for (let j = i + 1; j < nodes.length; j++) {
                     const dx = nodes[i].x - nodes[j].x;
@@ -1084,12 +1346,16 @@ C = sparse_matmul(A, B)  # Automatic sparse path selection</code></pre>
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
                     if (distance < connectionDistance) {
-                        const opacity = (1 - distance / connectionDistance) * 0.3;
+                        const opacity = (1 - distance / connectionDistance) * 0.4;
+                        const lineColor = currentTheme === 'dark'
+                            ? `rgba(139, 92, 246, ${opacity})`
+                            : `rgba(124, 58, 237, ${opacity * 0.7})`;
+                        
                         ctx.beginPath();
                         ctx.moveTo(nodes[i].x, nodes[i].y);
                         ctx.lineTo(nodes[j].x, nodes[j].y);
-                        ctx.strokeStyle = `rgba(139, 92, 246, ${opacity})`;
-                        ctx.lineWidth = 0.5;
+                        ctx.strokeStyle = lineColor;
+                        ctx.lineWidth = 1;
                         ctx.stroke();
                     }
                 }
@@ -1098,8 +1364,12 @@ C = sparse_matmul(A, B)  # Automatic sparse path selection</code></pre>
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.shadowBlur = 0; // Reset shadow for lines
             drawConnections();
-            nodes.forEach(node => { node.update(); node.draw(); });
+            nodes.forEach(node => { 
+                node.update(); 
+                node.draw(); 
+            });
             requestAnimationFrame(animate);
         }
         animate();
