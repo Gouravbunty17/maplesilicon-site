@@ -1,295 +1,334 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Maple Silicon Inc. | SparseFlow & HyperGraphify</title>
-  <meta name="description" content="Choose your path: SparseFlow for GPU sparse inference acceleration, or HyperGraphify for quantum LDPC hyper-edge transformation. Built by Maple Silicon Inc.">
+  <meta name="description" content="Choose your path: SparseFlow for GPU structured sparsity acceleration, or HyperGraphify for quantum LDPC hyper-edge → MWPM graphlike compatibility. Built by Maple Silicon Inc." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root[data-theme="dark"]{
-      --primary-bg:#0a0d14;--card-bg:rgba(21,25,34,.9);
-      --accent-blue:#3b9eff;--accent-purple:#8b5cf6;
-      --accent-orange:#f59e0b;--accent-pink:#ec4899;
-      --text-primary:#fff;--text-secondary:#9ca3af;--text-muted:#6b7280;
-      --border-subtle:rgba(59,158,255,.15);
-      --sparseflow-gradient:linear-gradient(135deg,#3b9eff,#8b5cf6);
-      --hypergraphify-gradient:linear-gradient(135deg,#f59e0b,#ec4899);
+      --bg:#0a0d14;
+      --card:rgba(21,25,34,.88);
+      --text:#fff;
+      --muted:#9ca3af;
+      --dim:#6b7280;
+      --border:rgba(255,255,255,.08);
+
+      --blue1:#3b9eff; --blue2:#8b5cf6;
+      --org1:#f59e0b;  --org2:#ec4899;
+
+      --gBlue:linear-gradient(135deg,var(--blue1),var(--blue2));
+      --gOrg: linear-gradient(135deg,var(--org1),var(--org2));
     }
     :root[data-theme="light"]{
-      --primary-bg:#fff;--card-bg:rgba(248,250,252,.95);
-      --accent-blue:#2563eb;--accent-purple:#7c3aed;
-      --accent-orange:#d97706;--accent-pink:#db2777;
-      --text-primary:#0f172a;--text-secondary:#475569;--text-muted:#64748b;
-      --border-subtle:rgba(37,99,235,.15);
-      --sparseflow-gradient:linear-gradient(135deg,#2563eb,#7c3aed);
-      --hypergraphify-gradient:linear-gradient(135deg,#d97706,#db2777);
+      --bg:#ffffff;
+      --card:rgba(248,250,252,.95);
+      --text:#0f172a;
+      --muted:#475569;
+      --dim:#64748b;
+      --border:rgba(15,23,42,.10);
+
+      --blue1:#2563eb; --blue2:#7c3aed;
+      --org1:#d97706;  --org2:#db2777;
+
+      --gBlue:linear-gradient(135deg,var(--blue1),var(--blue2));
+      --gOrg: linear-gradient(135deg,var(--org1),var(--org2));
     }
-    *{margin:0;padding:0;box-sizing:border-box}
+
+    *{box-sizing:border-box;margin:0;padding:0}
     body{
-      font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;
-      background:var(--primary-bg);color:var(--text-primary);
-      overflow-x:hidden;overflow-y:auto;min-height:100vh;transition:background-color .3s ease;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      overflow:hidden;
     }
-    .network-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-    .theme-toggle{
-      position:fixed;top:20px;right:20px;z-index:10000;
-      background:var(--card-bg);border:1px solid var(--border-subtle);
-      border-radius:50px;padding:.5rem 1rem;cursor:pointer;
-      display:flex;align-items:center;gap:.5rem;
-      backdrop-filter:blur(10px);box-shadow:0 4px 15px rgba(0,0,0,.1);
-      transition:all .3s ease;
+
+    .network-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+    header{
+      position:fixed;left:0;top:0;right:0;
+      padding:18px 22px;
+      background:var(--card);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--border);
+      z-index:50;
+      display:flex;align-items:center;justify-content:center;
     }
-    .theme-toggle:hover{transform:translateY(-2px)}
-    .theme-toggle-icon{font-size:1.2rem}
-    .theme-toggle-text{font-size:.9rem;font-weight:500;color:var(--text-primary)}
-    .main-header{
-      position:fixed;top:0;width:100%;padding:1.5rem 2rem;
-      background:var(--card-bg);backdrop-filter:blur(20px);
-      border-bottom:1px solid var(--border-subtle);z-index:100;
-      display:flex;justify-content:center;align-items:center;
-      animation:slideDown .8s ease-out;
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{
+      height:44px;width:auto;
+      filter:drop-shadow(0 8px 22px rgba(59,158,255,.22));
+      transition:transform .25s ease,filter .25s ease;
     }
-    @keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
-    .company-branding{display:flex;align-items:center;gap:1rem}
-    .company-logo{height:50px;width:auto;filter:drop-shadow(0 4px 12px rgba(59,158,255,.3));transition:transform .3s ease}
-    .company-logo:hover{transform:scale(1.05)}
-    .company-name{font-size:1.5rem;font-weight:700;color:var(--text-primary);letter-spacing:-.02em}
-    .company-tagline{font-size:.85rem;color:var(--text-secondary);font-weight:400;margin-top:.25rem}
-    .split-container{
-      display:flex;flex-direction:row;width:100%;min-height:100vh;
-      padding-top:100px;position:relative;z-index:1;
+    .brand img:hover{transform:scale(1.04);filter:drop-shadow(0 10px 28px rgba(59,158,255,.30))}
+    .brand .t1{font-weight:750;letter-spacing:-.02em;font-size:18px;line-height:1}
+    .brand .t2{font-size:12px;color:var(--muted);margin-top:4px}
+
+    .toggle{
+      position:fixed;top:14px;right:14px;z-index:60;
+      background:var(--card);border:1px solid var(--border);
+      border-radius:999px;padding:8px 12px;
+      display:flex;align-items:center;gap:8px;
+      cursor:pointer;user-select:none;
+      transition:transform .2s ease;
     }
-    .product-half{
-      flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;
-      padding:2rem 1.5rem;position:relative;overflow:hidden;
-      transition:all .5s cubic-bezier(.4,0,.2,1);
+    .toggle:hover{transform:translateY(-1px)}
+    .toggle span{font-weight:600;font-size:12px;color:var(--text)}
+    .toggle .ico{font-size:16px}
+
+    .split{
+      position:relative;z-index:1;
+      display:flex;flex-direction:row;
+      height:100vh;width:100%;
+      padding-top:86px;
     }
-    .product-half::before{
-      content:'';position:absolute;top:0;left:0;width:100%;height:100%;
-      background:var(--primary-bg);opacity:.95;transition:opacity .3s ease;z-index:-1;
+    .half{
+      flex:1;display:flex;align-items:center;justify-content:center;
+      padding:28px 18px;position:relative;overflow:hidden;
+      cursor:pointer;
+      transition:flex .45s cubic-bezier(.4,0,.2,1);
     }
-    .product-half:hover::before{opacity:.85}
-    .product-half:hover{flex:1.15}
-    .sparseflow-side{
-      border-right:1px solid var(--border-subtle);
-      background:radial-gradient(circle at 30% 50%, rgba(59,158,255,.08) 0%, transparent 60%);
+    .half:hover{flex:1.15}
+    .half::before{
+      content:"";position:absolute;inset:0;
+      background:var(--bg);
+      opacity:.93;transition:opacity .25s ease;
+      z-index:-1;
     }
-    .hypergraphify-side{
-      background:radial-gradient(circle at 70% 50%, rgba(245,158,11,.08) 0%, transparent 60%);
+    .half:hover::before{opacity:.86}
+
+    .left{
+      border-right:1px solid var(--border);
+      background:radial-gradient(circle at 30% 50%, rgba(59,158,255,.10), transparent 60%);
     }
-    .product-content{max-width:550px;text-align:center;animation:fadeInUp 1s ease-out}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-    .product-logo{height:100px;width:auto;margin-bottom:1.5rem;transition:all .4s ease;animation:logoFloat 3s ease-in-out infinite}
-    @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    .product-half:hover .product-logo{transform:scale(1.1) translateY(-8px)}
-    .sparseflow-side .product-logo{filter:drop-shadow(0 0 30px rgba(59,158,255,.5))}
-    .hypergraphify-side .product-logo{filter:drop-shadow(0 0 30px rgba(245,158,11,.5))}
-    .product-name{font-size:2.2rem;font-weight:700;margin-bottom:.75rem;letter-spacing:-.02em}
-    .sparseflow-side .product-name{background:var(--sparseflow-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .hypergraphify-side .product-name{background:var(--hypergraphify-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .product-tagline{font-size:1.1rem;color:var(--text-secondary);margin-bottom:1.25rem;font-weight:400}
-    .product-description{font-size:.95rem;color:var(--text-muted);line-height:1.6;margin-bottom:2rem}
-    .feature-badges{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;margin-bottom:2rem}
-    .feature-badge{
-      background:var(--card-bg);backdrop-filter:blur(10px);border:1px solid var(--border-subtle);
-      padding:.4rem .9rem;border-radius:50px;font-size:.8rem;font-weight:500;color:var(--text-secondary);
-      transition:all .3s ease;
+    .right{
+      background:radial-gradient(circle at 70% 50%, rgba(245,158,11,.10), transparent 60%);
     }
-    .feature-badge:hover{transform:translateY(-2px);color:var(--text-primary)}
-    .cta-button{
-      display:inline-flex;align-items:center;gap:.75rem;padding:.9rem 2.25rem;border-radius:50px;
-      font-weight:600;font-size:1rem;text-decoration:none;color:#fff;transition:all .3s ease;
-      position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.2);
+
+    .card{
+      width:min(560px,92%);
+      text-align:center;
+      animation:up .75s ease-out both;
     }
-    .sparseflow-side .cta-button{background:var(--sparseflow-gradient)}
-    .hypergraphify-side .cta-button{background:var(--hypergraphify-gradient)}
-    .cta-button::before{
-      content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-      background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+    @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+
+    .pLogo{
+      height:96px;width:auto;margin-bottom:18px;
+      animation:float 3s ease-in-out infinite;
+      transition:transform .25s ease,filter .25s ease;
+    }
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .left .pLogo{filter:drop-shadow(0 0 26px rgba(59,158,255,.45))}
+    .right .pLogo{filter:drop-shadow(0 0 26px rgba(245,158,11,.45))}
+    .half:hover .pLogo{transform:translateY(-10px) scale(1.08)}
+
+    .badge{
+      display:inline-block;
+      font-family:"IBM Plex Mono",monospace;
+      font-size:12px;font-weight:700;
+      padding:6px 12px;border-radius:999px;
+      border:1px solid transparent;margin-bottom:12px;
+    }
+    .left .badge{color:var(--blue1);background:rgba(59,158,255,.12);border-color:rgba(59,158,255,.26)}
+    .right .badge{color:var(--org1); background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.26)}
+
+    .name{
+      font-size:42px;font-weight:800;letter-spacing:-.03em;line-height:1.05;
+      margin-bottom:10px;
+    }
+    .left .name{background:var(--gBlue);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .right .name{background:var(--gOrg); -webkit-background-clip:text;background-clip:text;color:transparent}
+
+    .tag{font-size:17px;color:var(--muted);margin-bottom:14px}
+    .desc{font-size:14px;color:var(--dim);line-height:1.6;margin:0 auto 18px;max-width:520px}
+
+    .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:20px}
+    .chip{
+      font-size:12px;font-weight:600;color:var(--muted);
+      padding:7px 12px;border-radius:999px;
+      background:var(--card);border:1px solid var(--border);
+      backdrop-filter:blur(10px);
+      transition:transform .2s ease,color .2s ease,border-color .2s ease;
+    }
+    .chip:hover{transform:translateY(-2px);color:var(--text)}
+    .left .chip:hover{border-color:rgba(59,158,255,.35)}
+    .right .chip:hover{border-color:rgba(245,158,11,.35)}
+
+    .cta{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:14px 26px;border-radius:999px;
+      font-weight:800;font-size:14px;text-decoration:none;color:white;
+      box-shadow:0 18px 50px rgba(0,0,0,.28);
+      transition:transform .2s ease,box-shadow .2s ease;
+      position:relative;overflow:hidden;
+    }
+    .left .cta{background:var(--gBlue)}
+    .right .cta{background:var(--gOrg)}
+    .cta:hover{transform:translateY(-2px);box-shadow:0 24px 70px rgba(0,0,0,.34)}
+    .cta::before{
+      content:"";position:absolute;top:0;left:-100%;height:100%;width:100%;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
       transition:left .5s ease;
     }
-    .cta-button:hover::before{left:100%}
-    .cta-button:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,0,0,.3)}
-    .cta-arrow{font-size:1.1rem;transition:transform .3s ease}
-    .cta-button:hover .cta-arrow{transform:translateX(5px)}
-    .status-badge{
-      display:inline-block;padding:.35rem .9rem;border-radius:50px;
-      font-family:'IBM Plex Mono',monospace;font-size:.75rem;font-weight:600;margin-bottom:1.25rem;
-      animation:pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.9}}
-    .sparseflow-side .status-badge{background:rgba(59,158,255,.15);border:1px solid rgba(59,158,255,.3);color:var(--accent-blue)}
-    .hypergraphify-side .status-badge{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:var(--accent-orange)}
+    .cta:hover::before{left:100%}
+    .arrow{transition:transform .2s ease}
+    .cta:hover .arrow{transform:translateX(4px)}
+
     .divider{
       position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      width:2px;height:60%;background:linear-gradient(to bottom,transparent,var(--accent-blue),var(--accent-purple),transparent);
-      z-index:10;animation:dividerGlow 3s ease-in-out infinite;
+      width:2px;height:62%;
+      background:linear-gradient(to bottom,transparent,rgba(59,158,255,.55),rgba(245,158,11,.55),transparent);
+      z-index:5;opacity:.55;
     }
-    @keyframes dividerGlow{0%,100%{opacity:.3}50%{opacity:.7}}
-    .divider-badge{
-      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      background:var(--card-bg);backdrop-filter:blur(10px);border:1px solid var(--border-subtle);
-      border-radius:50%;width:70px;height:70px;display:flex;align-items:center;justify-content:center;
-      font-size:1.8rem;box-shadow:0 10px 30px rgba(0,0,0,.2);
+    .bolt{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:64px;height:64px;border-radius:999px;
+      background:var(--card);border:1px solid var(--border);
+      display:grid;place-items:center;
+      font-size:22px;
+      box-shadow:0 14px 45px rgba(0,0,0,.26);
+      z-index:6;
     }
-    @media (max-width:768px){
-      .main-header{padding:1rem}.company-logo{height:40px}.company-name{font-size:1.2rem}.company-tagline{font-size:.75rem}
-      .split-container{padding-top:80px}.product-half{padding:1.5rem 1rem}.product-logo{height:70px}
-      .product-name{font-size:1.6rem}.product-tagline{font-size:.95rem}.product-description{font-size:.85rem}
-      .feature-badge{font-size:.7rem;padding:.35rem .7rem}.cta-button{padding:.75rem 1.75rem;font-size:.9rem}
-      .theme-toggle{top:10px;right:10px;padding:.4rem .8rem}.divider-badge{width:50px;height:50px;font-size:1.3rem}
+
+    @media (max-width: 900px){
+      .name{font-size:34px}
     }
-    @media (max-width:480px){
-      .product-name{font-size:1.4rem}.product-tagline{font-size:.85rem}.product-description{font-size:.8rem;margin-bottom:1.5rem}
-      .feature-badges{margin-bottom:1.5rem}.cta-button{padding:.7rem 1.5rem;font-size:.85rem}
+    @media (max-width: 720px){
+      body{overflow:auto}
+      .split{min-height:100vh;height:auto;flex-direction:column;overflow:hidden}
+      .half{min-height:520px}
+      .divider,.bolt{display:none}
     }
   </style>
 </head>
 <body>
-  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-    <span class="theme-toggle-icon" id="themeIcon">🌙</span>
-    <span class="theme-toggle-text" id="themeText">Dark</span>
+  <button class="toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+    <span class="ico" id="tIco">🌙</span><span id="tTxt">Dark</span>
   </button>
 
-  <canvas class="network-canvas" id="networkCanvas"></canvas>
+  <canvas class="network-canvas" id="network"></canvas>
 
-  <header class="main-header">
-    <div class="company-branding">
-      <img src="maplesilicon.png" alt="Maple Silicon Inc." class="company-logo" onerror="this.style.display='none'">
+  <header>
+    <div class="brand">
+      <img src="maplesilicon.png" alt="Maple Silicon Inc.">
       <div>
-        <div class="company-name">Maple Silicon Inc.</div>
-        <div class="company-tagline">Advanced AI Infrastructure Solutions</div>
+        <div class="t1">Maple Silicon Inc.</div>
+        <div class="t2">Advanced AI Infrastructure Solutions</div>
       </div>
     </div>
   </header>
 
-  <div class="split-container">
-    <div class="product-half sparseflow-side">
-      <div class="product-content">
-        <img src="sparseflow.png" alt="SparseFlow" class="product-logo" onerror="this.style.display='none'">
-        <div class="status-badge">v2.0 LIVE</div>
-        <h1 class="product-name">SparseFlow</h1>
-        <p class="product-tagline">GPU Sparse Inference Acceleration</p>
-        <p class="product-description">
-          Production-ready Python package delivering up to 2× faster GPU inference using NVIDIA's native 2:4 structured sparsity.
-        </p>
-        <div class="feature-badges">
-          <span class="feature-badge">⚡ 2× Speedup</span>
-          <span class="feature-badge">🎯 Ampere+</span>
-          <span class="feature-badge">📦 PyPI</span>
-          <span class="feature-badge">🔓 Open Source</span>
+  <div class="split">
+    <div class="half left" onclick="location.href='sparseflow/'">
+      <div class="card">
+        <img class="pLogo" src="sparseflow.png" alt="SparseFlow">
+        <div class="badge">v2.0 LIVE</div>
+        <div class="name">SparseFlow</div>
+        <div class="tag">GPU Sparse Inference Acceleration</div>
+        <div class="desc">Production-ready systems work targeting NVIDIA’s native 2:4 structured sparsity — correctness-first, reproducible benchmarking, and hardware-aware execution.</div>
+        <div class="chips">
+          <div class="chip">⚡ 2× Speedup</div>
+          <div class="chip">🎯 Ampere+</div>
+          <div class="chip">📦 PyPI</div>
+          <div class="chip">🔓 Open Source</div>
         </div>
-        <a href="sparseflow/" class="cta-button">Explore SparseFlow <span class="cta-arrow">→</span></a>
+        <a class="cta" href="sparseflow/"><span>Explore SparseFlow</span><span class="arrow">→</span></a>
       </div>
     </div>
 
-    <div class="divider"><div class="divider-badge">⚡</div></div>
+    <div class="divider"></div>
+    <div class="bolt">⚡</div>
 
-    <div class="product-half hypergraphify-side">
-      <div class="product-content">
-        <img src="hypergraphify.png" alt="HyperGraphify" class="product-logo" onerror="this.style.display='none'">
-        <div class="status-badge">IN PROGRESS</div>
-        <h1 class="product-name">HyperGraphify</h1>
-        <p class="product-tagline">Hyper-edge → graphlike MWPM compatibility</p>
-        <p class="product-description">
-          Transforms non-graphlike detector error models (hyper-edges) into MWPM-compatible chains for decoders like PyMatching.
-        </p>
-        <div class="feature-badges">
-          <span class="feature-badge">🧠 Quantum LDPC</span>
-          <span class="feature-badge">🔁 Stim → MWPM</span>
-          <span class="feature-badge">🧩 Hyper-edge Handling</span>
-          <span class="feature-badge">⚙️ PyMatching Ready</span>
+    <div class="half right" onclick="location.href='hypergraphify/'">
+      <div class="card">
+        <img class="pLogo" src="hypergraphify.png" alt="HyperGraphify">
+        <div class="badge">IN PROGRESS</div>
+        <div class="name">HyperGraphify</div>
+        <div class="tag">Hyper-edge → graphlike MWPM compatibility</div>
+        <div class="desc">Transform non-graphlike detector error models (hyper-edges) into MWPM-compatible graphlike chains — enabling decoders like PyMatching to work on quantum LDPC error structures.</div>
+        <div class="chips">
+          <div class="chip">🧠 Quantum LDPC</div>
+          <div class="chip">🔁 Stim → MWPM</div>
+          <div class="chip">🧩 Hyper-edge Handling</div>
+          <div class="chip">⚙️ PyMatching Ready</div>
         </div>
-        <a href="hypergraphify/" class="cta-button">Explore HyperGraphify <span class="cta-arrow">→</span></a>
+        <a class="cta" href="hypergraphify/"><span>Explore HyperGraphify</span><span class="arrow">→</span></a>
       </div>
     </div>
   </div>
 
   <script>
     function toggleTheme(){
-      const html=document.documentElement;
-      const current=html.getAttribute('data-theme');
-      const next=current==='dark'?'light':'dark';
-      html.setAttribute('data-theme',next);
-      localStorage.setItem('theme',next);
-      const icon=document.getElementById('themeIcon');
-      const text=document.getElementById('themeText');
-      if(next==='light'){icon.textContent='☀️';text.textContent='Light';}
-      else{icon.textContent='🌙';text.textContent='Dark';}
+      const root=document.documentElement;
+      const cur=root.getAttribute("data-theme")||"dark";
+      const next=cur==="dark"?"light":"dark";
+      root.setAttribute("data-theme",next);
+      localStorage.setItem("theme",next);
+      document.getElementById("tIco").textContent = next==="dark" ? "🌙" : "☀️";
+      document.getElementById("tTxt").textContent = next==="dark" ? "Dark" : "Light";
     }
+    (function initTheme(){
+      const saved=localStorage.getItem("theme")||"dark";
+      document.documentElement.setAttribute("data-theme",saved);
+      document.getElementById("tIco").textContent = saved==="dark" ? "🌙" : "☀️";
+      document.getElementById("tTxt").textContent = saved==="dark" ? "Dark" : "Light";
+    })();
 
-    window.addEventListener('DOMContentLoaded',()=>{
-      const saved=localStorage.getItem('theme')||'dark';
-      document.documentElement.setAttribute('data-theme',saved);
-      if(saved==='light'){document.getElementById('themeIcon').textContent='☀️';document.getElementById('themeText').textContent='Light';}
-    });
+    const c=document.getElementById("network"),x=c.getContext("2d");
+    function resize(){c.width=innerWidth;c.height=innerHeight}
+    addEventListener("resize",resize);resize();
 
-    const canvas=document.getElementById('networkCanvas');
-    const ctx=canvas.getContext('2d');
-    function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
-    resize();window.addEventListener('resize',resize);
+    const N=70,dist=150;
+    const nodes=[...Array(N)].map(()=>({
+      x:Math.random()*c.width,
+      y:Math.random()*c.height,
+      vx:(Math.random()-.5)*.55,
+      vy:(Math.random()-.5)*.55,
+      r:Math.random()*2.2+1,
+      o:Math.random()*.55+.18
+    }));
 
-    const nodes=[],maxNodes=80,connectionDistance=150;
-
-    class Node{
-      constructor(){
-        this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;
-        this.vx=(Math.random()-.5)*.5;this.vy=(Math.random()-.5)*.5;
-        this.radius=Math.random()*2.5+1;this.opacity=Math.random()*.6+.3;
-        this.isLeft=this.x<canvas.width/2;
-      }
-      update(){
-        this.x+=this.vx;this.y+=this.vy;
-        if(this.x<0||this.x>canvas.width)this.vx*=-1;
-        if(this.y<0||this.y>canvas.height)this.vy*=-1;
-        this.isLeft=this.x<canvas.width/2;
-      }
-      draw(){
-        const theme=document.documentElement.getAttribute('data-theme');
-        const color=this.isLeft
-          ? (theme==='dark' ? `rgba(59,158,255,${this.opacity})` : `rgba(37,99,235,${this.opacity*.8})`)
-          : (theme==='dark' ? `rgba(245,158,11,${this.opacity})` : `rgba(217,119,6,${this.opacity*.8})`);
-        ctx.beginPath();ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
-        ctx.fillStyle=color;ctx.fill();
-        ctx.shadowBlur=10;ctx.shadowColor=color;
-      }
-    }
-
-    for(let i=0;i<maxNodes;i++)nodes.push(new Node());
-
-    function connections(){
-      const theme=document.documentElement.getAttribute('data-theme');
+    function step(){
+      x.clearRect(0,0,c.width,c.height);
+      const theme=document.documentElement.getAttribute("data-theme")||"dark";
       for(let i=0;i<nodes.length;i++){
+        const a=nodes[i];
+        a.x+=a.vx;a.y+=a.vy;
+        if(a.x<0||a.x>c.width) a.vx*=-1;
+        if(a.y<0||a.y>c.height) a.vy*=-1;
+
         for(let j=i+1;j<nodes.length;j++){
-          const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;
-          const d=Math.sqrt(dx*dx+dy*dy);
-          if(d<connectionDistance){
-            const opacity=(1-d/connectionDistance)*.4;
-            const midX=(nodes[i].x+nodes[j].x)/2;
-            const left=midX<canvas.width/2;
-            const line=left
-              ? (theme==='dark' ? `rgba(139,92,246,${opacity})` : `rgba(124,58,237,${opacity*.7})`)
-              : (theme==='dark' ? `rgba(236,72,153,${opacity})` : `rgba(219,39,119,${opacity*.7})`);
-            ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);
-            ctx.strokeStyle=line;ctx.lineWidth=1;ctx.stroke();
+          const b=nodes[j];
+          const dx=a.x-b.x,dy=a.y-b.y;
+          const d=Math.hypot(dx,dy);
+          if(d<dist){
+            const op=(1-d/dist)*0.22;
+            const midX=(a.x+b.x)/2;
+            const isLeft=midX < c.width/2;
+
+            const line=isLeft
+              ? (theme==="dark" ? `rgba(139,92,246,${op})` : `rgba(124,58,237,${op})`)
+              : (theme==="dark" ? `rgba(236,72,153,${op})` : `rgba(219,39,119,${op})`);
+
+            x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);
+            x.strokeStyle=line;x.lineWidth=1;x.stroke();
           }
         }
-      }
-    }
 
-    function animate(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.shadowBlur=0;
-      connections();
-      nodes.forEach(n=>{n.update();n.draw()});
-      requestAnimationFrame(animate);
+        const isLeft = a.x < c.width/2;
+        const dot=isLeft
+          ? (theme==="dark" ? `rgba(59,158,255,${a.o})` : `rgba(37,99,235,${a.o})`)
+          : (theme==="dark" ? `rgba(245,158,11,${a.o})` : `rgba(217,119,6,${a.o})`);
+        x.beginPath();x.arc(a.x,a.y,a.r,0,Math.PI*2);
+        x.fillStyle=dot;x.fill();
+      }
+      requestAnimationFrame(step);
     }
-    animate();
+    step();
   </script>
 </body>
 </html>
-git remote -v
-git branch --show-current

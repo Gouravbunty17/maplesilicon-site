@@ -1,14 +1,748 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>HyperGraphify | Maple Silicon Inc.</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>HyperGraphify™ - Hyper-edge → graphlike MWPM compatibility | Maple Silicon Inc.</title>
+  <meta name="description" content="Transforms non-graphlike detector error models (hyper-edges) into MWPM-compatible graphlike chains for decoders like PyMatching. Built by Maple Silicon Inc.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary-dark:#0a0d14;
+      --secondary-dark:#151922;
+
+      --accent-orange:#f59e0b;
+      --accent-pink:#ec4899;
+
+      --text-primary:#ffffff;
+      --text-secondary:#9ca3af;
+      --text-muted:#6b7280;
+
+      --border-subtle:rgba(245,158,11,.16);
+      --card-bg:rgba(21,25,34,.8);
+
+      --grad:linear-gradient(135deg,var(--accent-orange),var(--accent-pink));
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:var(--primary-dark);
+      color:var(--text-primary);
+      line-height:1.7;
+      overflow-x:hidden;
+    }
+
+    .network-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+    .bg-pattern{
+      position:fixed;inset:0;z-index:-1;
+      background:var(--primary-dark);
+      background-image:
+        radial-gradient(circle at 18% 30%, rgba(245,158,11,.045) 0%, transparent 52%),
+        radial-gradient(circle at 82% 70%, rgba(236,72,153,.040) 0%, transparent 55%);
+    }
+
+    header{
+      position:fixed;top:0;left:0;right:0;
+      padding:1.25rem 0;
+      background:rgba(10,13,20,.95);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border-subtle);
+      z-index:1000;
+      animation:slideDown .6s ease-out;
+    }
+    @keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+
+    nav{
+      max-width:1200px;margin:0 auto;padding:0 2rem;
+      display:flex;justify-content:space-between;align-items:center;
+    }
+
+    .logo-container{display:flex;align-items:center;gap:1rem}
+    .logo-container a{display:flex;align-items:center;gap:1rem;text-decoration:none}
+    .logo-img{
+      height:45px;width:auto;
+      filter:drop-shadow(0 10px 28px rgba(245,158,11,.24));
+      transition:transform .25s ease, filter .25s ease;
+    }
+    .logo-img:hover{
+      transform:scale(1.05);
+      filter:drop-shadow(0 12px 34px rgba(245,158,11,.32));
+    }
+    .brand-text{font-weight:650;font-size:1.25rem;color:var(--text-primary)}
+
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{
+      color:var(--text-secondary);
+      text-decoration:none;
+      font-weight:500;font-size:.95rem;
+      transition:color .25s ease;
+      position:relative;
+    }
+    .nav-links a::after{
+      content:"";position:absolute;left:0;bottom:-5px;height:2px;width:0;
+      background:var(--accent-orange);
+      transition:width .25s ease;
+    }
+    .nav-links a:hover{color:var(--text-primary)}
+    .nav-links a:hover::after{width:100%}
+
+    .hero{
+      padding:10rem 2rem 4rem;
+      max-width:1200px;margin:0 auto;
+      text-align:center;position:relative;z-index:1;
+    }
+
+    .product-logo-container{margin-bottom:2rem;animation:fadeInUp .8s ease-out}
+    .product-logo{
+      height:110px;width:auto;
+      filter:drop-shadow(0 0 26px rgba(245,158,11,.35)) brightness(1.12);
+      transition:transform .3s ease, filter .3s ease;
+      animation:logoFloat 3s ease-in-out infinite;
+    }
+    .product-logo:hover{
+      transform:scale(1.08);
+      filter:drop-shadow(0 0 40px rgba(245,158,11,.52)) brightness(1.18);
+    }
+    @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+    .hero h1{
+      font-size:4rem;font-weight:800;letter-spacing:-.03em;
+      margin-bottom:1rem;
+      background:var(--grad);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .trademark{font-size:.7em;vertical-align:super}
+
+    .subtitle{
+      font-size:1.75rem;color:var(--text-secondary);
+      font-weight:420;margin-bottom:2rem;
+      animation:fadeInUp .8s ease-out .2s both;
+    }
+    .intro{
+      font-size:1.1rem;color:var(--text-secondary);
+      max-width:900px;margin:0 auto 1.2rem;
+      line-height:1.85;
+      animation:fadeInUp .8s ease-out .35s both;
+    }
+    .proofline{
+      font-size:1.05rem;font-weight:600;
+      color:var(--accent-orange);
+      max-width:950px;margin:0 auto .75rem;
+      animation:fadeInUp .8s ease-out .5s both;
+    }
+    .proofline a{
+      color:var(--accent-orange);
+      text-decoration:none;
+      border-bottom:1px solid rgba(245,158,11,.35);
+      transition:all .2s ease;
+    }
+    .proofline a:hover{
+      color:#ffe7c2;
+      border-bottom-color:rgba(255,231,194,.85);
+    }
+
+    .status-badge{
+      display:inline-block;
+      padding:.5rem 1.25rem;
+      background:rgba(245,158,11,.12);
+      border:1px solid rgba(245,158,11,.30);
+      border-radius:6px;
+      font-family:"IBM Plex Mono",monospace;
+      font-size:.85rem;margin-top:1rem;
+      color:var(--accent-orange);
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.42);transform:scale(1)}
+      50%{box-shadow:0 0 0 8px rgba(245,158,11,0);transform:scale(1.02)}
+    }
+
+    .hero-cta-row{
+      margin-top:1.75rem;
+      display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;
+    }
+    .cta-primary,.cta-secondary,.cta-home{
+      display:inline-block;
+      padding:.875rem 2rem;
+      border-radius:8px;
+      font-weight:700;font-size:1rem;text-decoration:none;
+      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .cta-primary{background:var(--grad);color:white}
+    .cta-secondary{
+      background:rgba(21,25,34,.45);
+      color:var(--text-primary);
+      border:1px solid rgba(245,158,11,.22);
+      backdrop-filter:blur(10px);
+    }
+    .cta-home{
+      background:rgba(21,25,34,.25);
+      color:var(--text-primary);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(10px);
+    }
+    .cta-primary:hover,.cta-secondary:hover,.cta-home:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 25px rgba(245,158,11,.22);
+    }
+
+    .hero-proof{
+      max-width:980px;margin:2.5rem auto 0;text-align:left;
+    }
+    .proof-card{
+      background:var(--card-bg);
+      backdrop-filter:blur(10px);
+      border:1px solid var(--border-subtle);
+      border-radius:12px;
+      padding:1.75rem 2rem;
+      animation:fadeInUp .8s ease-out .65s both;
+    }
+    .proof-title{
+      font-size:1.15rem;font-weight:650;margin-bottom:1rem;
+      display:flex;gap:.75rem;align-items:center;
+    }
+    .proof-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:1rem;
+    }
+    .proof-item{
+      background:rgba(10,13,20,.35);
+      border:1px solid rgba(245,158,11,.14);
+      border-radius:10px;
+      padding:1rem 1rem;
+    }
+    .proof-item strong{
+      display:block;
+      font-family:"IBM Plex Mono",monospace;
+      font-size:.95rem;
+      color:#ffedd5;
+      margin-bottom:.35rem;
+    }
+    .proof-item span{display:block;color:var(--text-secondary);font-size:.95rem;line-height:1.6}
+
+    section{
+      padding:5rem 2rem;
+      max-width:1200px;margin:0 auto;
+      position:relative;z-index:1;
+    }
+
+    .section-header{
+      margin-bottom:3rem;
+      opacity:0;transform:translateY(20px);
+      transition:opacity .6s ease, transform .6s ease;
+    }
+    .section-header.visible{opacity:1;transform:translateY(0)}
+    .section-header h2{
+      font-size:2.5rem;font-weight:800;letter-spacing:-.03em;
+      margin-bottom:1rem;color:var(--text-primary);
+    }
+    .section-header p{font-size:1.1rem;color:var(--text-secondary);max-width:860px}
+
+    .content-card{
+      background:var(--card-bg);
+      backdrop-filter:blur(10px);
+      border:1px solid var(--border-subtle);
+      border-radius:12px;
+      padding:2.5rem;
+      margin-bottom:2rem;
+      opacity:0;transform:translateY(20px);
+      transition:all .6s ease;
+    }
+    .content-card.visible{opacity:1;transform:translateY(0)}
+    .content-card h3{
+      font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;
+      display:flex;gap:1rem;align-items:center;
+    }
+
+    .card-icon{
+      width:48px;height:48px;
+      display:flex;align-items:center;justify-content:center;
+      background:var(--grad);
+      border-radius:10px;
+      font-size:1.5rem;
+      animation:iconFloat 3s ease-in-out infinite;
+    }
+    @keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+    .content-card p{color:var(--text-secondary);line-height:1.85;margin-bottom:1rem}
+    .content-card p:last-child{margin-bottom:0}
+
+    .bullet-list{list-style:none;padding-left:0;margin:1.5rem 0}
+    .bullet-list li{
+      padding:.75rem 0;padding-left:1.75rem;position:relative;
+      color:var(--text-secondary);line-height:1.75;
+      opacity:0;transform:translateX(-10px);
+      transition:all .4s ease;
+    }
+    .bullet-list li.visible{opacity:1;transform:translateX(0)}
+    .bullet-list li::before{
+      content:"";position:absolute;left:0;top:1.1rem;
+      width:8px;height:8px;border-radius:50%;
+      background:var(--accent-orange);
+      animation:bulletPulse 2s ease-in-out infinite;
+    }
+    @keyframes bulletPulse{
+      0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.70)}
+      50%{box-shadow:0 0 0 4px rgba(245,158,11,0)}
+    }
+
+    .principles-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);
+      gap:1.5rem;margin-top:2rem;
+    }
+    .principle-card{
+      background:var(--card-bg);
+      backdrop-filter:blur(10px);
+      border:1px solid var(--border-subtle);
+      border-radius:12px;
+      padding:2rem;
+      opacity:0;transform:translateY(30px);
+      transition:all .5s ease;
+      position:relative;overflow:hidden;
+    }
+    .principle-card::before{
+      content:"";position:absolute;top:0;left:0;height:3px;width:100%;
+      background:var(--grad);
+      transform:scaleX(0);transform-origin:left;
+      transition:transform .6s ease;
+    }
+    .principle-card.visible{opacity:1;transform:translateY(0)}
+    .principle-card.visible::before{transform:scaleX(1)}
+    .principle-card:hover{transform:translateY(-5px);border-color:rgba(245,158,11,.40)}
+
+    .principle-icon{
+      width:56px;height:56px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      background:var(--grad);
+      font-size:1.75rem;margin-bottom:1.25rem;
+      animation:iconRotate 4s ease-in-out infinite;
+    }
+    @keyframes iconRotate{
+      0%,100%{transform:rotate(0) scale(1)}
+      25%{transform:rotate(-5deg) scale(1.05)}
+      75%{transform:rotate(5deg) scale(1.05)}
+    }
+    .principle-card h4{font-size:1.1rem;font-weight:750;margin-bottom:.75rem}
+    .principle-card p{color:var(--text-secondary);line-height:1.75;font-size:.95rem}
+
+    .emphasis-box{
+      background:rgba(245,158,11,.07);
+      border:1px solid rgba(245,158,11,.18);
+      border-radius:12px;
+      padding:2rem;margin:2rem 0;
+      opacity:0;transform:translateY(20px);
+      transition:all .6s ease;
+    }
+    .emphasis-box.visible{opacity:1;transform:translateY(0)}
+
+    .company-section{
+      background:var(--secondary-dark);
+      border:1px solid var(--border-subtle);
+      border-radius:12px;
+      padding:3rem;text-align:center;
+      opacity:0;transform:scale(.95);
+      transition:all .6s ease;
+    }
+    .company-section.visible{opacity:1;transform:scale(1)}
+    .company-logo{
+      height:80px;width:auto;margin-bottom:2rem;
+      filter:drop-shadow(0 10px 28px rgba(245,158,11,.18));
+    }
+    .company-section h2{font-size:2rem;margin-bottom:1.5rem}
+    .company-section p{color:var(--text-secondary);line-height:1.85;max-width:760px;margin:0 auto 1.25rem}
+
+    .contact-info{
+      text-align:center;
+      padding:2rem;
+      background:var(--card-bg);
+      border:1px solid var(--border-subtle);
+      border-radius:12px;
+      opacity:0;transform:translateY(20px);
+      transition:all .6s ease;
+    }
+    .contact-info.visible{opacity:1;transform:translateY(0)}
+    .contact-info h3{
+      font-size:1.5rem;margin-bottom:1rem;
+      display:flex;align-items:center;justify-content:center;gap:1rem;
+    }
+    .contact-info p{color:var(--text-secondary);margin-bottom:1.25rem;line-height:1.85}
+    .contact-info a{
+      color:var(--accent-orange);
+      text-decoration:none;font-weight:650;font-size:1.1rem;
+      transition:all .25s ease;
+    }
+    .contact-info a:hover{color:#ffd8a8;text-decoration:underline}
+
+    footer{
+      background:var(--secondary-dark);
+      border-top:1px solid var(--border-subtle);
+      padding:2.5rem 2rem;
+      text-align:center;margin-top:4rem;
+    }
+    .footer-content{max-width:1200px;margin:0 auto;color:var(--text-muted);font-size:.9rem}
+    .footer-links{margin-top:1rem;display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
+    .footer-links a{color:var(--text-secondary);text-decoration:none;transition:color .25s ease}
+    .footer-links a:hover{color:var(--text-primary)}
+
+    @media (max-width:968px){
+      .hero h1{font-size:3rem}
+      .subtitle{font-size:1.4rem}
+      .section-header h2{font-size:2rem}
+      .nav-links{display:none}
+      .proof-grid{grid-template-columns:1fr}
+      .principles-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      .hero h1{font-size:2.25rem}
+      .subtitle{font-size:1.2rem}
+      section{padding:3rem 1.5rem}
+      .content-card{padding:1.75rem}
+      .principle-icon,.card-icon{width:40px;height:40px;font-size:1.25rem}
+      .product-logo{height:70px}
+      .proof-card{padding:1.5rem 1.25rem}
+    }
+  </style>
 </head>
-<body style="background:#0a0d14;color:#fff;font-family:Inter,system-ui,sans-serif;padding:2rem;">
-  <h1>HyperGraphify</h1>
-  <p>Hyper-edge → graphlike MWPM compatibility</p>
-  <p>Placeholder. Replace with the full HyperGraphify page.</p>
-  <p><a href="/" style="color:#f59e0b;text-decoration:none;">← Back to Home</a></p>
+<body>
+  <canvas class="network-canvas" id="networkCanvas"></canvas>
+  <div class="bg-pattern"></div>
+
+  <header>
+    <nav>
+      <div class="logo-container">
+        <a href="../">
+          <img src="../maplesilicon.png" alt="Maple Silicon" class="logo-img">
+          <span class="brand-text">HyperGraphify</span>
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="../">Home</a></li>
+        <li><a href="#status">Status</a></li>
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#scope">Scope</a></li>
+        <li><a href="#roadmap">Next Steps</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="product-logo-container">
+      <img src="../hypergraphify.png" alt="HyperGraphify" class="product-logo">
+    </div>
+
+    <h1>HyperGraphify<span class="trademark">™</span></h1>
+    <p class="subtitle">Hyper-edge → graphlike event transformation for MWPM-compatible decoding</p>
+
+    <p class="intro">
+      Many quantum LDPC and modern detector error models include <strong>non-graphlike events</strong> where a single fault flips <strong>3+ detectors</strong> (hyper-edges).
+      Standard Minimum Weight Perfect Matching (MWPM) decoders expect <strong>graphlike</strong> events (1–2 detector flips), which breaks direct compatibility.
+    </p>
+
+    <p class="intro">
+      HyperGraphify converts hyper-edges into <strong>graphlike chains</strong> while preserving decoding intent — enabling MWPM decoders (e.g., PyMatching) to run on models that would otherwise require specialized hypergraph decoders.
+    </p>
+
+    <p class="proofline">
+      Goal: keep your workflow MWPM-friendly without pretending hyper-edges don’t exist.
+      <a href="../">See SparseFlow + HyperGraphify landing</a>
+    </p>
+
+    <div class="status-badge">IN DEVELOPMENT</div>
+
+    <div class="hero-cta-row">
+      <a class="cta-home" href="../">← Back to Home</a>
+      <a class="cta-primary" href="#" onclick="alert('Add your HyperGraphify GitHub URL here.'); return false;">View on GitHub</a>
+      <a class="cta-secondary" href="#how">How it works</a>
+    </div>
+
+    <div class="hero-proof">
+      <div class="proof-card">
+        <div class="proof-title">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;background:var(--grad);font-size:1.1rem;">🧩</span>
+          What it enables (at a glance)
+        </div>
+        <div class="proof-grid">
+          <div class="proof-item">
+            <strong>Input</strong>
+            <span>Hyper-edges (3+ detector events) in DEM / decoder graphs</span>
+          </div>
+          <div class="proof-item">
+            <strong>Output</strong>
+            <span>Graphlike edges/chains (pairwise structure) for MWPM pipelines</span>
+          </div>
+          <div class="proof-item">
+            <strong>Target</strong>
+            <span>MWPM decoders like PyMatching + existing graph tooling</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="status">
+    <div class="section-header">
+      <h2>Current Status</h2>
+      <p>Tooling build-out + correctness constraints</p>
+    </div>
+
+    <div class="content-card">
+      <h3><div class="card-icon">🧪</div>Active Implementation</h3>
+      <p style="font-size:1.15rem;font-weight:600;color:var(--text-primary);margin-bottom:1.2rem;">
+        HyperGraphify is being built as a correctness-first transformation layer: convert hyper-edges into graphlike structures without silently changing the decoding problem.
+      </p>
+      <ul class="bullet-list">
+        <li>Define safe decomposition rules for common hyper-edge patterns</li>
+        <li>Make transformation explicit + inspectable (you can see what changed)</li>
+        <li>Keep MWPM compatibility as the deliverable, not “pretty graphs”</li>
+        <li>Design for integration into Stim-style workflows and PyMatching pipelines</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="problem">
+    <div class="section-header">
+      <h2>The Problem</h2>
+      <p>Hyper-edges break MWPM assumptions</p>
+    </div>
+
+    <div class="content-card">
+      <h3><div class="card-icon">⚠️</div>Non-graphlike detector events</h3>
+      <p>
+        MWPM decoders operate on graphs where each error corresponds to an edge connecting two detection events (or a boundary). But real circuits can yield faults that flip three or more detectors simultaneously — these are hyper-edges.
+      </p>
+      <p>
+        If you feed hyper-edges into a graph-only pipeline, you either lose information, incorrectly approximate, or fail at construction time. That’s where HyperGraphify sits: a bridge between hypergraph reality and MWPM tooling.
+      </p>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="section-header">
+      <h2>How it works</h2>
+      <p>Transform hyper-edges into MWPM-friendly chains</p>
+    </div>
+
+    <div class="content-card">
+      <h3><div class="card-icon">🔁</div>Decomposition pipeline</h3>
+      <p>
+        At a high level, HyperGraphify takes a hyper-edge event (d1, d2, d3, …) and produces a set of graphlike edges that represent a consistent chain structure.
+      </p>
+      <ul class="bullet-list">
+        <li><strong>Parse:</strong> identify non-graphlike events (k ≥ 3 detectors)</li>
+        <li><strong>Select anchors:</strong> choose chain endpoints using deterministic rules</li>
+        <li><strong>Build chain:</strong> replace k-edge with k−1 pairwise edges (graphlike)</li>
+        <li><strong>Weighting:</strong> distribute weights so MWPM cost remains meaningful</li>
+        <li><strong>Emit:</strong> export as graphlike edge list compatible with MWPM tooling</li>
+      </ul>
+      <p>
+        The key is not just “splitting” — it’s keeping the transformation defensible and inspectable, so you can trust what MWPM is optimizing.
+      </p>
+    </div>
+
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="principle-icon">🔍</div>
+        <h4>Inspectable transforms</h4>
+        <p>You should be able to audit: which hyper-edge became which chain — no black box “magic”.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🧠</div>
+        <h4>Decoder-oriented</h4>
+        <p>The output is designed for MWPM (graphlike events), not for visualization aesthetics.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">⚖️</div>
+        <h4>Cost-aware weighting</h4>
+        <p>Weights are handled carefully so MWPM doesn’t optimize a distorted objective.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🧱</div>
+        <h4>Safe defaults</h4>
+        <p>When a transform is not safe/confident, it should fail loudly or fall back — not hallucinate edges.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="scope">
+    <div class="section-header">
+      <h2>Technical Scope</h2>
+      <p>What HyperGraphify targets first</p>
+    </div>
+
+    <div class="content-card">
+      <h3><div class="card-icon">🧰</div>Initial targets</h3>
+      <ul class="bullet-list">
+        <li>Hyper-edge detection in detector error models / event lists</li>
+        <li>Graphlike conversion for common k-edge patterns</li>
+        <li>Export formats tailored for MWPM tooling (edge lists / pairing graphs)</li>
+        <li>Deterministic transformations for reproducibility</li>
+        <li>Integration-ready structure for Stim → decode pipelines</li>
+      </ul>
+    </div>
+
+    <div class="emphasis-box">
+      <h3><div class="card-icon">📋</div>Honest limits (for now)</h3>
+      <ul class="bullet-list">
+        <li>Not claiming universal optimality across all hypergraph decoding regimes</li>
+        <li>Some transforms may require domain-specific choices (code family, circuit structure)</li>
+        <li>Weight handling needs careful validation against ground truth simulations</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="section-header">
+      <h2>Next Steps</h2>
+      <p>What you should expect next</p>
+    </div>
+
+    <div class="content-card">
+      <h3><div class="card-icon">🗺️</div>Roadmap</h3>
+      <ul class="bullet-list">
+        <li>Implement baseline hyper-edge → chain rules for common structures</li>
+        <li>Add validation harness: compare against known-decoder outcomes on small circuits</li>
+        <li>Export adapters for common MWPM interfaces (PyMatching-friendly)</li>
+        <li>Add “explain mode”: per-event transform trace (what changed and why)</li>
+        <li>Document safe usage boundaries and failure modes</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="company-section">
+      <img src="../maplesilicon.png" alt="Maple Silicon Inc." class="company-logo">
+      <h2>About Maple Silicon Inc.</h2>
+      <p>
+        Maple Silicon Inc. builds systems-level infrastructure for high-performance compute — spanning GPU optimization (SparseFlow™) and specialized tooling for emerging technical stacks like quantum error correction workflows.
+      </p>
+      <p>
+        HyperGraphify™ is focused on practical compatibility: bringing MWPM decoding to error models that contain hyper-edges.
+      </p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-info">
+      <h3><div class="card-icon">💬</div>Contact</h3>
+      <p>
+        Interested in quantum LDPC decoding workflows, MWPM integration, or a pilot evaluation? Reach out.
+      </p>
+      <p><strong>Email:</strong> <a href="mailto:info@maplesilicon.co">info@maplesilicon.co</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 Maple Silicon Inc. All rights reserved.</p>
+      <p>HyperGraphify™ is a trademark of Maple Silicon Inc.</p>
+      <div class="footer-links">
+        <a href="../">Home</a>
+        <a href="#" onclick="alert('Add your HyperGraphify GitHub URL here.'); return false;">GitHub</a>
+        <a href="mailto:info@maplesilicon.co">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Orange/pink network background
+    const canvas=document.getElementById("networkCanvas");
+    const ctx=canvas.getContext("2d");
+    function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+    addEventListener("resize",resize);resize();
+
+    const nodes=[],maxNodes=55,connectionDistance=160;
+
+    class Node{
+      constructor(){
+        this.x=Math.random()*canvas.width;
+        this.y=Math.random()*canvas.height;
+        this.vx=(Math.random()-.5)*.55;
+        this.vy=(Math.random()-.5)*.55;
+        this.r=Math.random()*2+1;
+        this.o=Math.random()*.55+.18;
+      }
+      update(){
+        this.x+=this.vx; this.y+=this.vy;
+        if(this.x<0||this.x>canvas.width) this.vx*=-1;
+        if(this.y<0||this.y>canvas.height) this.vy*=-1;
+      }
+      draw(){
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+        ctx.fillStyle=`rgba(245,158,11,${this.o})`;
+        ctx.fill();
+      }
+    }
+    for(let i=0;i<maxNodes;i++) nodes.push(new Node());
+
+    function links(){
+      for(let i=0;i<nodes.length;i++){
+        for(let j=i+1;j<nodes.length;j++){
+          const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y;
+          const d=Math.hypot(dx,dy);
+          if(d<connectionDistance){
+            const op=(1-d/connectionDistance)*0.22;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x,nodes[i].y);
+            ctx.lineTo(nodes[j].x,nodes[j].y);
+            ctx.strokeStyle=`rgba(236,72,153,${op})`;
+            ctx.lineWidth=0.8;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      links();
+      nodes.forEach(n=>{n.update();n.draw();});
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Reveal animations
+    const observerOptions={threshold:0.1, rootMargin:"0px 0px -50px 0px"};
+    const observer=new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add("visible");
+
+          if(entry.target.classList.contains("content-card") ||
+             entry.target.classList.contains("emphasis-box")){
+            const bullets=entry.target.querySelectorAll(".bullet-list li");
+            bullets.forEach((b,i)=>setTimeout(()=>b.classList.add("visible"), i*90));
+          }
+          if(entry.target.classList.contains("principles-grid")){
+            const cards=entry.target.querySelectorAll(".principle-card");
+            cards.forEach((c,i)=>setTimeout(()=>c.classList.add("visible"), i*140));
+          }
+        }
+      });
+    },observerOptions);
+
+    document.querySelectorAll(".section-header,.content-card,.emphasis-box,.company-section,.contact-info").forEach(el=>observer.observe(el));
+    document.querySelectorAll(".principles-grid").forEach(el=>observer.observe(el));
+
+    // Smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener("click", (e)=>{
+        const id=a.getAttribute("href");
+        const t=document.querySelector(id);
+        if(!t) return;
+        e.preventDefault();
+        const headerOffset=80;
+        const pos=t.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+        window.scrollTo({top:pos, behavior:"smooth"});
+      });
+    });
+  </script>
 </body>
 </html>
