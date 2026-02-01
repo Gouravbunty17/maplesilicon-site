@@ -1,334 +1,584 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Maple Silicon Inc. | SparseFlow & HyperGraphify</title>
-  <meta name="description" content="Choose your path: SparseFlow for GPU structured sparsity acceleration, or HyperGraphify for quantum LDPC hyper-edge → MWPM graphlike compatibility. Built by Maple Silicon Inc." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root[data-theme="dark"]{
-      --bg:#0a0d14;
-      --card:rgba(21,25,34,.88);
-      --text:#fff;
-      --muted:#9ca3af;
-      --dim:#6b7280;
-      --border:rgba(255,255,255,.08);
-
-      --blue1:#3b9eff; --blue2:#8b5cf6;
-      --org1:#f59e0b;  --org2:#ec4899;
-
-      --gBlue:linear-gradient(135deg,var(--blue1),var(--blue2));
-      --gOrg: linear-gradient(135deg,var(--org1),var(--org2));
-    }
-    :root[data-theme="light"]{
-      --bg:#ffffff;
-      --card:rgba(248,250,252,.95);
-      --text:#0f172a;
-      --muted:#475569;
-      --dim:#64748b;
-      --border:rgba(15,23,42,.10);
-
-      --blue1:#2563eb; --blue2:#7c3aed;
-      --org1:#d97706;  --org2:#db2777;
-
-      --gBlue:linear-gradient(135deg,var(--blue1),var(--blue2));
-      --gOrg: linear-gradient(135deg,var(--org1),var(--org2));
-    }
-
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      min-height:100vh;
-      overflow:hidden;
-    }
-
-    .network-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
-
-    header{
-      position:fixed;left:0;top:0;right:0;
-      padding:18px 22px;
-      background:var(--card);
-      backdrop-filter:blur(16px);
-      border-bottom:1px solid var(--border);
-      z-index:50;
-      display:flex;align-items:center;justify-content:center;
-    }
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand img{
-      height:44px;width:auto;
-      filter:drop-shadow(0 8px 22px rgba(59,158,255,.22));
-      transition:transform .25s ease,filter .25s ease;
-    }
-    .brand img:hover{transform:scale(1.04);filter:drop-shadow(0 10px 28px rgba(59,158,255,.30))}
-    .brand .t1{font-weight:750;letter-spacing:-.02em;font-size:18px;line-height:1}
-    .brand .t2{font-size:12px;color:var(--muted);margin-top:4px}
-
-    .toggle{
-      position:fixed;top:14px;right:14px;z-index:60;
-      background:var(--card);border:1px solid var(--border);
-      border-radius:999px;padding:8px 12px;
-      display:flex;align-items:center;gap:8px;
-      cursor:pointer;user-select:none;
-      transition:transform .2s ease;
-    }
-    .toggle:hover{transform:translateY(-1px)}
-    .toggle span{font-weight:600;font-size:12px;color:var(--text)}
-    .toggle .ico{font-size:16px}
-
-    .split{
-      position:relative;z-index:1;
-      display:flex;flex-direction:row;
-      height:100vh;width:100%;
-      padding-top:86px;
-    }
-    .half{
-      flex:1;display:flex;align-items:center;justify-content:center;
-      padding:28px 18px;position:relative;overflow:hidden;
-      cursor:pointer;
-      transition:flex .45s cubic-bezier(.4,0,.2,1);
-    }
-    .half:hover{flex:1.15}
-    .half::before{
-      content:"";position:absolute;inset:0;
-      background:var(--bg);
-      opacity:.93;transition:opacity .25s ease;
-      z-index:-1;
-    }
-    .half:hover::before{opacity:.86}
-
-    .left{
-      border-right:1px solid var(--border);
-      background:radial-gradient(circle at 30% 50%, rgba(59,158,255,.10), transparent 60%);
-    }
-    .right{
-      background:radial-gradient(circle at 70% 50%, rgba(245,158,11,.10), transparent 60%);
-    }
-
-    .card{
-      width:min(560px,92%);
-      text-align:center;
-      animation:up .75s ease-out both;
-    }
-    @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
-
-    .pLogo{
-      height:96px;width:auto;margin-bottom:18px;
-      animation:float 3s ease-in-out infinite;
-      transition:transform .25s ease,filter .25s ease;
-    }
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    .left .pLogo{filter:drop-shadow(0 0 26px rgba(59,158,255,.45))}
-    .right .pLogo{filter:drop-shadow(0 0 26px rgba(245,158,11,.45))}
-    .half:hover .pLogo{transform:translateY(-10px) scale(1.08)}
-
-    .badge{
-      display:inline-block;
-      font-family:"IBM Plex Mono",monospace;
-      font-size:12px;font-weight:700;
-      padding:6px 12px;border-radius:999px;
-      border:1px solid transparent;margin-bottom:12px;
-    }
-    .left .badge{color:var(--blue1);background:rgba(59,158,255,.12);border-color:rgba(59,158,255,.26)}
-    .right .badge{color:var(--org1); background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.26)}
-
-    .name{
-      font-size:42px;font-weight:800;letter-spacing:-.03em;line-height:1.05;
-      margin-bottom:10px;
-    }
-    .left .name{background:var(--gBlue);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .right .name{background:var(--gOrg); -webkit-background-clip:text;background-clip:text;color:transparent}
-
-    .tag{font-size:17px;color:var(--muted);margin-bottom:14px}
-    .desc{font-size:14px;color:var(--dim);line-height:1.6;margin:0 auto 18px;max-width:520px}
-
-    .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:20px}
-    .chip{
-      font-size:12px;font-weight:600;color:var(--muted);
-      padding:7px 12px;border-radius:999px;
-      background:var(--card);border:1px solid var(--border);
-      backdrop-filter:blur(10px);
-      transition:transform .2s ease,color .2s ease,border-color .2s ease;
-    }
-    .chip:hover{transform:translateY(-2px);color:var(--text)}
-    .left .chip:hover{border-color:rgba(59,158,255,.35)}
-    .right .chip:hover{border-color:rgba(245,158,11,.35)}
-
-    .cta{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:14px 26px;border-radius:999px;
-      font-weight:800;font-size:14px;text-decoration:none;color:white;
-      box-shadow:0 18px 50px rgba(0,0,0,.28);
-      transition:transform .2s ease,box-shadow .2s ease;
-      position:relative;overflow:hidden;
-    }
-    .left .cta{background:var(--gBlue)}
-    .right .cta{background:var(--gOrg)}
-    .cta:hover{transform:translateY(-2px);box-shadow:0 24px 70px rgba(0,0,0,.34)}
-    .cta::before{
-      content:"";position:absolute;top:0;left:-100%;height:100%;width:100%;
-      background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
-      transition:left .5s ease;
-    }
-    .cta:hover::before{left:100%}
-    .arrow{transition:transform .2s ease}
-    .cta:hover .arrow{transform:translateX(4px)}
-
-    .divider{
-      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      width:2px;height:62%;
-      background:linear-gradient(to bottom,transparent,rgba(59,158,255,.55),rgba(245,158,11,.55),transparent);
-      z-index:5;opacity:.55;
-    }
-    .bolt{
-      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      width:64px;height:64px;border-radius:999px;
-      background:var(--card);border:1px solid var(--border);
-      display:grid;place-items:center;
-      font-size:22px;
-      box-shadow:0 14px 45px rgba(0,0,0,.26);
-      z-index:6;
-    }
-
-    @media (max-width: 900px){
-      .name{font-size:34px}
-    }
-    @media (max-width: 720px){
-      body{overflow:auto}
-      .split{min-height:100vh;height:auto;flex-direction:column;overflow:hidden}
-      .half{min-height:520px}
-      .divider,.bolt{display:none}
-    }
-  </style>
-</head>
-<body>
-  <button class="toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-    <span class="ico" id="tIco">🌙</span><span id="tTxt">Dark</span>
-  </button>
-
-  <canvas class="network-canvas" id="network"></canvas>
-
-  <header>
-    <div class="brand">
-      <img src="maplesilicon.png" alt="Maple Silicon Inc.">
-      <div>
-        <div class="t1">Maple Silicon Inc.</div>
-        <div class="t2">Advanced AI Infrastructure Solutions</div>
-      </div>
-    </div>
-  </header>
-
-  <div class="split">
-    <div class="half left" onclick="location.href='sparseflow/'">
-      <div class="card">
-        <img class="pLogo" src="sparseflow.png" alt="SparseFlow">
-        <div class="badge">v2.0 LIVE</div>
-        <div class="name">SparseFlow</div>
-        <div class="tag">GPU Sparse Inference Acceleration</div>
-        <div class="desc">Production-ready systems work targeting NVIDIA’s native 2:4 structured sparsity — correctness-first, reproducible benchmarking, and hardware-aware execution.</div>
-        <div class="chips">
-          <div class="chip">⚡ 2× Speedup</div>
-          <div class="chip">🎯 Ampere+</div>
-          <div class="chip">📦 PyPI</div>
-          <div class="chip">🔓 Open Source</div>
-        </div>
-        <a class="cta" href="sparseflow/"><span>Explore SparseFlow</span><span class="arrow">→</span></a>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-    <div class="bolt">⚡</div>
-
-    <div class="half right" onclick="location.href='hypergraphify/'">
-      <div class="card">
-        <img class="pLogo" src="hypergraphify.png" alt="HyperGraphify">
-        <div class="badge">IN PROGRESS</div>
-        <div class="name">HyperGraphify</div>
-        <div class="tag">Hyper-edge → graphlike MWPM compatibility</div>
-        <div class="desc">Transform non-graphlike detector error models (hyper-edges) into MWPM-compatible graphlike chains — enabling decoders like PyMatching to work on quantum LDPC error structures.</div>
-        <div class="chips">
-          <div class="chip">🧠 Quantum LDPC</div>
-          <div class="chip">🔁 Stim → MWPM</div>
-          <div class="chip">🧩 Hyper-edge Handling</div>
-          <div class="chip">⚙️ PyMatching Ready</div>
-        </div>
-        <a class="cta" href="hypergraphify/"><span>Explore HyperGraphify</span><span class="arrow">→</span></a>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function toggleTheme(){
-      const root=document.documentElement;
-      const cur=root.getAttribute("data-theme")||"dark";
-      const next=cur==="dark"?"light":"dark";
-      root.setAttribute("data-theme",next);
-      localStorage.setItem("theme",next);
-      document.getElementById("tIco").textContent = next==="dark" ? "🌙" : "☀️";
-      document.getElementById("tTxt").textContent = next==="dark" ? "Dark" : "Light";
-    }
-    (function initTheme(){
-      const saved=localStorage.getItem("theme")||"dark";
-      document.documentElement.setAttribute("data-theme",saved);
-      document.getElementById("tIco").textContent = saved==="dark" ? "🌙" : "☀️";
-      document.getElementById("tTxt").textContent = saved==="dark" ? "Dark" : "Light";
-    })();
-
-    const c=document.getElementById("network"),x=c.getContext("2d");
-    function resize(){c.width=innerWidth;c.height=innerHeight}
-    addEventListener("resize",resize);resize();
-
-    const N=70,dist=150;
-    const nodes=[...Array(N)].map(()=>({
-      x:Math.random()*c.width,
-      y:Math.random()*c.height,
-      vx:(Math.random()-.5)*.55,
-      vy:(Math.random()-.5)*.55,
-      r:Math.random()*2.2+1,
-      o:Math.random()*.55+.18
-    }));
-
-    function step(){
-      x.clearRect(0,0,c.width,c.height);
-      const theme=document.documentElement.getAttribute("data-theme")||"dark";
-      for(let i=0;i<nodes.length;i++){
-        const a=nodes[i];
-        a.x+=a.vx;a.y+=a.vy;
-        if(a.x<0||a.x>c.width) a.vx*=-1;
-        if(a.y<0||a.y>c.height) a.vy*=-1;
-
-        for(let j=i+1;j<nodes.length;j++){
-          const b=nodes[j];
-          const dx=a.x-b.x,dy=a.y-b.y;
-          const d=Math.hypot(dx,dy);
-          if(d<dist){
-            const op=(1-d/dist)*0.22;
-            const midX=(a.x+b.x)/2;
-            const isLeft=midX < c.width/2;
-
-            const line=isLeft
-              ? (theme==="dark" ? `rgba(139,92,246,${op})` : `rgba(124,58,237,${op})`)
-              : (theme==="dark" ? `rgba(236,72,153,${op})` : `rgba(219,39,119,${op})`);
-
-            x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);
-            x.strokeStyle=line;x.lineWidth=1;x.stroke();
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maple Silicon Inc. | SparseFlow & Borealis</title>
+    <meta name="description" content="SparseFlow: GPU sparse inference acceleration. Borealis: Autonomous systems for extreme environments. Built by Maple Silicon Inc.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root[data-theme="dark"] {
+            --primary-bg: #0a0d14;
+            --card-bg: rgba(21, 25, 34, 0.9);
+            --accent-blue: #3b9eff;
+            --accent-purple: #8b5cf6;
+            --accent-teal: #2dd4bf;
+            --accent-violet: #a78bfa;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-subtle: rgba(59, 158, 255, 0.15);
+            --sparseflow-gradient: linear-gradient(135deg, #3b9eff, #8b5cf6);
+            --borealis-gradient: linear-gradient(135deg, #2dd4bf, #a78bfa);
         }
 
-        const isLeft = a.x < c.width/2;
-        const dot=isLeft
-          ? (theme==="dark" ? `rgba(59,158,255,${a.o})` : `rgba(37,99,235,${a.o})`)
-          : (theme==="dark" ? `rgba(245,158,11,${a.o})` : `rgba(217,119,6,${a.o})`);
-        x.beginPath();x.arc(a.x,a.y,a.r,0,Math.PI*2);
-        x.fillStyle=dot;x.fill();
-      }
-      requestAnimationFrame(step);
-    }
-    step();
-  </script>
+        :root[data-theme="light"] {
+            --primary-bg: #ffffff;
+            --card-bg: rgba(248, 250, 252, 0.95);
+            --accent-blue: #2563eb;
+            --accent-purple: #7c3aed;
+            --accent-teal: #0d9488;
+            --accent-violet: #7c3aed;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-subtle: rgba(37, 99, 235, 0.15);
+            --sparseflow-gradient: linear-gradient(135deg, #2563eb, #7c3aed);
+            --borealis-gradient: linear-gradient(135deg, #0d9488, #7c3aed);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            overflow-y: auto;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+
+        .network-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover { transform: translateY(-2px); }
+        .theme-toggle-icon { font-size: 1.2rem; }
+        .theme-toggle-text { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
+
+        .main-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .company-branding { display: flex; align-items: center; gap: 1rem; }
+
+        .company-logo {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 4px 12px rgba(59, 158, 255, 0.3));
+            transition: transform 0.3s ease;
+        }
+        .company-logo:hover { transform: scale(1.05); }
+
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+        .company-tagline {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-top: 0.25rem;
+        }
+
+        /* LEFT / RIGHT SPLIT — ALWAYS ROW */
+        .split-container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-half {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-half::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--primary-bg);
+            opacity: 0.95;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        .product-half:hover::before { opacity: 0.85; }
+        .product-half:hover { flex: 1.15; }
+
+        /* ─── SPARSEFLOW (LEFT) ─── */
+        .sparseflow-side {
+            border-right: 1px solid var(--border-subtle);
+            background: radial-gradient(circle at 30% 50%, rgba(59, 158, 255, 0.08) 0%, transparent 60%);
+        }
+        .sparseflow-side .product-logo {
+            filter: drop-shadow(0 0 30px rgba(59, 158, 255, 0.5));
+        }
+        .sparseflow-side .product-name {
+            background: var(--sparseflow-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .sparseflow-side .status-badge {
+            background: rgba(59, 158, 255, 0.15);
+            border: 1px solid rgba(59, 158, 255, 0.3);
+            color: var(--accent-blue);
+        }
+        .sparseflow-side .feature-badge:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 4px 15px rgba(59, 158, 255, 0.2);
+        }
+        .sparseflow-side .cta-button { background: var(--sparseflow-gradient); }
+
+        /* ─── BOREALIS (RIGHT) ─── */
+        .borealis-side {
+            background: radial-gradient(circle at 70% 50%, rgba(45, 212, 191, 0.07) 0%, transparent 60%);
+        }
+        .borealis-side .product-logo {
+            filter: drop-shadow(0 0 30px rgba(45, 212, 191, 0.45));
+        }
+        .borealis-side .product-name {
+            background: var(--borealis-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .borealis-side .status-badge {
+            background: rgba(45, 212, 191, 0.12);
+            border: 1px solid rgba(45, 212, 191, 0.3);
+            color: var(--accent-teal);
+        }
+        .borealis-side .feature-badge:hover {
+            border-color: var(--accent-teal);
+            box-shadow: 0 4px 15px rgba(45, 212, 191, 0.2);
+        }
+        .borealis-side .cta-button { background: var(--borealis-gradient); }
+
+        /* ─── SHARED PRODUCT STYLES ─── */
+        .product-content {
+            max-width: 550px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .product-logo {
+            height: 100px;
+            width: auto;
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .product-half:hover .product-logo { transform: scale(1.1) translateY(-8px); }
+
+        .product-name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .product-tagline {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            font-weight: 400;
+        }
+
+        .product-description {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .feature-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .feature-badge {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            padding: 0.4rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+        .feature-badge:hover {
+            transform: translateY(-2px);
+            color: var(--text-primary);
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 2.25rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        .cta-button:hover::before { left: 100%; }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        .cta-arrow {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+        .cta-button:hover .cta-arrow { transform: translateX(5px); }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        /* ─── CENTER DIVIDER ─── */
+        .divider {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 2px;
+            height: 60%;
+            background: linear-gradient(to bottom, transparent, var(--accent-blue), var(--accent-teal), transparent);
+            z-index: 10;
+            animation: dividerGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes dividerGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        .divider-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .main-header { padding: 1rem; }
+            .company-logo { height: 40px; }
+            .company-name { font-size: 1.2rem; }
+            .company-tagline { font-size: 0.75rem; }
+            .split-container { padding-top: 80px; }
+            .product-half { padding: 1.5rem 1rem; }
+            .product-logo { height: 70px; }
+            .product-name { font-size: 1.6rem; }
+            .product-tagline { font-size: 0.95rem; }
+            .product-description { font-size: 0.85rem; }
+            .feature-badges { gap: 0.5rem; }
+            .feature-badge { font-size: 0.7rem; padding: 0.35rem 0.7rem; }
+            .cta-button { padding: 0.75rem 1.75rem; font-size: 0.9rem; }
+            .theme-toggle { top: 10px; right: 10px; padding: 0.4rem 0.8rem; }
+            .divider-badge { width: 50px; height: 50px; font-size: 1.3rem; }
+        }
+
+        @media (max-width: 480px) {
+            .product-name { font-size: 1.4rem; }
+            .product-tagline { font-size: 0.85rem; }
+            .product-description { font-size: 0.8rem; margin-bottom: 1.5rem; }
+            .feature-badges { margin-bottom: 1.5rem; }
+            .cta-button { padding: 0.7rem 1.5rem; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <span class="theme-toggle-icon" id="themeIcon">🌙</span>
+        <span class="theme-toggle-text" id="themeText">Dark</span>
+    </button>
+
+    <canvas class="network-canvas" id="networkCanvas"></canvas>
+
+    <header class="main-header">
+        <div class="company-branding">
+            <img src="maplesilicon.png" alt="Maple Silicon Inc." class="company-logo">
+            <div>
+                <div class="company-name">Maple Silicon Inc.</div>
+                <div class="company-tagline">Advanced AI Infrastructure Solutions</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="split-container">
+
+        <!-- LEFT: SparseFlow -->
+        <div class="product-half sparseflow-side">
+            <div class="product-content">
+                <img src="sparseflow.png" alt="SparseFlow" class="product-logo">
+                <div class="status-badge">v2.0 LIVE</div>
+                <h1 class="product-name">SparseFlow</h1>
+                <p class="product-tagline">GPU Sparse Inference Acceleration</p>
+                <p class="product-description">
+                    Production-ready Python package delivering up to 2× faster GPU inference using NVIDIA's native 2:4 structured sparsity.
+                </p>
+                <div class="feature-badges">
+                    <span class="feature-badge">⚡ 2× Speedup</span>
+                    <span class="feature-badge">🎯 Ampere+</span>
+                    <span class="feature-badge">📦 PyPI</span>
+                    <span class="feature-badge">🔓 Open Source</span>
+                </div>
+                <a href="sparseflow/" class="cta-button">
+                    Explore SparseFlow
+                    <span class="cta-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- CENTER DIVIDER -->
+        <div class="divider">
+            <div class="divider-badge">⚡</div>
+        </div>
+
+        <!-- RIGHT: Borealis -->
+        <div class="product-half borealis-side">
+            <div class="product-content">
+                <img src="borealis.png" alt="Borealis" class="product-logo">
+                <div class="status-badge">IN PROGRESS</div>
+                <h1 class="product-name">Borealis</h1>
+                <p class="product-tagline">Autonomous Systems for Extreme Environments</p>
+                <p class="product-description">
+                    Autonomous software enabling drones and unmanned systems to operate reliably in remote, harsh, and low-connectivity regions.
+                </p>
+                <div class="feature-badges">
+                    <span class="feature-badge">🧭 Autonomous Navigation</span>
+                    <span class="feature-badge">👁️ Situational Awareness</span>
+                    <span class="feature-badge">❄️ Extreme-Environment Ready</span>
+                    <span class="feature-badge">🌐 Low-Connectivity Operation</span>
+                </div>
+                <a href="borealis/" class="cta-button">
+                    Explore Borealis
+                    <span class="cta-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ─── THEME TOGGLE ───
+        function toggleTheme() {
+            const html = document.documentElement;
+            const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            document.getElementById('themeIcon').textContent = next === 'light' ? '☀️' : '🌙';
+            document.getElementById('themeText').textContent = next === 'light' ? 'Light' : 'Dark';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+            document.getElementById('themeIcon').textContent = saved === 'light' ? '☀️' : '🌙';
+            document.getElementById('themeText').textContent  = saved === 'light' ? 'Light' : 'Dark';
+        });
+
+        // ─── NETWORK CANVAS ───
+        const canvas = document.getElementById('networkCanvas');
+        const ctx    = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width  = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const nodes = [];
+        const MAX_NODES = 80;
+        const CONN_DIST = 150;
+
+        // Color palette per side
+        // LEFT  (SparseFlow): nodes = blue,   lines = purple
+        // RIGHT (Borealis)  : nodes = teal,   lines = violet
+        const COLORS = {
+            dark: {
+                leftNode:  [59, 158, 255],   // blue
+                leftLine:  [139, 92, 246],   // purple
+                rightNode: [45, 212, 191],   // teal
+                rightLine: [167, 139, 250]   // violet
+            },
+            light: {
+                leftNode:  [37, 99, 235],
+                leftLine:  [124, 58, 237],
+                rightNode: [13, 148, 136],
+                rightLine: [124, 58, 237]
+            }
+        };
+
+        class Node {
+            constructor() {
+                this.x  = Math.random() * canvas.width;
+                this.y  = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.r  = Math.random() * 2.5 + 1;
+                this.a  = Math.random() * 0.6 + 0.3;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width)  this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw(palette) {
+                const c = this.x < canvas.width / 2 ? palette.leftNode : palette.rightNode;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${this.a})`;
+                ctx.shadowBlur  = 10;
+                ctx.shadowColor = `rgba(${c[0]},${c[1]},${c[2]},0.6)`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < MAX_NODES; i++) nodes.push(new Node());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.shadowBlur = 0;
+
+            const theme   = document.documentElement.getAttribute('data-theme');
+            const palette = COLORS[theme] || COLORS.dark;
+            const half    = canvas.width / 2;
+
+            // draw lines
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const d  = Math.sqrt(dx * dx + dy * dy);
+                    if (d < CONN_DIST) {
+                        const a = (1 - d / CONN_DIST) * 0.4;
+                        const c = ((nodes[i].x + nodes[j].x) / 2) < half
+                            ? palette.leftLine : palette.rightLine;
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+                        ctx.lineWidth   = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // draw nodes
+            nodes.forEach(n => { n.update(); n.draw(palette); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>
