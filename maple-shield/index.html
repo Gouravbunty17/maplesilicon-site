@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maple Shield — Edge AI for Drone Detection & Airspace Security | Maple Silicon</title>
+    <meta name="description" content="Maple Shield is Maple Silicon's edge AI platform for real-time drone detection, persistent tracking, and operator-ready airspace security.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root[data-theme="dark"] {
+            --primary-bg: #0a0d14;
+            --card-bg: rgba(21, 25, 34, 0.9);
+            --accent-teal: #2dd4bf;
+            --accent-violet: #a78bfa;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-subtle: rgba(45, 212, 191, 0.15);
+            --shield-gradient: linear-gradient(135deg, #2dd4bf, #a78bfa);
+        }
+        :root[data-theme="light"] {
+            --primary-bg: #f8fafc;
+            --card-bg: rgba(248, 250, 252, 0.95);
+            --accent-teal: #0d9488;
+            --accent-violet: #7c3aed;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-subtle: rgba(13, 148, 136, 0.15);
+            --shield-gradient: linear-gradient(135deg, #0d9488, #7c3aed);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.25rem 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-left { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .nav-logo { height: 36px; width: auto; }
+        .nav-company { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+        .nav-back {
+            font-size: 0.85rem;
+            color: var(--accent-teal);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+        .nav-back:hover { opacity: 0.7; }
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50px;
+            padding: 0.4rem 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover { transform: translateY(-1px); }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+        }
+        .hero-logo {
+            height: 140px;
+            width: auto;
+            filter: drop-shadow(0 0 40px rgba(45, 212, 191, 0.4));
+            animation: heroFloat 4s ease-in-out infinite;
+            margin-bottom: 2rem;
+        }
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(45, 212, 191, 0.12);
+            border: 1px solid rgba(45, 212, 191, 0.3);
+            color: var(--accent-teal);
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            background: var(--shield-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        .hero-tagline {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 720px;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            max-width: 780px;
+            width: 100%;
+            margin-bottom: 3rem;
+        }
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 1.75rem;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-teal);
+            box-shadow: 0 8px 30px rgba(45, 212, 191, 0.1);
+        }
+        .feature-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+        .feature-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+        .feature-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .status-section {
+            max-width: 760px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+        .status-section h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .status-section p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.75rem;
+            border-radius: 50px;
+            background: var(--shield-gradient);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+        }
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2.4rem; }
+            .hero-tagline { font-size: 1.05rem; }
+            .features { grid-template-columns: 1fr; }
+            .hero-logo { height: 100px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../" class="nav-left">
+            <img src="../maplesilicon.png" alt="Maple Silicon" class="nav-logo">
+            <span class="nav-company">Maple Silicon</span>
+        </a>
+        <div style="display:flex;align-items:center;gap:1.5rem;">
+            <a href="../" class="nav-back">← Back</a>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span id="themeIcon">🌙</span>
+                <span id="themeText">Dark</span>
+            </button>
+        </div>
+    </nav>
+    <section class="hero">
+        <img src="../borealis.png" alt="Maple Shield" class="hero-logo">
+        <div class="status-badge">IN PROGRESS</div>
+        <h1>Maple Shield</h1>
+        <p class="hero-tagline">Edge AI for drone detection, persistent tracking, and operator-ready airspace security in authorized environments.</p>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Real-Time Detection</h3>
+                <p>Edge inference pipeline for identifying airborne objects from live video and field-ready sensor feeds.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📡</div>
+                <h3>Persistent Tracking</h3>
+                <p>Multi-target tracking with stable IDs, event logging, and replayable operator evidence.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Airspace Awareness</h3>
+                <p>Operator-facing alerts, threat scoring, and restricted-zone visibility for authorized security workflows.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h3>Edge Deployment</h3>
+                <p>Built for low-latency execution on portable systems without requiring constant cloud connectivity.</p>
+            </div>
+        </div>
+        <div class="status-section">
+            <h2>Currently in Development</h2>
+            <p>Maple Shield is being built as Maple Silicon’s airspace-awareness platform for lawful detection, tracking, and operator-ready incident intelligence.</p>
+            <a href="../" class="back-btn">← Back to Maple Silicon</a>
+        </div>
+    </section>
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            document.getElementById('themeIcon').textContent = next === 'light' ? '☀️' : '🌙';
+            document.getElementById('themeText').textContent = next === 'light' ? 'Light' : 'Dark';
+        }
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+            document.getElementById('themeIcon').textContent = saved === 'light' ? '☀️' : '🌙';
+            document.getElementById('themeText').textContent = saved === 'light' ? 'Light' : 'Dark';
+        });
+    </script>
+</body>
+</html>
