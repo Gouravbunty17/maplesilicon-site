@@ -1,4 +1,4 @@
-mv sparseflow_index.html sparseflow/index.html && git add . && git commit -m "Add dark/light mode to SparseFlow page" && git push origin main --force<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -9,44 +9,44 @@ mv sparseflow_index.html sparseflow/index.html && git add . && git commit -m "Ad
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ─── DARK THEME ─── */
-        :root[data-theme="dark"] {
-            --primary-bg: #0a0d14;
-            --secondary-bg: #151922;
-            --card-bg: rgba(21, 25, 34, 0.8);
-            --accent-blue: #3b9eff;
-            --accent-purple: #8b5cf6;
-            --text-primary: #ffffff;
-            --text-secondary: #9ca3af;
-            --text-muted: #6b7280;
-            --border-subtle: rgba(59, 158, 255, 0.15);
-            --gradient: linear-gradient(135deg, #3b9eff, #8b5cf6);
-            --header-bg: rgba(10, 13, 20, 0.95);
-            --emphasis-bg: rgba(139, 92, 246, 0.08);
-            --emphasis-border: rgba(139, 92, 246, 0.2);
-            --proof-item-bg: rgba(10, 13, 20, 0.35);
-            --proof-item-border: rgba(59, 158, 255, 0.14);
-            --proof-strong-color: #dbeafe;
+        /* ─── DESIGN TOKENS (unified with site) ─── */
+        :root, [data-theme="dark"] {
+            --primary-bg:       #0a0d14;
+            --secondary-bg:     #121620;
+            --card-bg:          rgba(18, 22, 32, 0.85);
+            --accent-blue:      #3b9eff;
+            --accent-purple:    #8b5cf6;
+            --text-primary:     #f1f5f9;
+            --text-secondary:   #94a3b8;
+            --text-muted:       #64748b;
+            --border-subtle:    rgba(59, 158, 255, 0.18);
+            --border-base:      rgba(255,255,255,0.08);
+            --gradient:         linear-gradient(135deg, #3b9eff, #8b5cf6);
+            --header-bg:        rgba(10, 13, 20, 0.92);
+            --emphasis-bg:      rgba(139, 92, 246, 0.08);
+            --emphasis-border:  rgba(139, 92, 246, 0.2);
+            --proof-item-bg:    rgba(10, 13, 20, 0.35);
+            --proof-item-border:rgba(59, 158, 255, 0.14);
+            --proof-strong-color:#dbeafe;
         }
-
-        /* ─── LIGHT THEME ─── */
-        :root[data-theme="light"] {
-            --primary-bg: #f0f4f8;
-            --secondary-bg: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --accent-blue: #2563eb;
-            --accent-purple: #7c3aed;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #64748b;
-            --border-subtle: rgba(37, 99, 235, 0.15);
-            --gradient: linear-gradient(135deg, #2563eb, #7c3aed);
-            --header-bg: rgba(255, 255, 255, 0.95);
-            --emphasis-bg: rgba(124, 58, 237, 0.06);
-            --emphasis-border: rgba(124, 58, 237, 0.2);
-            --proof-item-bg: rgba(37, 99, 235, 0.04);
-            --proof-item-border: rgba(37, 99, 235, 0.14);
-            --proof-strong-color: #1e3a5f;
+        [data-theme="light"] {
+            --primary-bg:       #f8fafc;
+            --secondary-bg:     #ffffff;
+            --card-bg:          rgba(255, 255, 255, 0.92);
+            --accent-blue:      #2563eb;
+            --accent-purple:    #7c3aed;
+            --text-primary:     #0f172a;
+            --text-secondary:   #475569;
+            --text-muted:       #94a3b8;
+            --border-subtle:    rgba(37, 99, 235, 0.18);
+            --border-base:      rgba(0,0,0,0.08);
+            --gradient:         linear-gradient(135deg, #2563eb, #7c3aed);
+            --header-bg:        rgba(248, 250, 252, 0.92);
+            --emphasis-bg:      rgba(124, 58, 237, 0.06);
+            --emphasis-border:  rgba(124, 58, 237, 0.2);
+            --proof-item-bg:    rgba(37, 99, 235, 0.04);
+            --proof-item-border:rgba(37, 99, 235, 0.14);
+            --proof-strong-color:#1e3a5f;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -80,98 +80,52 @@ mv sparseflow_index.html sparseflow/index.html && git add . && git commit -m "Ad
             transition: background-color 0.3s ease;
         }
 
-        /* ─── THEME TOGGLE ─── */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 10000;
-            background: var(--card-bg);
-            border: 1px solid var(--border-subtle);
-            border-radius: 50px;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+        /* ─── THEME TOGGLE (in-nav) ─── */
+        .theme-btn {
+            width: 38px; height: 38px; border-radius: 10px;
+            border: 1px solid var(--border-base);
+            background: var(--card-bg); cursor: pointer; font-size: 1.1rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: border-color 0.2s, transform 0.2s; flex-shrink: 0;
         }
-        .theme-toggle:hover { transform: translateY(-2px); }
-        .theme-toggle-icon { font-size: 1.2rem; }
-        .theme-toggle-text { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
+        .theme-btn:hover { border-color: var(--border-subtle); transform: scale(1.08); }
 
         /* ─── HEADER ─── */
         header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.25rem 0;
-            background: var(--header-bg);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-subtle);
-            z-index: 1000;
-            animation: slideDown 0.6s ease-out;
+            position: fixed; top: 0; width: 100%;
+            background: var(--header-bg); backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-base); z-index: 1000;
             transition: background 0.3s ease;
         }
 
-        @keyframes slideDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
         nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            max-width: 1200px; margin: 0 auto;
+            padding: 0 2rem; height: 64px;
+            display: flex; justify-content: space-between; align-items: center; gap: 1.5rem;
         }
 
-        .logo-container { display: flex; align-items: center; gap: 1rem; }
+        .logo-container { display: flex; align-items: center; gap: 0.75rem; }
 
         .logo-img {
-            height: 45px;
-            width: auto;
-            filter: drop-shadow(0 8px 22px rgba(59, 158, 255, 0.22));
-            transition: transform 0.3s ease, filter 0.3s ease;
+            height: 36px; width: auto;
+            filter: drop-shadow(0 4px 12px rgba(59, 158, 255, 0.22));
+            transition: transform 0.3s ease;
         }
-        .logo-img:hover {
-            transform: scale(1.05);
-            filter: drop-shadow(0 10px 28px rgba(59, 158, 255, 0.30));
-        }
+        .logo-img:hover { transform: scale(1.05); }
 
         .brand-text {
-            font-weight: 600;
-            font-size: 1.25rem;
-            color: var(--text-primary);
-            transition: color 0.3s ease;
+            font-weight: 600; font-size: 1rem;
+            color: var(--text-primary); transition: color 0.3s ease;
         }
 
-        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
 
         .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-            position: relative;
+            padding: 0.5rem 0.875rem; border-radius: 8px;
+            color: var(--text-secondary); text-decoration: none;
+            font-weight: 500; font-size: 0.9rem; transition: color 0.2s, background 0.2s;
         }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px; left: 0;
-            width: 0; height: 2px;
-            background: var(--accent-blue);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover { color: var(--text-primary); }
-        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
 
         /* ─── HERO ─── */
         .hero {
@@ -674,10 +628,9 @@ mv sparseflow_index.html sparseflow/index.html && git add . && git commit -m "Ad
         /* ─── FOOTER ─── */
         footer {
             background: var(--secondary-bg);
-            border-top: 1px solid var(--border-subtle);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            margin-top: 4rem;
+            border-top: 1px solid var(--border-base);
+            padding: 2rem;
+            margin-top: 2rem;
             transition: background 0.3s ease;
         }
 
@@ -685,16 +638,13 @@ mv sparseflow_index.html sparseflow/index.html && git add . && git commit -m "Ad
             max-width: 1200px;
             margin: 0 auto;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             transition: color 0.3s ease;
         }
-        .footer-content p { margin-bottom: 0.5rem; }
 
         .footer-links {
-            margin-top: 1rem;
             display: flex;
-            gap: 1.5rem;
-            justify-content: center;
+            gap: 1.25rem;
             flex-wrap: wrap;
         }
 
@@ -731,18 +681,12 @@ mv sparseflow_index.html sparseflow/index.html && git add . && git commit -m "Ad
     <canvas class="network-canvas" id="networkCanvas"></canvas>
     <div class="bg-pattern"></div>
 
-    <!-- THEME TOGGLE -->
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-        <span class="theme-toggle-icon" id="themeIcon">🌙</span>
-        <span class="theme-toggle-text" id="themeText">Dark</span>
-    </button>
-
     <header>
         <nav>
             <div class="logo-container">
-                <a href="../" style="display:flex;align-items:center;gap:1rem;text-decoration:none;">
-                  <img src="../maplesilicon.png" alt="Maple Silicon" class="logo-img">
-                  <span class="brand-text">Maple Silicon Inc.</span>
+                <a href="../" style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;">
+                    <img src="../maplesilicon.png" alt="Maple Silicon" class="logo-img">
+                    <span class="brand-text">Maple Silicon Inc.</span>
                 </a>
             </div>
             <ul class="nav-links">
@@ -752,7 +696,11 @@ mv sparseflow_index.html sparseflow/index.html && git add . && git commit -m "Ad
                 <li><a href="#scope">Scope</a></li>
                 <li><a href="#roadmap">Next Steps</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="../maple-shield/">Maple Shield</a></li>
             </ul>
+            <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+                <span id="themeIcon">🌙</span>
+            </button>
         </nav>
     </header>
 
@@ -1021,14 +969,13 @@ mv sparseflow_index.html sparseflow/index.html && git add . && git commit -m "Ad
     </section>
 
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Maple Silicon Inc. All rights reserved.</p>
-            <p>SparseFlow™ is a trademark of Maple Silicon Inc.</p>
+        <div class="footer-content" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+            <span>© 2026 Maple Silicon Inc. · Caledon, Ontario, Canada · SparseFlow™ is a trademark of Maple Silicon Inc.</span>
             <div class="footer-links">
                 <a href="../">Home</a>
+                <a href="../maple-shield/">Maple Shield</a>
                 <a href="https://github.com/MapleSilicon/SparseFlow">GitHub</a>
-                <a href="https://github.com/MapleSilicon/SparseFlow/blob/main/LICENSE">License</a>
-                <a href="https://github.com/MapleSilicon">Company</a>
+                <a href="mailto:info@maplesilicon.co">Contact</a>
             </div>
         </div>
     </footer>
@@ -1036,20 +983,16 @@ mv sparseflow_index.html sparseflow/index.html && git add . && git commit -m "Ad
     <script>
         // ─── THEME TOGGLE ───
         function toggleTheme() {
-            const html = document.documentElement;
-            const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
-            document.getElementById('themeIcon').textContent = next === 'light' ? '☀️' : '🌙';
-            document.getElementById('themeText').textContent  = next === 'light' ? 'Light' : 'Dark';
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('ms-theme', next);
+            document.getElementById('themeIcon').textContent = next === 'dark' ? '🌙' : '☀️';
         }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const saved = localStorage.getItem('theme') || 'dark';
+        (function () {
+            const saved = localStorage.getItem('ms-theme') || 'dark';
             document.documentElement.setAttribute('data-theme', saved);
-            document.getElementById('themeIcon').textContent = saved === 'light' ? '☀️' : '🌙';
-            document.getElementById('themeText').textContent  = saved === 'light' ? 'Light' : 'Dark';
-        });
+            document.getElementById('themeIcon').textContent = saved === 'dark' ? '🌙' : '☀️';
+        })();
 
         // ─── NETWORK CANVAS ───
         const canvas = document.getElementById('networkCanvas');
