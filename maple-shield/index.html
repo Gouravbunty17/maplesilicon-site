@@ -415,6 +415,7 @@
                     <a href="#system">System</a>
                     <a href="#workflow">Workflow</a>
                     <a href="../sparseflow/">SparseFlow</a>
+                    <a href="mailto:info@maplesilicon.co">Contact</a>
                 </nav>
             </div>
         </div>
@@ -443,16 +444,16 @@
 
                         <div class="signal">
                             <div class="signal-card">
-                                <div class="signal-label">Positioning</div>
-                                <div class="signal-value">Edge AI for drone detection and airspace security.</div>
+                                <div class="signal-label">Detection accuracy</div>
+                                <div class="signal-value" style="color:var(--cyan)">mAP@50: 0.926 — YOLOv8n, validated on holdout dataset</div>
                             </div>
                             <div class="signal-card">
-                                <div class="signal-label">Current direction</div>
-                                <div class="signal-value">Operator-ready workflows with logging, replay, and track continuity.</div>
+                                <div class="signal-label">Edge power envelope</div>
+                                <div class="signal-value" style="color:var(--teal)">&lt;20W on NVIDIA Jetson Orin NX — man-portable, RF-silent capable</div>
                             </div>
                             <div class="signal-card">
-                                <div class="signal-label">Deployment bias</div>
-                                <div class="signal-value">Low-latency inference near the sensor, not cloud-first dependence.</div>
+                                <div class="signal-label">Technology readiness</div>
+                                <div class="signal-value">TRL 3–4 → targeting TRL 5 by Q4 2025 through field validation</div>
                             </div>
                         </div>
                     </aside>
@@ -563,19 +564,48 @@
                 <div class="cta-panel">
                     <div class="section-head" style="margin-bottom: 14px;">
                         <div>
-                            <h2>Maple Shield now looks like a product, not a placeholder.</h2>
+                            <h2>Partner with us on Maple Shield.</h2>
                         </div>
                     </div>
                     <p>
-                        This page is designed to present Maple Shield as a focused advanced platform inside Maple Silicon Inc., with enough seriousness for technical reviewers, customers, and partners to immediately understand what category it belongs to and why it matters.
+                        Maple Shield is being developed in alignment with Canadian defence priorities and IDEaS CUAS program objectives. We are actively seeking partnerships with defence agencies, research institutions, and system integrators for field validation, pilot deployments, and co-development opportunities.
                     </p>
+                    <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:26px;">
+                        <a href="mailto:info@maplesilicon.co" style="display:inline-flex;align-items:center;gap:10px;padding:15px 20px;border-radius:16px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--teal));color:#02131c;text-decoration:none;">
+                            ✉ Contact — info@maplesilicon.co
+                        </a>
+                        <a href="../" style="display:inline-flex;align-items:center;gap:10px;padding:15px 20px;border-radius:16px;font-weight:700;border:1px solid rgba(148,163,184,0.18);background:rgba(255,255,255,0.04);color:var(--text);text-decoration:none;">
+                            ← Back to Maple Silicon Inc.
+                        </a>
+                    </div>
+                    <div style="margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
+                        <div style="padding:16px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,0.03);">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Camera</div>
+                            <div style="font-weight:700;font-size:0.95rem;">FLIR Boson+ thermal — RF-silent detection</div>
+                        </div>
+                        <div style="padding:16px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,0.03);">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">C2 Protocol</div>
+                            <div style="font-weight:700;font-size:0.95rem;">STANAG 4586-compatible MQTT alert stream</div>
+                        </div>
+                        <div style="padding:16px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,0.03);">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Hardware</div>
+                            <div style="font-weight:700;font-size:0.95rem;">NVIDIA Jetson Orin NX — &lt;20W edge compute</div>
+                        </div>
+                        <div style="padding:16px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,0.03);">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Grant Program</div>
+                            <div style="font-weight:700;font-size:0.95rem;">DND IDEaS CUAS applicant — Canadian-built</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="shell">Maple Shield by Maple Silicon Inc. - edge AI for airspace awareness and operator-ready incident intelligence.</div>
+        <div class="shell" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-bottom:36px;padding-top:10px;border-top:1px solid rgba(148,163,184,0.1);">
+            <span style="color:var(--muted);font-size:0.9rem;">© 2025 Maple Silicon Inc. — Caledon, Ontario, Canada</span>
+            <a href="mailto:info@maplesilicon.co" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">info@maplesilicon.co</a>
+        </div>
     </footer>
 </body>
 </html>

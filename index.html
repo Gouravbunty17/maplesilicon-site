@@ -573,6 +573,7 @@
                     <a href="#capabilities">Capabilities</a>
                     <a href="sparseflow/">SparseFlow</a>
                     <a href="maple-shield/">Maple Shield</a>
+                    <a href="#contact">Contact</a>
                 </nav>
             </div>
         </div>
@@ -607,20 +608,20 @@
 
                     <div class="metrics">
                         <div class="metric">
-                            <div class="metric-value">2x</div>
-                            <div class="metric-label">SparseFlow target for large-matrix sparse inference acceleration</div>
+                            <div class="metric-value" style="color:var(--cyan)">1.68×</div>
+                            <div class="metric-label">Peak inference speedup — SparseFlow 2:4 sparse acceleration on RTX 4090</div>
                         </div>
                         <div class="metric">
-                            <div class="metric-value">Edge</div>
-                            <div class="metric-label">Maple Shield is designed around low-latency deployment near the sensor</div>
+                            <div class="metric-value" style="color:var(--teal)">92.6%</div>
+                            <div class="metric-label">Maple Shield mAP@50 — YOLOv8n drone detection model, validated on holdout set</div>
                         </div>
                         <div class="metric">
-                            <div class="metric-value">Offline</div>
-                            <div class="metric-label">Architectures shaped for constrained and low-connectivity environments</div>
+                            <div class="metric-value" style="color:var(--blue)">&lt;20W</div>
+                            <div class="metric-label">Target edge deployment power envelope — NVIDIA Jetson Orin NX, man-portable</div>
                         </div>
                         <div class="metric">
-                            <div class="metric-value">System</div>
-                            <div class="metric-label">Company strategy centered on integration, reliability, and measurable output</div>
+                            <div class="metric-value" style="color:var(--violet)">TRL 3→5</div>
+                            <div class="metric-label">Maple Shield technology readiness progression — concept to field-validated prototype</div>
                         </div>
                     </div>
                 </div>
@@ -721,24 +722,53 @@
             </div>
         </section>
 
-        <section class="closing">
+        <section class="closing" id="contact">
             <div class="shell">
                 <div class="closing-panel">
                     <div class="section-head" style="margin-bottom: 14px;">
                         <div>
-                            <h2>Maple Silicon Inc. is now telling a cleaner story.</h2>
+                            <h2>Work with us.</h2>
                         </div>
                     </div>
                     <p>
-                        SparseFlow represents compute efficiency. Maple Shield represents edge awareness. Together they make the company feel more deliberate, more advanced, and more aligned with serious technical buyers. This redesign keeps that structure visible without cluttering the site with filler.
+                        Maple Silicon Inc. is actively pursuing partnerships with defence agencies, system integrators, and research institutions. Whether you are evaluating CUAS solutions, exploring sparse inference for your inference stack, or looking to collaborate on field trials, we want to hear from you.
                     </p>
+                    <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:26px;">
+                        <a class="button button-primary" href="mailto:info@maplesilicon.co" style="display:inline-flex;align-items:center;gap:10px;padding:15px 20px;border-radius:16px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--teal));color:#02131d;text-decoration:none;">
+                            ✉ info@maplesilicon.co
+                        </a>
+                        <a class="button button-secondary" href="maple-shield/" style="display:inline-flex;align-items:center;gap:10px;padding:15px 20px;border-radius:16px;font-weight:700;border:1px solid rgba(148,163,184,0.18);background:rgba(255,255,255,0.04);color:var(--text);text-decoration:none;">
+                            View Maple Shield →
+                        </a>
+                    </div>
+                    <div style="margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+                        <div style="padding:18px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,0.03);">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Email</div>
+                            <div style="font-weight:700;">info@maplesilicon.co</div>
+                        </div>
+                        <div style="padding:18px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,0.03);">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Location</div>
+                            <div style="font-weight:700;">Caledon, Ontario, Canada</div>
+                        </div>
+                        <div style="padding:18px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,0.03);">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Incorporation</div>
+                            <div style="font-weight:700;">Federal Corporation — Canada</div>
+                        </div>
+                        <div style="padding:18px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,0.03);">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Focus</div>
+                            <div style="font-weight:700;">Defence AI · Edge Systems</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="shell">Maple Silicon Inc. - Advanced AI infrastructure for performance and autonomy.</div>
+        <div class="shell" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-bottom:38px;padding-top:10px;border-top:1px solid rgba(148,163,184,0.1);">
+            <span>© 2025 Maple Silicon Inc. — Caledon, Ontario, Canada. Federal Corporation.</span>
+            <a href="mailto:info@maplesilicon.co" style="color:var(--muted);text-decoration:none;">info@maplesilicon.co</a>
+        </div>
     </footer>
 </body>
 </html>
