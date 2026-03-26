@@ -140,6 +140,17 @@
         }
 
         /* ── HERO SIDE STATS ── */
+        .logo-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+        }
+        .logo-card img { width: 100%; max-width: 280px; height: auto; display: block; }
         .hero-side { display: flex; flex-direction: column; gap: 1rem; }
         .stat-card {
             background: var(--card); border: 1px solid var(--border);
@@ -284,6 +295,9 @@
             </div>
 
             <div class="hero-side">
+                <div class="logo-card reveal">
+                    <img src="maple-shield-logo-full.png" alt="Maple Shield — Protecting Airspace With Intelligence">
+                </div>
                 <div class="stat-card reveal">
                     <div class="stat-label">Detection Accuracy</div>
                     <div class="stat-value hi">mAP@50: 0.926</div>
@@ -293,11 +307,6 @@
                     <div class="stat-label">Edge Power Envelope</div>
                     <div class="stat-value">&lt;20W — NVIDIA Jetson Orin NX</div>
                     <div style="font-size:0.82rem;color:var(--muted);margin-top:0.3rem;">Man-portable, RF-silent capable</div>
-                </div>
-                <div class="stat-card reveal">
-                    <div class="stat-label">Technology Readiness</div>
-                    <div class="stat-value">TRL 3–4 → targeting TRL 5</div>
-                    <div style="font-size:0.82rem;color:var(--muted);margin-top:0.3rem;">Field validation target: Q4 2025</div>
                 </div>
                 <div class="stat-card reveal">
                     <div class="stat-label">C2 Protocol</div>
