@@ -1,507 +1,817 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maple Silicon Inc. | Edge AI & Sparse Inference Infrastructure</title>
-    <meta name="description" content="Maple Silicon Inc. builds advanced AI infrastructure: SparseFlow for sparse GPU inference and Maple Shield for edge AI drone detection and airspace awareness.">
+    <title>Maple Silicon Inc. | SparseFlow and Maple Shield</title>
+    <meta name="description" content="Maple Silicon Inc. builds advanced AI infrastructure across high-performance sparse inference and edge AI airspace awareness systems.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* ── DESIGN TOKENS ── */
-        :root, [data-theme="dark"] {
-            --bg:           #0a0d14;
-            --surface:      #121620;
-            --card:         rgba(18, 22, 32, 0.85);
-            --border:       rgba(255,255,255,0.08);
-            --border-hi:    rgba(59,158,255,0.22);
-            --text:         #f1f5f9;
-            --muted:        #94a3b8;
-            --dim:          #64748b;
-            --nav-bg:       rgba(10,13,20,0.92);
-            --shadow:       0 8px 32px rgba(0,0,0,0.4);
-            --blue:         #3b9eff;
-            --purple:       #8b5cf6;
-            --teal:         #2dd4bf;
-            --cyan:         #67e8f9;
-            --grad-sf:      linear-gradient(135deg,#3b9eff,#8b5cf6);
-            --grad-ms:      linear-gradient(135deg,#2dd4bf,#67e8f9);
-        }
-        [data-theme="light"] {
-            --bg:           #f8fafc;
-            --surface:      #ffffff;
-            --card:         rgba(255,255,255,0.92);
-            --border:       rgba(0,0,0,0.08);
-            --border-hi:    rgba(37,99,235,0.2);
-            --text:         #0f172a;
-            --muted:        #475569;
-            --dim:          #94a3b8;
-            --nav-bg:       rgba(248,250,252,0.92);
-            --shadow:       0 8px 32px rgba(0,0,0,0.08);
-            --blue:         #2563eb;
-            --purple:       #7c3aed;
-            --teal:         #0d9488;
-            --cyan:         #0891b2;
-            --grad-sf:      linear-gradient(135deg,#2563eb,#7c3aed);
-            --grad-ms:      linear-gradient(135deg,#0d9488,#0891b2);
+        :root {
+            --bg: #000000;
+            --surface: #0d0d0d;
+            --border: #1a1a1a;
+            --border-accent: rgba(168, 255, 62, 0.18);
+            --text: #f8f8f8;
+            --muted: #666666;
+            --muted-light: #999999;
+            --accent: #a8ff3e;
+            --accent-dim: rgba(168, 255, 62, 0.12);
+            --accent-ms: #00f5cc;
+            --accent-ms-dim: rgba(0, 245, 204, 0.12);
         }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg);
+            font-family: "Space Grotesk", sans-serif;
             color: var(--text);
-            line-height: 1.7;
+            background: var(--bg);
+            min-height: 100vh;
             overflow-x: hidden;
-            transition: background 0.3s ease, color 0.3s ease;
         }
 
         a { color: inherit; text-decoration: none; }
 
+        .shell {
+            width: min(1280px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
         /* ── NAV ── */
         header {
-            position: fixed; top: 0; width: 100%;
-            background: var(--nav-bg);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            transition: background 0.3s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 0;
+            transition: background 300ms ease, border-color 300ms ease;
         }
-        nav {
-            max-width: 1200px; margin: 0 auto;
-            padding: 0 2rem; height: 64px;
-            display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
-        }
-        .brand { display: flex; align-items: center; gap: 0.75rem; }
-        .brand img { height: 36px; width: auto; }
-        .brand-name { font-weight: 600; font-size: 1rem; white-space: nowrap; }
-        .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
-        .nav-links a {
-            padding: 0.5rem 0.875rem; border-radius: 8px;
-            color: var(--muted); font-size: 0.9rem; font-weight: 500;
-            transition: color 0.2s, background 0.2s;
-        }
-        .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.06); }
-        .theme-btn {
-            width: 38px; height: 38px; border-radius: 10px;
-            border: 1px solid var(--border); background: var(--card);
-            cursor: pointer; font-size: 1.1rem;
-            display: flex; align-items: center; justify-content: center;
-            transition: border-color 0.2s, transform 0.2s;
-            flex-shrink: 0;
-        }
-        .theme-btn:hover { border-color: var(--border-hi); transform: scale(1.08); }
 
-        /* ── LAYOUT ── */
-        .shell { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .brand-name {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            position: relative;
+            color: var(--muted);
+            font-size: 0.88rem;
+            font-weight: 400;
+            transition: color 200ms ease;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            right: 50%;
+            height: 1px;
+            background: var(--accent);
+            transition: left 200ms ease, right 200ms ease;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { left: 0; right: 0; }
 
         /* ── HERO ── */
         .hero {
-            padding: 9rem 2rem 5rem;
-            max-width: 1200px; margin: 0 auto;
-            text-align: center;
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
         }
+
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0.0) 100%),
+                linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 20%, transparent 75%, rgba(0,0,0,0.9) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding-top: 80px;
+        }
+
         .eyebrow {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.45rem 1rem; border-radius: 999px;
-            border: 1px solid var(--border-hi);
-            background: rgba(59,158,255,0.07);
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
-            color: var(--blue); margin-bottom: 1.75rem;
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 28px;
         }
-        .eyebrow::before {
-            content: ''; width: 7px; height: 7px; border-radius: 50%;
-            background: var(--blue); box-shadow: 0 0 0 4px rgba(59,158,255,0.15);
+
+        h1 {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.8rem, 6vw, 5.5rem);
+            line-height: 0.96;
+            letter-spacing: -0.04em;
+            max-width: 900px;
+            margin-bottom: 28px;
         }
-        .hero h1 {
-            font-size: clamp(2.4rem, 5.5vw, 4rem);
-            font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;
-            max-width: 820px; margin: 0 auto 1.5rem;
-            transition: color 0.3s;
+
+        .hero-sub {
+            color: var(--muted-light);
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.7;
+            max-width: 560px;
+            margin-bottom: 44px;
         }
-        .hero-lead {
-            font-size: 1.1rem; color: var(--muted); max-width: 680px;
-            margin: 0 auto 2.5rem; line-height: 1.8;
-            transition: color 0.3s;
-        }
+
         .hero-actions {
-            display: flex; gap: 0.875rem; justify-content: center; flex-wrap: wrap;
-            margin-bottom: 3.5rem;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
         }
+
         .btn {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.8rem 1.6rem; border-radius: 10px;
-            font-weight: 600; font-size: 0.95rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer; border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border-radius: 4px;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+            cursor: pointer;
         }
+
         .btn:hover { transform: translateY(-2px); }
-        .btn-primary {
-            background: var(--grad-sf); color: #fff;
-            box-shadow: 0 6px 20px rgba(59,158,255,0.25);
+
+        .btn-solid {
+            background: var(--accent);
+            color: #000;
         }
-        .btn-secondary {
-            background: var(--card); color: var(--text);
+
+        .btn-solid:hover {
+            box-shadow: 0 8px 24px rgba(168, 255, 62, 0.3);
+        }
+
+        .btn-ghost {
             border: 1px solid var(--border);
+            color: var(--muted-light);
+            background: transparent;
         }
 
-        /* ── METRICS ── */
-        .metrics {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
-            margin-bottom: 4rem;
+        .btn-ghost:hover {
+            border-color: var(--muted);
+            color: var(--text);
         }
-        .metric {
-            padding: 1.5rem;
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 12px; text-align: center;
-            transition: background 0.3s, border-color 0.2s, transform 0.2s;
-        }
-        .metric:hover { border-color: var(--border-hi); transform: translateY(-3px); }
-        .metric-value {
-            font-size: 2rem; font-weight: 700; letter-spacing: -0.04em;
-            margin-bottom: 0.5rem;
-        }
-        .metric-label { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
 
-        /* ── SECTIONS ── */
-        section { padding: 4rem 0; }
-        .section-header { margin-bottom: 2.5rem; }
-        .section-header h2 {
-            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-            font-weight: 700; letter-spacing: -0.025em; margin-bottom: 0.75rem;
+        .hero-scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
         }
-        .section-header p { color: var(--muted); max-width: 560px; }
 
-        /* ── PRODUCT GRID ── */
-        .product-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
-        .product-card {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 16px; padding: 2rem;
-            position: relative; overflow: hidden;
-            transition: background 0.3s, border-color 0.2s, transform 0.2s;
+        .hero-scroll-hint span {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
         }
-        .product-card:hover { border-color: var(--border-hi); transform: translateY(-4px); }
-        .product-card::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 3px; transform: scaleX(0);
-            transform-origin: left; transition: transform 0.4s ease;
+
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--muted), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
         }
-        .product-card:hover::before { transform: scaleX(1); }
-        .product-card.sparseflow::before { background: var(--grad-sf); }
-        .product-card.maple-shield::before { background: var(--grad-ms); }
-        .product-top {
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 1.5rem;
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.1); }
         }
-        .product-icon {
-            width: 52px; height: 52px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
+
+        /* ── RULE ── */
+        .rule { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+        /* ── PLATFORMS ── */
+        .platforms { padding: 120px 0; }
+
+        .section-label {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 64px;
         }
-        .product-icon.sf { background: #ffffff; padding: 4px; }
-        .product-icon.sf img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
-        .product-icon.ms { background: #ffffff; padding: 4px; }
-        .product-icon.ms img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
-        .product-badge {
-            padding: 0.35rem 0.75rem; border-radius: 999px;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase;
+
+        .product-strip {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            align-items: start;
+            gap: 80px;
+            padding: 64px 0;
+            border-top: 1px solid var(--border);
+            transition: border-color 300ms ease;
         }
-        .badge-live { background: rgba(59,158,255,0.12); color: var(--blue); border: 1px solid rgba(59,158,255,0.2); }
-        .badge-building { background: rgba(45,212,191,0.12); color: var(--teal); border: 1px solid rgba(45,212,191,0.2); }
-        .product-card h3 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
-        .product-card .sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.25rem; }
-        .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
-        .chip {
-            padding: 0.3rem 0.7rem; border-radius: 999px;
-            border: 1px solid var(--border); font-size: 0.78rem; color: var(--muted);
+
+        .product-strip:last-child { border-bottom: 1px solid var(--border); }
+
+        .product-strip:hover { border-top-color: var(--accent); }
+        .product-strip.ms:hover { border-top-color: var(--accent-ms); }
+
+        .product-strip-left {}
+
+        .product-strip-name {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 16px;
         }
-        .product-card .body { color: var(--muted); line-height: 1.8; font-size: 0.94rem; margin-bottom: 1.5rem; }
-        .product-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-        .btn-sm {
-            display: inline-flex; align-items: center; gap: 0.4rem;
-            padding: 0.6rem 1rem; border-radius: 8px;
-            font-weight: 600; font-size: 0.875rem;
-            transition: transform 0.2s; border: 1px solid transparent;
+
+        .product-strip-name.sf { color: var(--accent); }
+        .product-strip-name.ms-name { color: var(--accent-ms); }
+
+        .product-strip-tagline {
+            color: var(--muted-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            max-width: 280px;
         }
-        .btn-sm:hover { transform: translateY(-2px); }
-        .btn-sm.sf { background: var(--grad-sf); color: #fff; }
-        .btn-sm.ms { background: var(--grad-ms); color: #06151a; }
-        .btn-sm.ghost { border-color: var(--border); color: var(--muted); background: transparent; }
+
+        .product-strip-right {}
+
+        .product-status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .status-badge {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 10px;
+            border-radius: 2px;
+        }
+
+        .status-live {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid rgba(168, 255, 62, 0.25);
+        }
+
+        .status-building {
+            background: var(--accent-ms-dim);
+            color: var(--accent-ms);
+            border: 1px solid rgba(0, 245, 204, 0.25);
+        }
+
+        .product-strip-body {
+            color: var(--muted-light);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .tag {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            padding: 6px 10px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+        }
+
+        .strip-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: gap 200ms ease, color 200ms ease;
+        }
+
+        .strip-link.sf-link { color: var(--accent); }
+        .strip-link.ms-link { color: var(--accent-ms); }
+        .strip-link:hover { gap: 14px; }
 
         /* ── CAPABILITIES ── */
-        .cap-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
-        .cap {
-            padding: 1.75rem; background: var(--card);
-            border: 1px solid var(--border); border-radius: 14px;
-            transition: background 0.3s, border-color 0.2s, transform 0.2s;
-        }
-        .cap:hover { border-color: var(--border-hi); transform: translateY(-3px); }
-        .cap-kicker {
-            font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
-            letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue);
-            margin-bottom: 0.875rem;
-        }
-        .cap h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.6rem; }
-        .cap p { color: var(--muted); font-size: 0.9rem; line-height: 1.75; }
+        .capabilities { padding: 120px 0; }
 
-        /* ── CONTACT ── */
-        .contact-panel {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 16px; padding: 2.5rem;
-            transition: background 0.3s;
+        .cap-list { margin-top: 64px; }
+
+        .cap-item {
+            display: grid;
+            grid-template-columns: 120px 1fr 1.6fr;
+            align-items: start;
+            gap: 60px;
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
         }
-        .contact-panel h2 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 0.75rem; }
-        .contact-panel > p { color: var(--muted); max-width: 640px; margin-bottom: 2rem; line-height: 1.8; }
-        .contact-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 1rem;
-            margin-top: 1.75rem;
+
+        .cap-item:last-child { border-bottom: 1px solid var(--border); }
+
+        .cap-number {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: 3.5rem;
+            letter-spacing: -0.06em;
+            color: var(--surface);
+            line-height: 1;
+            -webkit-text-stroke: 1px var(--border);
         }
-        .contact-item {
-            padding: 1.25rem; background: var(--surface);
-            border: 1px solid var(--border); border-radius: 10px;
+
+        .cap-title {
+            font-family: "Syne", sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            padding-top: 6px;
         }
-        .contact-item-label {
-            font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
-            letter-spacing: 0.08em; text-transform: uppercase;
-            color: var(--dim); margin-bottom: 0.5rem;
+
+        .cap-desc {
+            color: var(--muted-light);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            font-weight: 300;
+            padding-top: 6px;
         }
-        .contact-item-value { font-weight: 600; font-size: 0.92rem; }
+
+        /* ── CLOSING ── */
+        .closing { padding: 120px 0; }
+
+        .closing-inner {
+            border-top: 1px solid var(--border);
+            padding-top: 80px;
+        }
+
+        .closing-eyebrow {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 36px;
+        }
+
+        .closing-title {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            max-width: 760px;
+            margin-bottom: 32px;
+        }
+
+        .closing-body {
+            color: var(--muted-light);
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 300;
+            max-width: 640px;
+        }
 
         /* ── FOOTER ── */
         footer {
             border-top: 1px solid var(--border);
-            background: var(--surface); padding: 2rem;
-            margin-top: 2rem;
-            transition: background 0.3s;
+            padding: 32px 0;
         }
+
         .footer-inner {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
         }
-        .footer-inner span { color: var(--dim); font-size: 0.875rem; }
-        .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
-        .footer-links a { color: var(--muted); font-size: 0.875rem; transition: color 0.2s; }
+
+        .footer-name {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 0.82rem;
+            color: var(--muted);
+            transition: color 180ms ease;
+        }
+
         .footer-links a:hover { color: var(--text); }
 
-        /* ── SCROLL REVEAL ── */
-        .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
-        .reveal.visible { opacity: 1; transform: none; }
-
         /* ── RESPONSIVE ── */
-        @media (max-width: 900px) {
-            .metrics { grid-template-columns: repeat(2,1fr); }
-            .product-grid { grid-template-columns: 1fr; }
-            .cap-grid { grid-template-columns: 1fr; }
+        @media (max-width: 980px) {
+            .product-strip {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .cap-item {
+                grid-template-columns: 60px 1fr;
+                gap: 24px;
+            }
+
+            .cap-desc {
+                grid-column: 1 / -1;
+                padding-top: 0;
+            }
+
+            .cap-number { font-size: 2.5rem; }
         }
-        @media (max-width: 640px) {
+
+        @media (max-width: 720px) {
+            .shell { width: calc(100% - 32px); }
+
             .nav-links { display: none; }
-            .hero { padding: 7rem 1.5rem 3rem; }
-            .shell { padding: 0 1.25rem; }
-            .metrics { grid-template-columns: 1fr 1fr; }
-            .hero h1 { font-size: 2rem; }
+
+            h1 { font-size: 2.4rem; }
+
+            .platforms, .capabilities, .closing { padding: 80px 0; }
+
+            .cap-item {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 36px 0;
+            }
+
+            .footer-inner { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
 <body>
+
     <!-- NAV -->
-    <header>
-        <nav>
-            <a class="brand" href="/">
-                <img src="maplesilicon.png" alt="Maple Silicon Inc.">
-                <span class="brand-name">Maple Silicon Inc.</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="#products">Platforms</a></li>
-                <li><a href="#capabilities">Capabilities</a></li>
-                <li><a href="sparseflow/">SparseFlow</a></li>
-                <li><a href="maple-shield/">Maple Shield</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
-                <span id="themeIcon">🌙</span>
-            </button>
-        </nav>
+    <header id="site-header">
+        <div class="shell">
+            <div class="nav">
+                <a class="brand" href="#top">
+                    <img src="maplesilicon.png" alt="Maple Silicon">
+                    <span class="brand-name">Maple Silicon Inc.</span>
+                </a>
+                <nav class="nav-links" aria-label="Primary">
+                    <a href="#platforms">Platforms</a>
+                    <a href="#capabilities">Capabilities</a>
+                    <a href="sparseflow/">SparseFlow</a>
+                    <a href="maple-shield/">Maple Shield</a>
+                </nav>
+            </div>
+        </div>
     </header>
 
     <!-- HERO -->
-    <section class="hero">
-        <div class="eyebrow">Canadian AI Systems Company — Caledon, Ontario</div>
-        <h1>Software layer between raw compute and field-ready intelligence.</h1>
-        <p class="hero-lead">
-            Maple Silicon Inc. develops focused AI infrastructure products for high-leverage technical challenges — efficient sparse inference for the data centre and edge AI airspace awareness for constrained environments.
-        </p>
-        <div class="hero-actions">
-            <a class="btn btn-primary" href="#products">Explore Platforms</a>
-            <a class="btn btn-secondary" href="#contact">Get in Touch</a>
+    <section class="hero" id="top">
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="shell hero-content">
+            <div class="eyebrow">Maple Silicon Inc. — Canadian AI systems company</div>
+            <h1>We build the software layer between raw compute and field-ready intelligence.</h1>
+            <p class="hero-sub">Focused products for high-leverage technical bottlenecks: efficient sparse inference in the data center and edge AI airspace awareness in constrained environments.</p>
+            <div class="hero-actions">
+                <a class="btn btn-solid" href="#platforms">Explore Platforms</a>
+                <a class="btn btn-ghost" href="#capabilities">Core Capabilities</a>
+            </div>
         </div>
-
-        <!-- METRICS -->
-        <div class="metrics">
-            <div class="metric">
-                <div class="metric-value" style="background:var(--grad-sf);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1.68×</div>
-                <div class="metric-label">Peak inference speedup — SparseFlow 2:4 sparse on RTX 4090</div>
-            </div>
-            <div class="metric">
-                <div class="metric-value" style="color:var(--teal)">92.6%</div>
-                <div class="metric-label">Maple Shield mAP@50 — YOLOv8n drone detection, validated holdout</div>
-            </div>
-            <div class="metric">
-                <div class="metric-value" style="color:var(--cyan)">&lt;20W</div>
-                <div class="metric-label">Target edge power envelope — NVIDIA Jetson Orin NX, man-portable</div>
-            </div>
-            <div class="metric">
-                <div class="metric-value" style="color:var(--purple)">TRL 4</div>
-                <div class="metric-label">Maple Shield technology readiness — targeting TRL 5 through field validation</div>
-            </div>
+        <div class="hero-scroll-hint" aria-hidden="true">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
         </div>
     </section>
 
-    <!-- PRODUCTS -->
-    <section id="products">
-        <div class="shell">
-            <div class="section-header reveal">
-                <h2>Two platforms, one systems mindset.</h2>
-                <p>Focused, technically deep products that start with a concrete operational problem and end with measurable, deployable output.</p>
-            </div>
-            <div class="product-grid">
-                <article class="product-card sparseflow reveal">
-                    <div class="product-top">
-                        <div class="product-icon sf"><img src="sparseflow-icon.png" alt="SparseFlow"></div>
-                        <span class="product-badge badge-live">v2.0 Live</span>
-                    </div>
-                    <h3>SparseFlow</h3>
-                    <p class="sub">Sparse inference acceleration for production GPU workloads.</p>
-                    <div class="chips">
-                        <span class="chip">Structured sparsity</span>
-                        <span class="chip">NVIDIA native path</span>
-                        <span class="chip">Python package</span>
-                        <span class="chip">Benchmark-led</span>
-                    </div>
-                    <p class="body">Built for teams that care about actual deployment economics. Reproducible speedups, clear thresholds, and practical integration into inference pipelines — not abstract efficiency claims.</p>
-                    <div class="product-actions">
-                        <a class="btn-sm sf" href="sparseflow/">Open SparseFlow →</a>
-                    </div>
-                </article>
+    <hr class="rule">
 
-                <article class="product-card maple-shield reveal">
-                    <div class="product-top">
-                        <div class="product-icon ms"><img src="maple-shield/maple-shield-icon.png" alt="Maple Shield"></div>
-                        <span class="product-badge badge-building">In Progress</span>
-                    </div>
-                    <h3>Maple Shield</h3>
-                    <p class="sub">Edge AI for drone detection, persistent tracking, and airspace awareness.</p>
-                    <div class="chips">
-                        <span class="chip">Real-time detection</span>
-                        <span class="chip">Persistent tracks</span>
-                        <span class="chip">STANAG 4586</span>
-                        <span class="chip">Edge-ready runtime</span>
-                    </div>
-                    <p class="body">Airspace-awareness platform designed for lawful detection, track continuity, MQTT alerting, and operator-ready incident intelligence in constrained, RF-silent environments.</p>
-                    <div class="product-actions">
-                        <a class="btn-sm ms" href="maple-shield/">Open Maple Shield →</a>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
+    <main>
+        <!-- PLATFORMS -->
+        <section class="platforms" id="platforms">
+            <div class="shell">
+                <div class="section-label">// Platforms — two products, one systems mindset</div>
 
-    <!-- CAPABILITIES -->
-    <section id="capabilities">
-        <div class="shell">
-            <div class="section-header reveal">
-                <h2>What carries across the stack.</h2>
-                <p>The same product discipline — measurable performance, practical deployment boundaries, and software that survives real operating conditions.</p>
-            </div>
-            <div class="cap-grid">
-                <article class="cap reveal">
-                    <div class="cap-kicker">01 / Performance</div>
-                    <h3>Optimization with a concrete output</h3>
-                    <p>Performance claims tied to deployment conditions and operational constraints — not isolated demos.</p>
-                </article>
-                <article class="cap reveal">
-                    <div class="cap-kicker">02 / Deployment</div>
-                    <h3>Built for real environments</h3>
-                    <p>From production GPU inference stacks to edge systems with limited connectivity and <20W power budgets.</p>
-                </article>
-                <article class="cap reveal">
-                    <div class="cap-kicker">03 / Product</div>
-                    <h3>Technical depth, sharp positioning</h3>
-                    <p>Each platform is narrow enough to be credible and deep enough to become a defensible product category.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-        <div class="shell">
-            <div class="contact-panel reveal">
-                <h2>Work with us.</h2>
-                <p>Maple Silicon Inc. is actively pursuing partnerships with defence agencies, system integrators, and research institutions — evaluating CUAS solutions, sparse inference, or field trial collaboration.</p>
-                <div class="hero-actions" style="justify-content:flex-start;">
-                    <a class="btn btn-primary" href="mailto:info@maplesilicon.co">✉ info@maplesilicon.co</a>
-                    <a class="btn btn-secondary" href="maple-shield/">View Maple Shield →</a>
+                <!-- SparseFlow strip -->
+                <div class="product-strip sf">
+                    <div class="product-strip-left">
+                        <div class="product-strip-name sf">SparseFlow</div>
+                        <div class="product-strip-tagline">Sparse inference acceleration for production GPU workloads.</div>
+                    </div>
+                    <div class="product-strip-right">
+                        <div class="product-status-row">
+                            <span class="status-badge status-live">v2.0 live</span>
+                        </div>
+                        <p class="product-strip-body">SparseFlow is built for teams that care about actual deployment economics, not abstract efficiency rhetoric. It focuses on reproducible speedups, clear thresholds, and practical integration into inference pipelines.</p>
+                        <div class="tag-row">
+                            <span class="tag">Structured sparsity</span>
+                            <span class="tag">NVIDIA native path</span>
+                            <span class="tag">Python package</span>
+                            <span class="tag">Benchmark-led</span>
+                        </div>
+                        <a class="strip-link sf-link" href="sparseflow/">Open SparseFlow →</a>
+                    </div>
                 </div>
-                <div class="contact-grid">
-                    <div class="contact-item">
-                        <div class="contact-item-label">Email</div>
-                        <div class="contact-item-value">info@maplesilicon.co</div>
+
+                <!-- Maple Shield strip -->
+                <div class="product-strip ms">
+                    <div class="product-strip-left">
+                        <div class="product-strip-name ms-name">Maple Shield</div>
+                        <div class="product-strip-tagline">Edge AI for drone detection, persistent tracking, and airspace awareness.</div>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-item-label">Location</div>
-                        <div class="contact-item-value">Caledon, Ontario, Canada</div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-item-label">Incorporation</div>
-                        <div class="contact-item-value">Federal Corporation — Canada</div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-item-label">Focus</div>
-                        <div class="contact-item-value">Defence AI · Edge Systems</div>
+                    <div class="product-strip-right">
+                        <div class="product-status-row">
+                            <span class="status-badge status-building">In progress</span>
+                        </div>
+                        <p class="product-strip-body">Maple Shield is the airspace-awareness platform in the portfolio. It is being shaped around lawful detection, track continuity, alerting, evidence capture, and operator-ready incident intelligence in authorized environments.</p>
+                        <div class="tag-row">
+                            <span class="tag">Real-time detection</span>
+                            <span class="tag">Persistent tracks</span>
+                            <span class="tag">Operator workflows</span>
+                            <span class="tag">Edge-ready runtime</span>
+                        </div>
+                        <a class="strip-link ms-link" href="maple-shield/">Open Maple Shield →</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- FOOTER -->
+        <hr class="rule">
+
+        <!-- CAPABILITIES -->
+        <section class="capabilities" id="capabilities">
+            <div class="shell">
+                <div class="section-label">// Core capabilities — what carries across the stack</div>
+
+                <div class="cap-list">
+                    <div class="cap-item">
+                        <div class="cap-number">01</div>
+                        <div class="cap-title">Performance</div>
+                        <p class="cap-desc">We care about how systems behave under actual load, not just how they look in isolated demos. Performance claims should be tied to deployment conditions and operational constraints. Optimization with a concrete, measurable output.</p>
+                    </div>
+                    <div class="cap-item">
+                        <div class="cap-number">02</div>
+                        <div class="cap-title">Deployment</div>
+                        <p class="cap-desc">From GPUs in production inference stacks to edge systems operating with limited connectivity, the work is framed around where the software will actually run. Built for real environments, not controlled conditions.</p>
+                    </div>
+                    <div class="cap-item">
+                        <div class="cap-number">03</div>
+                        <div class="cap-title">Product</div>
+                        <p class="cap-desc">Each platform is kept narrow enough to be credible, while still broad enough to become a real product category inside a focused systems company. Technical depth with sharp, defensible positioning.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- CLOSING -->
+        <section class="closing">
+            <div class="shell">
+                <div class="closing-inner">
+                    <div class="closing-eyebrow">// Company direction</div>
+                    <h2 class="closing-title">Two platforms. One systems mindset. A cleaner story.</h2>
+                    <p class="closing-body">SparseFlow represents compute efficiency. Maple Shield represents edge awareness. Together they make the company feel more deliberate, more advanced, and more aligned with serious technical buyers. The portfolio is narrow, technical, and intentionally operator-facing.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer>
-        <div class="footer-inner">
-            <span>© 2026 Maple Silicon Inc. · Caledon, Ontario, Canada · Federal Corporation</span>
-            <div class="footer-links">
-                <a href="/">Home</a>
-                <a href="sparseflow/">SparseFlow</a>
-                <a href="maple-shield/">Maple Shield</a>
-                <a href="mailto:info@maplesilicon.co">Contact</a>
+        <div class="shell">
+            <div class="footer-inner">
+                <div class="footer-name">Maple Silicon Inc. — maplesilicon.co</div>
+                <div class="footer-links">
+                    <a href="sparseflow/">SparseFlow</a>
+                    <a href="maple-shield/">Maple Shield</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- THREE.JS SPARSE MATRIX ANIMATION -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // ── THEME ──
-        function toggleTheme() {
-            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('ms-theme', next);
-            document.getElementById('themeIcon').textContent = next === 'dark' ? '🌙' : '☀️';
-        }
-        (function () {
-            const saved = localStorage.getItem('ms-theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', saved);
-            document.getElementById('themeIcon').textContent = saved === 'dark' ? '🌙' : '☀️';
-        })();
+    (function() {
+        const canvas = document.getElementById('hero-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setClearColor(0x000000, 0);
 
-        // ── SCROLL REVEAL ──
-        const obs = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+        camera.position.set(0, 0, 18);
+
+        // Lighting
+        scene.add(new THREE.AmbientLight(0xffffff, 0.08));
+        const pointLight = new THREE.PointLight(0xa8ff3e, 1.2, 50);
+        pointLight.position.set(4, 4, 8);
+        scene.add(pointLight);
+        const pointLight2 = new THREE.PointLight(0xa8ff3e, 0.3, 30);
+        pointLight2.position.set(-6, -3, 4);
+        scene.add(pointLight2);
+
+        // Sparse matrix grid: 14 x 8 x 3
+        const COLS = 14, ROWS = 8, DEPTH = 3;
+        const CUBE_SIZE = 0.42;
+        const GAP = 1.05;
+        const OFFSET_X = -(COLS - 1) * GAP / 2;
+        const OFFSET_Y = -(ROWS - 1) * GAP / 2;
+        const OFFSET_Z = -(DEPTH - 1) * GAP / 2;
+
+        const geoActive = new THREE.BoxGeometry(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE);
+        const geoInactive = new THREE.BoxGeometry(CUBE_SIZE * 0.9, CUBE_SIZE * 0.9, CUBE_SIZE * 0.9);
+
+        const matActive = new THREE.MeshStandardMaterial({
+            color: 0xa8ff3e,
+            emissive: 0xa8ff3e,
+            emissiveIntensity: 0.32,
+            roughness: 0.25,
+            metalness: 0.1
+        });
+
+        const matInactive = new THREE.MeshBasicMaterial({
+            color: 0x1c1c1c,
+            wireframe: true
+        });
+
+        const group = new THREE.Group();
+        const activeMeshes = [];
+
+        // 2:4 sparsity: seeded pseudo-random pattern
+        function isActive(col, row, depth) {
+            // For every 4 columns, exactly 2 are active — deterministic by position
+            const seed = (col * 7 + row * 13 + depth * 31) % 4;
+            return seed < 2;
+        }
+
+        for (let z = 0; z < DEPTH; z++) {
+            for (let y = 0; y < ROWS; y++) {
+                for (let x = 0; x < COLS; x++) {
+                    const active = isActive(x, y, z);
+                    const mesh = new THREE.Mesh(
+                        active ? geoActive : geoInactive,
+                        active ? matActive.clone() : matInactive
+                    );
+                    mesh.position.set(
+                        OFFSET_X + x * GAP,
+                        OFFSET_Y + y * GAP,
+                        OFFSET_Z + z * GAP
+                    );
+                    group.add(mesh);
+                    if (active) activeMeshes.push(mesh);
+                }
+            }
+        }
+
+        scene.add(group);
+
+        // Mouse parallax state
+        let targetRotX = 0, targetRotY = 0;
+        let currentRotX = 0, currentRotY = 0;
+        let baseRotY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            const dx = (e.clientX / window.innerWidth - 0.5) * 2;
+            const dy = (e.clientY / window.innerHeight - 0.5) * 2;
+            targetRotY = dx * 0.28;
+            targetRotX = -dy * 0.18;
+        });
+
+        // Scroll depth effect
+        let scrollZ = 0;
+        window.addEventListener('scroll', () => {
+            scrollZ = window.scrollY * 0.006;
+        });
+
+        // Pulse: randomly vary emissive intensity on active cubes
+        setInterval(() => {
+            const count = Math.floor(activeMeshes.length * 0.06);
+            for (let i = 0; i < count; i++) {
+                const mesh = activeMeshes[Math.floor(Math.random() * activeMeshes.length)];
+                const target = 0.3 + Math.random() * 0.7;
+                mesh.material.emissiveIntensity = target;
+            }
+        }, 2000);
+
+        // Resize handler
+        function resize() {
+            const w = canvas.clientWidth;
+            const h = canvas.clientHeight;
+            renderer.setSize(w, h, false);
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+        }
+
+        const ro = new ResizeObserver(resize);
+        ro.observe(canvas);
+        resize();
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            baseRotY += 0.0018;
+            currentRotX += (targetRotX - currentRotX) * 0.04;
+            currentRotY += (targetRotY - currentRotY) * 0.04;
+
+            group.rotation.y = baseRotY + currentRotY;
+            group.rotation.x = -0.2 + currentRotX;
+
+            camera.position.z = 18 + scrollZ;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    })();
     </script>
+
+    <!-- Scroll nav behavior -->
+    <script>
+    (function() {
+        const header = document.getElementById('site-header');
+        function onScroll() {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+    </script>
+
 </body>
 </html>

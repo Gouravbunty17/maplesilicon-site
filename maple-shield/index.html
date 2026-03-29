@@ -1,482 +1,893 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maple Shield | Edge AI Drone Detection & Airspace Awareness</title>
-    <meta name="description" content="Maple Shield is Maple Silicon Inc.'s edge AI platform for real-time drone detection, persistent tracking, operator alerting, and airspace intelligence.">
+    <title>Maple Shield — Edge AI for Drone Detection and Airspace Security | Maple Silicon Inc.</title>
+    <meta name="description" content="Maple Shield is Maple Silicon Inc.'s edge AI platform for drone detection, persistent tracking, operator alerting, and airspace awareness.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* ── DESIGN TOKENS ── */
-        :root, [data-theme="dark"] {
-            --bg:           #0a0d14;
-            --surface:      #121620;
-            --card:         rgba(18, 22, 32, 0.85);
-            --border:       rgba(255,255,255,0.08);
-            --border-hi:    rgba(45,212,191,0.25);
-            --text:         #f1f5f9;
-            --muted:        #94a3b8;
-            --dim:          #64748b;
-            --nav-bg:       rgba(10,13,20,0.92);
-            --shadow:       0 8px 32px rgba(0,0,0,0.4);
-            --teal:         #2dd4bf;
-            --cyan:         #67e8f9;
-            --violet:       #8b5cf6;
-            --grad:         linear-gradient(135deg,#2dd4bf,#67e8f9);
-        }
-        [data-theme="light"] {
-            --bg:           #f8fafc;
-            --surface:      #ffffff;
-            --card:         rgba(255,255,255,0.92);
-            --border:       rgba(0,0,0,0.08);
-            --border-hi:    rgba(13,148,136,0.25);
-            --text:         #0f172a;
-            --muted:        #475569;
-            --dim:          #94a3b8;
-            --nav-bg:       rgba(248,250,252,0.92);
-            --shadow:       0 8px 32px rgba(0,0,0,0.08);
-            --teal:         #0d9488;
-            --cyan:         #0891b2;
-            --violet:       #7c3aed;
-            --grad:         linear-gradient(135deg,#0d9488,#0891b2);
+        :root {
+            --bg: #000000;
+            --surface: #0d0d0d;
+            --border: #1a1a1a;
+            --text: #f8f8f8;
+            --muted: #666666;
+            --muted-light: #999999;
+            --accent: #00f5cc;
+            --accent-dim: rgba(0, 245, 204, 0.1);
+            --accent-border: rgba(0, 245, 204, 0.22);
         }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg); color: var(--text);
-            line-height: 1.7; overflow-x: hidden;
-            transition: background 0.3s ease, color 0.3s ease;
+            font-family: "Space Grotesk", sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
+
         a { color: inherit; text-decoration: none; }
+
+        .shell {
+            width: min(1280px, calc(100% - 48px));
+            margin: 0 auto;
+        }
 
         /* ── NAV ── */
         header {
-            position: fixed; top: 0; width: 100%;
-            background: var(--nav-bg); backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border); z-index: 1000;
-            transition: background 0.3s ease;
-        }
-        nav {
-            max-width: 1200px; margin: 0 auto;
-            padding: 0 2rem; height: 64px;
-            display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
-        }
-        .brand { display: flex; align-items: center; gap: 0.75rem; }
-        .brand img { height: 36px; width: auto; }
-        .brand-name { font-weight: 600; font-size: 1rem; white-space: nowrap; }
-        .brand-sub { font-size: 0.78rem; color: var(--muted); }
-        .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
-        .nav-links a {
-            padding: 0.5rem 0.875rem; border-radius: 8px;
-            color: var(--muted); font-size: 0.9rem; font-weight: 500;
-            transition: color 0.2s, background 0.2s;
-        }
-        .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.06); }
-        .theme-btn {
-            width: 38px; height: 38px; border-radius: 10px;
-            border: 1px solid var(--border); background: var(--card);
-            cursor: pointer; font-size: 1.1rem;
-            display: flex; align-items: center; justify-content: center;
-            transition: border-color 0.2s, transform 0.2s; flex-shrink: 0;
-        }
-        .theme-btn:hover { border-color: var(--border-hi); transform: scale(1.08); }
-
-        /* ── LAYOUT ── */
-        .shell { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        section { padding: 4rem 0; }
-
-        /* ── HERO ── */
-        .hero { padding: 9rem 2rem 4rem; max-width: 1200px; margin: 0 auto; }
-        .hero-inner {
-            display: grid; grid-template-columns: 1.2fr 0.8fr;
-            gap: 1.5rem; align-items: start;
-        }
-        .hero-main {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 18px; padding: 2.5rem;
-            transition: background 0.3s;
-        }
-        .eyebrow {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.4rem 0.875rem; border-radius: 999px;
-            border: 1px solid var(--border-hi);
-            background: rgba(45,212,191,0.07);
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
-            color: var(--teal); margin-bottom: 1.5rem;
-        }
-        .eyebrow::before {
-            content: ''; width: 6px; height: 6px; border-radius: 50%;
-            background: var(--teal); box-shadow: 0 0 0 4px rgba(45,212,191,0.15);
-        }
-        .hero-main h1 {
-            font-size: clamp(2rem, 5vw, 3.4rem);
-            font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;
-            margin-bottom: 1.25rem;
-        }
-        .hero-main p {
-            color: var(--muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 2rem;
-        }
-        .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-        .btn {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.75rem 1.4rem; border-radius: 10px;
-            font-weight: 600; font-size: 0.9rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn:hover { transform: translateY(-2px); }
-        .btn-primary {
-            background: var(--grad); color: #06151a;
-            box-shadow: 0 6px 20px rgba(45,212,191,0.25);
-        }
-        .btn-secondary {
-            background: var(--card); color: var(--text);
-            border: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 0;
+            transition: background 300ms ease, border-color 300ms ease;
         }
 
-        /* ── HERO SIDE STATS ── */
-        .logo-card {
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 2rem 1.5rem;
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
             display: flex;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            justify-content: space-between;
+            gap: 24px;
         }
-        .logo-card img { width: 100%; max-width: 280px; height: auto; display: block; }
-        .hero-side { display: flex; flex-direction: column; gap: 1rem; }
-        .stat-card {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 14px; padding: 1.25rem;
-            transition: background 0.3s, border-color 0.2s;
-        }
-        .stat-card:hover { border-color: var(--border-hi); }
-        .stat-label {
-            font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
-            letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.5rem;
-        }
-        .stat-value { font-weight: 700; font-size: 1.05rem; line-height: 1.4; }
-        .stat-value.hi { color: var(--teal); }
 
-        /* ── SECTION HEADER ── */
-        .section-header { margin-bottom: 2.25rem; }
-        .section-header h2 {
-            font-size: clamp(1.7rem, 3vw, 2.4rem);
-            font-weight: 700; letter-spacing: -0.025em; margin-bottom: 0.75rem;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .section-header p { color: var(--muted); max-width: 560px; line-height: 1.75; }
 
-        /* ── CARDS ── */
-        .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.25rem; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
-        .card {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 14px; padding: 1.75rem;
-            transition: background 0.3s, border-color 0.2s, transform 0.2s;
+        .brand img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            opacity: 0.85;
         }
-        .card:hover { border-color: var(--border-hi); transform: translateY(-3px); }
-        .card-kicker {
-            font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
-            letter-spacing: 0.08em; text-transform: uppercase;
-            color: var(--teal); margin-bottom: 0.875rem;
-        }
-        .card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.6rem; }
-        .card p { color: var(--muted); font-size: 0.9rem; line-height: 1.75; }
 
-        /* ── WORKFLOW STEP ── */
-        .step-num {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 40px; height: 40px; border-radius: 10px;
-            background: rgba(45,212,191,0.12); border: 1px solid rgba(45,212,191,0.2);
-            font-family: 'IBM Plex Mono', monospace; font-size: 0.88rem; font-weight: 600;
-            color: var(--teal); margin-bottom: 1rem;
+        .brand-name {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--muted-light);
+        }
+
+        .brand-name span {
+            color: var(--accent);
+            font-family: "IBM Plex Mono", monospace;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            position: relative;
+            color: var(--muted);
+            font-size: 0.85rem;
+            transition: color 200ms ease;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 50%; right: 50%;
+            height: 1px;
+            background: var(--accent);
+            transition: left 200ms ease, right 200ms ease;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { left: 0; right: 0; }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            overflow: hidden;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0.0) 100%),
+                linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 20%, transparent 75%, rgba(0,0,0,0.9) 100%);
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 60px;
+            padding-top: 80px;
+        }
+
+        .hero-left {}
+
+        .hero-eyebrow {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.6rem, 5.5vw, 5rem);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            margin-bottom: 28px;
+        }
+
+        .hero-lead {
+            color: var(--muted-light);
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.75;
+            max-width: 520px;
+            margin-bottom: 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            border-radius: 4px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: transform 180ms ease, box-shadow 180ms ease;
+        }
+
+        .btn:hover { transform: translateY(-2px); }
+
+        .btn-solid {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-solid:hover { box-shadow: 0 6px 24px rgba(0, 245, 204, 0.3); }
+
+        .btn-ghost {
+            border: 1px solid var(--border);
+            color: var(--muted-light);
+            background: transparent;
+        }
+
+        .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+
+        /* ── HERO RIGHT PANEL ── */
+        .hero-right {}
+
+        .signal-panel {
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .signal-header {
+            padding: 14px 20px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .signal-item {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg);
+        }
+
+        .signal-item:last-child { border-bottom: none; }
+
+        .signal-label {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .signal-value {
+            font-size: 0.88rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--muted-light);
+        }
+
+        /* ── SCROLL HINT ── */
+        .hero-scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-scroll-hint span {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--muted), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* ── RULE ── */
+        .rule { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+        /* ── SHARED SECTION ── */
+        .content-section { padding: 100px 0; }
+
+        .section-label {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 56px;
+        }
+
+        .section-h2 {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            margin-bottom: 20px;
+        }
+
+        .section-sub {
+            color: var(--muted-light);
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 640px;
+            margin-bottom: 60px;
+        }
+
+        /* ── SYSTEM LAYERS ── */
+        .layers-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--border);
+        }
+
+        .layer-card {
+            background: var(--surface);
+            padding: 32px 24px;
+            transition: background 200ms ease;
+        }
+
+        .layer-card:hover { background: var(--bg); }
+
+        .layer-num {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .layer-title {
+            font-family: "Syne", sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .layer-desc {
+            color: var(--muted-light);
+            font-size: 0.85rem;
+            line-height: 1.65;
+            font-weight: 300;
+        }
+
+        /* ── PRINCIPLES ── */
+        .principles-list { margin-top: 0; }
+
+        .principle-item {
+            display: grid;
+            grid-template-columns: 100px 1fr 1.8fr;
+            align-items: start;
+            gap: 48px;
+            padding: 44px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .principle-item:last-child { border-bottom: 1px solid var(--border); }
+
+        .principle-num {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: 3rem;
+            letter-spacing: -0.06em;
+            color: var(--surface);
+            line-height: 1;
+            -webkit-text-stroke: 1px var(--border);
+        }
+
+        .principle-title {
+            font-family: "Syne", sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            padding-top: 4px;
+        }
+
+        .principle-desc {
+            color: var(--muted-light);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            font-weight: 300;
+            padding-top: 4px;
+        }
+
+        /* ── WORKFLOW ── */
+        .workflow-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--border);
+            margin-top: 0;
+        }
+
+        .workflow-card {
+            background: var(--surface);
+            padding: 36px 28px;
+            position: relative;
+            transition: background 200ms ease;
+        }
+
+        .workflow-card:hover { background: var(--bg); }
+
+        .workflow-step {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .workflow-title {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            letter-spacing: -0.04em;
+            margin-bottom: 16px;
+        }
+
+        .workflow-desc {
+            color: var(--muted-light);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            font-weight: 300;
         }
 
         /* ── CTA PANEL ── */
-        .cta-panel {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 16px; padding: 2.5rem;
-            transition: background 0.3s;
+        .cta-section { padding: 100px 0; }
+
+        .cta-inner {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 80px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
         }
-        .cta-panel h2 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 0.75rem; }
-        .cta-panel > p { color: var(--muted); max-width: 640px; line-height: 1.8; margin-bottom: 2rem; }
-        .spec-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(175px,1fr));
-            gap: 1rem; margin-top: 1.75rem;
+
+        .cta-left {}
+
+        .cta-eyebrow {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 24px;
         }
-        .spec-item {
-            padding: 1.1rem; background: var(--surface);
-            border: 1px solid var(--border); border-radius: 10px;
+
+        .cta-title {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            letter-spacing: -0.04em;
+            line-height: 1.05;
         }
-        .spec-label {
-            font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem;
-            letter-spacing: 0.08em; text-transform: uppercase;
-            color: var(--dim); margin-bottom: 0.4rem;
+
+        .cta-right {
+            color: var(--muted-light);
+            font-size: 0.95rem;
+            line-height: 1.85;
+            font-weight: 300;
         }
-        .spec-value { font-weight: 600; font-size: 0.88rem; }
+
+        .cta-right p + p { margin-top: 14px; }
+
+        .cta-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
 
         /* ── FOOTER ── */
         footer {
-            border-top: 1px solid var(--border); background: var(--surface);
-            padding: 2rem; margin-top: 2rem; transition: background 0.3s;
+            border-top: 1px solid var(--border);
+            padding: 28px 0;
         }
+
         .footer-inner {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
         }
-        .footer-inner span { color: var(--dim); font-size: 0.875rem; }
-        .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
-        .footer-links a { color: var(--muted); font-size: 0.875rem; transition: color 0.2s; }
+
+        .footer-copy {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            font-size: 0.82rem;
+            color: var(--muted);
+            transition: color 180ms ease;
+        }
+
         .footer-links a:hover { color: var(--text); }
 
-        /* ── SCROLL REVEAL ── */
-        .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
-        .reveal.visible { opacity: 1; transform: none; }
+        /* ── FADE IN ── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 600ms ease, transform 600ms ease;
+        }
+
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 900px) {
-            .hero-inner { grid-template-columns: 1fr; }
-            .hero-side { flex-direction: row; flex-wrap: wrap; }
-            .hero-side .stat-card { flex: 1 1 180px; }
-            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        @media (max-width: 980px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                align-items: flex-start;
+                padding-top: 100px;
+                gap: 40px;
+            }
+
+            .hero-right { display: none; }
+
+            .layers-grid { grid-template-columns: repeat(2, 1fr); }
+
+            .principle-item {
+                grid-template-columns: 60px 1fr;
+                gap: 20px;
+            }
+
+            .principle-desc { grid-column: 1 / -1; padding-top: 0; }
+            .principle-num { font-size: 2.2rem; }
+
+            .workflow-strip { grid-template-columns: 1fr; }
+
+            .cta-inner { grid-template-columns: 1fr; gap: 40px; }
         }
-        @media (max-width: 640px) {
+
+        @media (max-width: 720px) {
+            .shell { width: calc(100% - 32px); }
             .nav-links { display: none; }
-            .hero { padding: 7rem 1.25rem 2.5rem; }
-            .shell { padding: 0 1.25rem; }
+            h1 { font-size: 2.4rem; }
+            .layers-grid { grid-template-columns: 1fr; }
+            .content-section, .cta-section { padding: 72px 0; }
+            .principle-item { grid-template-columns: 1fr; gap: 12px; padding: 32px 0; }
+            .footer-inner { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
 <body>
+
     <!-- NAV -->
-    <header>
-        <nav>
-            <a class="brand" href="../">
-                <img src="../maplesilicon.png" alt="Maple Silicon Inc.">
-                <div>
-                    <div class="brand-name">Maple Silicon Inc.</div>
-                    <div class="brand-sub">Maple Shield — Edge AI Airspace Intelligence</div>
-                </div>
-            </a>
-            <ul class="nav-links">
-                <li><a href="../">Home</a></li>
-                <li><a href="#system">System</a></li>
-                <li><a href="#workflow">Workflow</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="../sparseflow/">SparseFlow</a></li>
-            </ul>
-            <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
-                <span id="themeIcon">🌙</span>
-            </button>
-        </nav>
+    <header id="site-header">
+        <div class="shell">
+            <div class="nav">
+                <a class="brand" href="../">
+                    <img src="../maplesilicon.png" alt="Maple Silicon">
+                    <span class="brand-name">Maple Silicon / <span>Maple Shield</span></span>
+                </a>
+                <nav class="nav-links" aria-label="Maple Shield">
+                    <a href="../">Home</a>
+                    <a href="#system">System</a>
+                    <a href="#principles">Principles</a>
+                    <a href="#workflow">Workflow</a>
+                    <a href="../sparseflow/">SparseFlow</a>
+                </nav>
+            </div>
+        </div>
     </header>
 
     <!-- HERO -->
     <section class="hero">
-        <div class="hero-inner">
-            <div class="hero-main reveal">
-                <div class="eyebrow">Maple Shield · Edge AI Airspace Awareness</div>
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="shell hero-inner">
+            <div class="hero-left">
+                <div class="hero-eyebrow">// Maple Shield — edge AI airspace awareness</div>
                 <h1>Detection, tracking, and operator clarity at the edge.</h1>
-                <p>
-                    Maple Shield is Maple Silicon Inc.'s platform for drone detection, persistent multi-target tracking, real-time alerting, and replayable incident intelligence. Designed for lawful operation in authorized environments — from military bases to critical infrastructure.
-                </p>
+                <p class="hero-lead">Maple Shield is Maple Silicon Inc.'s platform for drone detection, persistent multi-target tracking, alerting, and replayable incident intelligence in authorized environments.</p>
                 <div class="hero-actions">
-                    <a class="btn btn-primary" href="#system">View System Layers</a>
-                    <a class="btn btn-secondary" href="../">← Maple Silicon Inc.</a>
+                    <a class="btn btn-solid" href="#system">View System Layers</a>
+                    <a class="btn btn-ghost" href="../">← Back to Home</a>
                 </div>
             </div>
-
-            <div class="hero-side">
-                <div class="logo-card reveal">
-                    <img src="maple-shield-logo-full.png" alt="Maple Shield — Protecting Airspace With Intelligence">
-                </div>
-                <div class="stat-card reveal">
-                    <div class="stat-label">Detection Accuracy</div>
-                    <div class="stat-value hi">mAP@50: 0.926</div>
-                    <div style="font-size:0.82rem;color:var(--muted);margin-top:0.3rem;">YOLOv8n, validated on holdout dataset</div>
-                </div>
-                <div class="stat-card reveal">
-                    <div class="stat-label">Edge Power Envelope</div>
-                    <div class="stat-value">&lt;20W — NVIDIA Jetson Orin NX</div>
-                    <div style="font-size:0.82rem;color:var(--muted);margin-top:0.3rem;">Man-portable, RF-silent capable</div>
-                </div>
-                <div class="stat-card reveal">
-                    <div class="stat-label">C2 Protocol</div>
-                    <div class="stat-value">STANAG 4586-compatible MQTT</div>
-                    <div style="font-size:0.82rem;color:var(--muted);margin-top:0.3rem;">Real-time alert streaming to command systems</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SYSTEM LAYERS -->
-    <section id="system">
-        <div class="shell">
-            <div class="section-header reveal">
-                <h2>System layers with a clear job to do.</h2>
-                <p>An integrated stack that sees, tracks, scores, and explains — not a single component but the full sensing and operator layer.</p>
-            </div>
-            <div class="grid-2">
-                <article class="card reveal">
-                    <div class="card-kicker">Layer 01</div>
-                    <h3>Detection Engine</h3>
-                    <p>Computer vision on live video and edge sensor feeds — YOLOv8n tuned to surface airborne objects fast enough for real-time operator workflows.</p>
-                </article>
-                <article class="card reveal">
-                    <div class="card-kicker">Layer 02</div>
-                    <h3>Persistent Tracking</h3>
-                    <p>Stable track identities with IoU multi-object tracker, continuity across frames, and trajectory prediction to maintain operator trust under clutter and occlusion.</p>
-                </article>
-                <article class="card reveal">
-                    <div class="card-kicker">Layer 03</div>
-                    <h3>Alerting & Scoring</h3>
-                    <p>Risk-aware operator cues from CLEAR to CRITICAL — MQTT-streamed to C2 systems with STANAG 4586-compatible track messages.</p>
-                </article>
-                <article class="card reveal">
-                    <div class="card-kicker">Layer 04</div>
-                    <h3>Replay & Evidence</h3>
-                    <p>Incident history, replayable JSONL logs, and a structured audit trail that turns raw detections into post-event intelligence for operators and investigators.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRINCIPLES -->
-    <section>
-        <div class="shell">
-            <div class="section-header reveal">
-                <h2>Principles behind the product.</h2>
-                <p>Lawful detection first. Edge deployment by default. A system that evolves without becoming a hardware-first trap.</p>
-            </div>
-            <div class="grid-3">
-                <article class="card reveal">
-                    <div class="card-kicker">01</div>
-                    <h3>Software-first moat</h3>
-                    <p>The durable value sits in perception, track continuity, and event intelligence — not custom hardware. The software stack is the product.</p>
-                </article>
-                <article class="card reveal">
-                    <div class="card-kicker">02</div>
-                    <h3>Edge-first runtime</h3>
-                    <p>Latency, resilience, and constrained deployment matter. Maple Shield runs close to the sensor — not only on a distant server.</p>
-                </article>
-                <article class="card reveal">
-                    <div class="card-kicker">03</div>
-                    <h3>Operator-grade interface</h3>
-                    <p>Understandable alerts, replayable evidence, and confidence that the workflow helps humans act — not overwhelm them.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- WORKFLOW -->
-    <section id="workflow">
-        <div class="shell">
-            <div class="section-header reveal">
-                <h2>How the workflow is meant to feel.</h2>
-                <p>From sensor feed to trusted action — a chain that stays understandable at every step.</p>
-            </div>
-            <div class="grid-3">
-                <article class="card reveal">
-                    <div class="step-num">01</div>
-                    <h3>Sense</h3>
-                    <p>Ingest video or thermal feed, perform real-time detection, establish an initial track candidate with minimal delay.</p>
-                </article>
-                <article class="card reveal">
-                    <div class="step-num">02</div>
-                    <h3>Interpret</h3>
-                    <p>Stabilize the track, maintain identity, score against zone context, and filter alert noise before escalation.</p>
-                </article>
-                <article class="card reveal">
-                    <div class="step-num">03</div>
-                    <h3>Record</h3>
-                    <p>Log the event, preserve evidence, make the incident replayable for performance validation and post-event review.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-        <div class="shell">
-            <div class="cta-panel reveal">
-                <h2>Partner with us on Maple Shield.</h2>
-                <p>
-                    Maple Shield is being developed in alignment with Canadian defence priorities and IDEaS CUAS program objectives. We are actively seeking partnerships with defence agencies, research institutions, and system integrators for field validation, pilot deployments, and co-development.
-                </p>
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href="mailto:info@maplesilicon.co">✉ info@maplesilicon.co</a>
-                    <a class="btn btn-secondary" href="../">← Maple Silicon Inc.</a>
-                </div>
-                <div class="spec-grid">
-                    <div class="spec-item">
-                        <div class="spec-label">Thermal Camera</div>
-                        <div class="spec-value">FLIR Boson+ — RF-silent detection</div>
+            <div class="hero-right">
+                <div class="signal-panel">
+                    <div class="signal-header">// Platform signals</div>
+                    <div class="signal-item">
+                        <div class="signal-label">Positioning</div>
+                        <div class="signal-value">Edge AI for drone detection and airspace security.</div>
                     </div>
-                    <div class="spec-item">
-                        <div class="spec-label">C2 Protocol</div>
-                        <div class="spec-value">STANAG 4586-compatible MQTT</div>
+                    <div class="signal-item">
+                        <div class="signal-label">Current direction</div>
+                        <div class="signal-value">Operator-ready workflows with logging, replay, and track continuity.</div>
                     </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Edge Hardware</div>
-                        <div class="spec-value">NVIDIA Jetson Orin NX &lt;20W</div>
+                    <div class="signal-item">
+                        <div class="signal-label">Deployment bias</div>
+                        <div class="signal-value">Low-latency inference near the sensor, not cloud-first dependence.</div>
                     </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Grant Program</div>
-                        <div class="spec-value">DND IDEaS CUAS applicant</div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Incorporated</div>
-                        <div class="spec-value">Federal Corp · Caledon, ON</div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Contact</div>
-                        <div class="spec-value">info@maplesilicon.co</div>
+                    <div class="signal-item">
+                        <div class="signal-label">Status</div>
+                        <div class="signal-value" style="color: var(--accent);">In active development</div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="hero-scroll-hint" aria-hidden="true">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
     </section>
 
-    <!-- FOOTER -->
+    <hr class="rule">
+
+    <main>
+        <!-- SYSTEM LAYERS -->
+        <section class="content-section" id="system">
+            <div class="shell">
+                <div class="section-label fade-in">// System layers — a clear job at each level</div>
+                <h2 class="section-h2 fade-in">System layers with<br>a clear job to do.</h2>
+                <p class="section-sub fade-in">Maple Shield is being shaped as a full sensing and operator layer. The opportunity is not a single dramatic component — it is the integrated stack that sees, tracks, scores, and explains.</p>
+                <div class="layers-grid fade-in">
+                    <div class="layer-card">
+                        <div class="layer-num">Layer 01</div>
+                        <div class="layer-title">Detection engine</div>
+                        <p class="layer-desc">Computer vision for live video and edge sensor feeds, tuned to surface airborne objects quickly enough for real-time workflows.</p>
+                    </div>
+                    <div class="layer-card">
+                        <div class="layer-num">Layer 02</div>
+                        <div class="layer-title">Persistent tracking</div>
+                        <p class="layer-desc">Stable track identities, continuity across frames, and the ability to maintain operator trust even when clutter and occlusion appear.</p>
+                    </div>
+                    <div class="layer-card">
+                        <div class="layer-num">Layer 03</div>
+                        <div class="layer-title">Alerting and scoring</div>
+                        <p class="layer-desc">Risk-aware operator cues that prioritize what matters, reduce noise, and keep human decision-making readable under pressure.</p>
+                    </div>
+                    <div class="layer-card">
+                        <div class="layer-num">Layer 04</div>
+                        <div class="layer-title">Replay and evidence</div>
+                        <p class="layer-desc">Incident history, replayable logs, and a structured audit trail that turns raw detections into useful post-event intelligence.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- PRINCIPLES -->
+        <section class="content-section" id="principles">
+            <div class="shell">
+                <div class="section-label fade-in">// Product principles</div>
+                <h2 class="section-h2 fade-in">Principles behind<br>the product.</h2>
+                <p class="section-sub fade-in">The product direction is kept disciplined: lawful detection and awareness first, edge deployment by default, and a system design that can evolve without turning into a hardware-first trap.</p>
+                <div class="principles-list">
+                    <div class="principle-item fade-in">
+                        <div class="principle-num">01</div>
+                        <div class="principle-title">Software-first moat</div>
+                        <p class="principle-desc">The durable value sits in perception, track continuity, event intelligence, and integration — not in trying to start with expensive custom hardware.</p>
+                    </div>
+                    <div class="principle-item fade-in">
+                        <div class="principle-num">02</div>
+                        <div class="principle-title">Edge-first runtime</div>
+                        <p class="principle-desc">Latency, resilience, and constrained deployment matter. Maple Shield is being positioned for the node closest to the sensor, not only the server furthest away.</p>
+                    </div>
+                    <div class="principle-item fade-in">
+                        <div class="principle-num">03</div>
+                        <div class="principle-title">Operator-grade interface</div>
+                        <p class="principle-desc">A serious system must produce understandable alerts, replayable evidence, and confidence that the workflow helps humans act instead of overwhelming them.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- WORKFLOW -->
+        <section class="content-section" id="workflow">
+            <div class="shell">
+                <div class="section-label fade-in">// Operator workflow</div>
+                <h2 class="section-h2 fade-in">How the workflow<br>is meant to feel.</h2>
+                <p class="section-sub fade-in">The architecture is not just model-in, box-out. The experience should move from sensor feed to trusted action with a chain that remains understandable at every step.</p>
+                <div class="workflow-strip fade-in">
+                    <div class="workflow-card">
+                        <div class="workflow-step">01 / Sense</div>
+                        <div class="workflow-title">Sense</div>
+                        <p class="workflow-desc">Ingest video or adjacent sensor data, perform real-time detection, and establish an initial track candidate with minimal delay.</p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-step">02 / Interpret</div>
+                        <div class="workflow-title">Interpret</div>
+                        <p class="workflow-desc">Stabilize the track, maintain identity, score the event against zone or scenario context, and filter away alert noise.</p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-step">03 / Record</div>
+                        <div class="workflow-title">Record</div>
+                        <p class="workflow-desc">Log the event, preserve evidence, and make the incident replayable so teams can validate performance and understand what happened.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="shell">
+                <div class="cta-inner">
+                    <div class="cta-left fade-in">
+                        <div class="cta-eyebrow">// Company direction</div>
+                        <h2 class="cta-title">Maple Shield now looks like a product, not a placeholder.</h2>
+                    </div>
+                    <div class="cta-right fade-in">
+                        <p>This platform is designed to present Maple Shield as a focused advanced product inside Maple Silicon Inc., with enough seriousness for technical reviewers, customers, and partners to immediately understand what category it belongs to and why it matters.</p>
+                        <p>Part of a two-product systems company: SparseFlow for compute efficiency, Maple Shield for edge awareness.</p>
+                        <div class="cta-links">
+                            <a class="btn btn-solid" href="../">Back to Maple Silicon Inc.</a>
+                            <a class="btn btn-ghost" href="../sparseflow/">See SparseFlow →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer>
-        <div class="footer-inner">
-            <span>© 2026 Maple Silicon Inc. · Caledon, Ontario, Canada · Federal Corporation</span>
-            <div class="footer-links">
-                <a href="../">Home</a>
-                <a href="../sparseflow/">SparseFlow</a>
-                <a href="#">Maple Shield</a>
-                <a href="mailto:info@maplesilicon.co">Contact</a>
+        <div class="shell">
+            <div class="footer-inner">
+                <div class="footer-copy">Maple Shield by Maple Silicon Inc. — maplesilicon.co</div>
+                <div class="footer-links">
+                    <a href="../">Home</a>
+                    <a href="../sparseflow/">SparseFlow</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- THREE.JS SPARSE MATRIX (TEAL) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // ── THEME ──
-        function toggleTheme() {
-            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('ms-theme', next);
-            document.getElementById('themeIcon').textContent = next === 'dark' ? '🌙' : '☀️';
-        }
-        (function () {
-            const saved = localStorage.getItem('ms-theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', saved);
-            document.getElementById('themeIcon').textContent = saved === 'dark' ? '🌙' : '☀️';
-        })();
+    (function() {
+        const canvas = document.getElementById('hero-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setClearColor(0x000000, 0);
 
-        // ── SCROLL REVEAL ──
-        const obs = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+        camera.position.set(0, 0, 18);
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.06));
+        const pl1 = new THREE.PointLight(0x00f5cc, 1.2, 50);
+        pl1.position.set(5, 3, 8);
+        scene.add(pl1);
+        const pl2 = new THREE.PointLight(0x00f5cc, 0.3, 30);
+        pl2.position.set(-5, -3, 4);
+        scene.add(pl2);
+
+        const COLS = 14, ROWS = 8, DEPTH = 3;
+        const CUBE = 0.42, GAP = 1.05;
+        const OX = -(COLS - 1) * GAP / 2;
+        const OY = -(ROWS - 1) * GAP / 2;
+        const OZ = -(DEPTH - 1) * GAP / 2;
+
+        const geoA = new THREE.BoxGeometry(CUBE, CUBE, CUBE);
+        const geoI = new THREE.BoxGeometry(CUBE * 0.85, CUBE * 0.85, CUBE * 0.85);
+        const matI = new THREE.MeshBasicMaterial({ color: 0x1a1a1a, wireframe: true });
+
+        const group = new THREE.Group();
+        const active = [];
+
+        function isActive(x, y, z) {
+            return ((x * 7 + y * 13 + z * 31) % 4) < 2;
+        }
+
+        for (let z = 0; z < DEPTH; z++) {
+            for (let y = 0; y < ROWS; y++) {
+                for (let x = 0; x < COLS; x++) {
+                    const act = isActive(x, y, z);
+                    const mat = act
+                        ? new THREE.MeshStandardMaterial({ color: 0x00f5cc, emissive: 0x00f5cc, emissiveIntensity: 0.32, roughness: 0.2 })
+                        : matI;
+                    const mesh = new THREE.Mesh(act ? geoA : geoI, mat);
+                    mesh.position.set(OX + x * GAP, OY + y * GAP, OZ + z * GAP);
+                    group.add(mesh);
+                    if (act) active.push(mesh);
+                }
+            }
+        }
+
+        scene.add(group);
+
+        let tRotX = 0, tRotY = 0, cRotX = 0, cRotY = 0, baseY = 0, scrollZ = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            tRotY = (e.clientX / window.innerWidth - 0.5) * 0.6;
+            tRotX = -(e.clientY / window.innerHeight - 0.5) * 0.35;
+        });
+
+        window.addEventListener('scroll', () => { scrollZ = window.scrollY * 0.006; });
+
+        setInterval(() => {
+            const n = Math.floor(active.length * 0.07);
+            for (let i = 0; i < n; i++) {
+                active[Math.floor(Math.random() * active.length)].material.emissiveIntensity = 0.25 + Math.random() * 0.75;
+            }
+        }, 1800);
+
+        function resize() {
+            const w = canvas.clientWidth, h = canvas.clientHeight;
+            renderer.setSize(w, h, false);
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+        }
+
+        new ResizeObserver(resize).observe(canvas);
+        resize();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            baseY += 0.0018;
+            cRotX += (tRotX - cRotX) * 0.04;
+            cRotY += (tRotY - cRotY) * 0.04;
+            group.rotation.y = baseY + cRotY;
+            group.rotation.x = -0.2 + cRotX;
+            camera.position.z = 18 + scrollZ;
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    })();
     </script>
+
+    <script>
+    (function() {
+        // Nav scroll
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
+
+        // Fade-in observer
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const t = document.querySelector(a.getAttribute('href'));
+                if (t) { e.preventDefault(); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }); }
+            });
+        });
+    })();
+    </script>
+
 </body>
 </html>
