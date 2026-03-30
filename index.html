@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maple Silicon — GPU Optimization. Energy-Efficient Inference.</title>
+  <title>Maple Silicon — Edge AI for Drone Detection &amp; Airspace Security.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -721,18 +721,18 @@
   <div class="hero-content">
     <p class="hero-eyebrow">Maple Silicon Inc.</p>
     <h1 class="hero-title">
-      GPU<br/>
-      <span class="accent">Optimization.</span><br/>
-      Energy&#8209;Efficient<br/>
-      Inference.
+      Edge AI.<br/>
+      <span class="accent">Airspace</span><br/>
+      Awareness.<br/>
+      Zero Cloud.
     </h1>
-    <p class="hero-sub">The software layer between raw compute and field-ready intelligence.</p>
-    <p class="hero-tagline">AI Infrastructure · Built Different</p>
+    <p class="hero-sub">Real-time drone detection for contested, offline, and SWaP-constrained environments.</p>
+    <p class="hero-tagline">Maple Shield · Built for the Edge</p>
     <div class="hero-cycling">
-      <span class="cycle-word active">SPARSE</span>
-      <span class="cycle-word">FAST</span>
-      <span class="cycle-word">EFFICIENT</span>
-      <span class="cycle-word">LEAN</span>
+      <span class="cycle-word active">OFFLINE</span>
+      <span class="cycle-word">REAL&#8209;TIME</span>
+      <span class="cycle-word">AIR&#8209;GAPPED</span>
+      <span class="cycle-word">FIELD&#8209;READY</span>
     </div>
   </div>
   <div class="hero-scroll">
@@ -745,29 +745,29 @@
 <section id="problem">
   <div class="section-inner">
     <p class="section-label reveal">01 — The Problem</p>
-    <h2 class="section-title reveal reveal-delay-1">GPU waste is the<br/>silent tax on AI.</h2>
+    <h2 class="section-title reveal reveal-delay-1">Drone threats don't<br/>wait for the cloud.</h2>
     <div class="problem-grid">
       <div class="reveal reveal-delay-2">
-        <p class="section-body">Modern AI models are trained for peak accuracy — not deployment efficiency. The result: bloated inference pipelines that burn compute, inflate costs, and choke on edge hardware.</p>
+        <p class="section-body">Commercial drones are cheap, proliferating fast, and increasingly weaponized. Existing detection systems require connectivity, cloud compute, or bulky hardware that can't go where the threat is.</p>
         <br/>
-        <p class="section-body">We fix that. Not with approximations — with precision-engineered sparsity that preserves model fidelity while slashing the compute bill.</p>
+        <p class="section-body">Maple Shield runs entirely on-device. No uplink required. No latency penalty. Detection that works in the field — not just in the lab.</p>
       </div>
       <div class="problem-stat-grid reveal reveal-delay-3">
         <div class="problem-stat">
-          <div class="problem-stat-val">70%</div>
-          <div class="problem-stat-label">of GPU cycles wasted on dense operations in sparse models</div>
+          <div class="problem-stat-val">11M+</div>
+          <div class="problem-stat-label">registered drones in the US alone — growing every year</div>
         </div>
         <div class="problem-stat">
-          <div class="problem-stat-val">3×</div>
-          <div class="problem-stat-label">higher inference cost vs. optimized pipelines</div>
+          <div class="problem-stat-val">&lt;500ms</div>
+          <div class="problem-stat-label">target detection latency on constrained edge hardware</div>
         </div>
         <div class="problem-stat">
-          <div class="problem-stat-val">$4B+</div>
-          <div class="problem-stat-label">annual inference overspend across hyperscalers</div>
+          <div class="problem-stat-val">0</div>
+          <div class="problem-stat-label">cloud dependencies — fully air-gapped operation</div>
         </div>
         <div class="problem-stat">
-          <div class="problem-stat-val">Edge</div>
-          <div class="problem-stat-label">environments where generic models simply don't fit</div>
+          <div class="problem-stat-val">Multi</div>
+          <div class="problem-stat-label">-modal fusion: RF, acoustic, and visual detection signals</div>
         </div>
       </div>
     </div>
@@ -784,20 +784,6 @@
     <div class="products-grid">
       <div class="product-card reveal reveal-delay-2">
         <div class="product-card-wire"></div>
-        <span class="product-badge badge-live">Live — v2.0</span>
-        <img src="sparseflow.png" alt="SparseFlow" class="product-icon" />
-        <h3 class="product-name">SparseFlow</h3>
-        <p class="product-desc">Sparse inference acceleration for GPU workloads. SparseFlow rewrites the execution graph at the operator level — skipping zeros without touching model weights.</p>
-        <ul class="product-specs">
-          <li>Up to 1.68× end-to-end speedup</li>
-          <li>Zero regressions across 60+ configurations tested</li>
-          <li>Drop-in integration — no retraining required</li>
-          <li>Supports PyTorch, ONNX, and TensorRT</li>
-        </ul>
-        <a href="sparseflow/" class="product-link">Explore SparseFlow →</a>
-      </div>
-      <div class="product-card reveal reveal-delay-3">
-        <div class="product-card-wire"></div>
         <span class="product-badge badge-building">In Development</span>
         <img src="borealis.png" alt="Maple Shield" class="product-icon" />
         <h3 class="product-name">Maple Shield</h3>
@@ -810,6 +796,20 @@
         </ul>
         <a href="maple-shield/" class="product-link">Explore Maple Shield →</a>
       </div>
+      <div class="product-card reveal reveal-delay-3">
+        <div class="product-card-wire"></div>
+        <span class="product-badge badge-live">Live — v2.0</span>
+        <img src="sparseflow.png" alt="SparseFlow" class="product-icon" />
+        <h3 class="product-name">SparseFlow</h3>
+        <p class="product-desc">Sparse inference acceleration for GPU workloads. SparseFlow rewrites the execution graph at the operator level — skipping zeros without touching model weights.</p>
+        <ul class="product-specs">
+          <li>Up to 1.68× end-to-end speedup</li>
+          <li>Zero regressions across 60+ configurations tested</li>
+          <li>Drop-in integration — no retraining required</li>
+          <li>Supports PyTorch, ONNX, and TensorRT</li>
+        </ul>
+        <a href="sparseflow/" class="product-link">Explore SparseFlow →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -820,25 +820,25 @@
 <section id="numbers">
   <div class="section-inner">
     <p class="section-label reveal">03 — By the Numbers</p>
-    <h2 class="section-title reveal reveal-delay-1">Results that<br/>ship to prod.</h2>
+    <h2 class="section-title reveal reveal-delay-1">Built for the<br/>hardest environments.</h2>
     <div class="numbers-grid">
       <div class="number-block reveal reveal-delay-1">
         <div class="number-val">
-          <span class="num-accent counter" data-target="168" data-suffix="×" data-decimal="true">1.68×</span>
+          <span class="num-accent counter" data-target="500" data-suffix="ms">&lt;500ms</span>
         </div>
-        <div class="number-label">end-to-end<br/>inference speedup</div>
+        <div class="number-label">target detection<br/>latency on-device</div>
       </div>
       <div class="number-block reveal reveal-delay-2">
         <div class="number-val">
           <span class="num-accent counter" data-target="0">0</span>
         </div>
-        <div class="number-label">regressions across<br/>all tested configs</div>
+        <div class="number-label">cloud dependencies —<br/>fully air-gapped</div>
       </div>
       <div class="number-block reveal reveal-delay-3">
         <div class="number-val">
-          <span class="num-accent counter" data-target="60" data-suffix="+">60+</span>
+          <span class="num-accent counter" data-target="3" data-suffix=" signals">3</span>
         </div>
-        <div class="number-label">hardware configurations<br/>validated</div>
+        <div class="number-label">fused detection modalities:<br/>RF · acoustic · visual</div>
       </div>
     </div>
   </div>
@@ -850,28 +850,28 @@
 <section id="how">
   <div class="section-inner">
     <p class="section-label reveal">04 — How It Works</p>
-    <h2 class="section-title reveal reveal-delay-1">The SparseFlow<br/>pipeline.</h2>
+    <h2 class="section-title reveal reveal-delay-1">The Maple Shield<br/>detection pipeline.</h2>
     <div class="pipeline">
       <div class="pipeline-steps">
         <div class="pipeline-step reveal reveal-delay-1">
           <div class="step-num">01</div>
-          <h4 class="step-title">Model Ingestion</h4>
-          <p class="step-body">Load any pre-trained model from PyTorch, ONNX, or TensorRT. No retraining. No fine-tuning.</p>
+          <h4 class="step-title">Sensor Fusion</h4>
+          <p class="step-body">RF signatures, acoustic profiles, and visual feeds are ingested simultaneously and time-synchronized on-device.</p>
         </div>
         <div class="pipeline-step reveal reveal-delay-2">
           <div class="step-num">02</div>
-          <h4 class="step-title">Sparsity Analysis</h4>
-          <p class="step-body">SparseFlow profiles activation patterns and identifies zero-valued computation at the operator level.</p>
+          <h4 class="step-title">On-Device Inference</h4>
+          <p class="step-body">Optimized models run locally on SWaP-constrained hardware. No uplink required. No round-trip latency.</p>
         </div>
         <div class="pipeline-step reveal reveal-delay-3">
           <div class="step-num">03</div>
-          <h4 class="step-title">Graph Rewriting</h4>
-          <p class="step-body">The execution graph is rewritten to skip zero operations using custom CUDA kernels — preserving numerical fidelity.</p>
+          <h4 class="step-title">Threat Classification</h4>
+          <p class="step-body">Detections are scored, classified by drone type, and correlated across modalities to eliminate false positives.</p>
         </div>
         <div class="pipeline-step reveal reveal-delay-4">
           <div class="step-num">04</div>
-          <h4 class="step-title">Deploy</h4>
-          <p class="step-body">Drop the optimized runtime into your existing stack. Same API, same outputs — faster execution.</p>
+          <h4 class="step-title">Alert & Track</h4>
+          <p class="step-body">Operators receive real-time alerts with track history. All data stays local — no cloud, no exposure.</p>
         </div>
       </div>
     </div>
@@ -911,11 +911,11 @@
 <section id="cta">
   <div class="cta-inner">
     <p class="section-label reveal" style="text-align:center;">06 — Work With Us</p>
-    <h2 class="cta-title reveal reveal-delay-1">Ready to stop<br/>burning compute?</h2>
-    <p class="cta-sub reveal reveal-delay-2">Get early API access to SparseFlow, request a benchmark run on your models, or explore partnership opportunities.</p>
+    <h2 class="cta-title reveal reveal-delay-1">Secure your<br/>airspace.</h2>
+    <p class="cta-sub reveal reveal-delay-2">Get early access to Maple Shield, request a field demonstration, or explore integration with your existing systems.</p>
     <div class="cta-buttons reveal reveal-delay-3">
-      <a href="mailto:contact@maplesilicon.com?subject=SparseFlow%20API%20Access" class="btn-primary">Request API Access</a>
-      <a href="sparseflow/" class="btn-secondary">View SparseFlow</a>
+      <a href="maple-shield/" class="btn-primary">Explore Maple Shield</a>
+      <a href="mailto:contact@maplesilicon.com?subject=Maple%20Shield%20Demo" class="btn-secondary">Request a Demo</a>
       <a href="mailto:contact@maplesilicon.com?subject=Partnership" class="btn-secondary">Get in Touch</a>
     </div>
   </div>
@@ -927,8 +927,8 @@
     <strong>Maple Silicon Inc.</strong> · GPU Optimization &amp; Edge AI
   </div>
   <ul class="footer-links">
-    <li><a href="sparseflow/">SparseFlow</a></li>
     <li><a href="maple-shield/">Maple Shield</a></li>
+    <li><a href="sparseflow/">SparseFlow</a></li>
     <li><a href="mailto:contact@maplesilicon.com">Contact</a></li>
   </ul>
 </footer>
