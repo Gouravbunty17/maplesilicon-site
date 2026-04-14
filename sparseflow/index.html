@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SparseFlow™ — High-performance compiler &amp; runtime for sparse GPU compute | Maple Silicon Inc.</title>
     <meta name="description" content="Compiler + runtime for verifiable structured sparsity (N:M). Reproducible performance. Open-source. Built by Maple Silicon.">
+    <script>
+        (function() {
+            try {
+                document.documentElement.setAttribute('data-theme', localStorage.getItem('maplesilicon-theme') || 'dark');
+            } catch (error) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -63,8 +72,8 @@
         /* ── THEME TOGGLE ── */
         .theme-btn {
             position: fixed;
-            top: 22px;
-            right: 24px;
+            right: 20px;
+            bottom: 20px;
             z-index: 200;
             background: var(--surface);
             border: 1px solid var(--border);
@@ -647,7 +656,7 @@
         @media (max-width: 720px) {
             .shell { width: calc(100% - 32px); }
             .nav-links { display: none; }
-            .theme-btn { top: 18px; right: 18px; }
+            .theme-btn { right: 16px; bottom: 16px; }
             .hero h1 { font-size: 3rem; }
             .content-section { padding: 72px 0; }
         }
@@ -1063,12 +1072,12 @@
         const html = document.documentElement;
         const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         html.setAttribute('data-theme', next);
-        localStorage.setItem('sf-theme', next);
+        localStorage.setItem('maplesilicon-theme', next);
         document.getElementById('themeLabel').textContent = next === 'dark' ? 'Light' : 'Dark';
     }
 
     (function() {
-        const saved = localStorage.getItem('sf-theme') || 'dark';
+        const saved = localStorage.getItem('maplesilicon-theme') || 'dark';
         document.documentElement.setAttribute('data-theme', saved);
         document.getElementById('themeLabel').textContent = saved === 'dark' ? 'Light' : 'Dark';
 

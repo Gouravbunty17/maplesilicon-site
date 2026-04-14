@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maple Silicon — Edge AI for Drone Detection &amp; Airspace Security.</title>
+  <script>
+    (function() {
+      try {
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('maplesilicon-theme') || 'dark');
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
+    :root, [data-theme="dark"] {
       --bg: #0a0a0f;
       --bg2: #0d0d14;
       --bg3: #111118;
@@ -27,6 +36,22 @@
       --border-hover: rgba(249,115,22,0.4);
     }
 
+    [data-theme="light"] {
+      --bg: #f6f3ec;
+      --bg2: #f1eee6;
+      --bg3: #fffdf8;
+      --amber: #b65b12;
+      --amber-dim: rgba(182,91,18,0.10);
+      --amber-glow: rgba(182,91,18,0.20);
+      --blue: #116f9f;
+      --blue-dim: rgba(17,111,159,0.08);
+      --text: #17141c;
+      --text-dim: #4f4a5d;
+      --text-muted: #6a6578;
+      --border: rgba(23,20,28,0.10);
+      --border-hover: rgba(182,91,18,0.28);
+    }
+
     html { scroll-behavior: smooth; }
 
     body {
@@ -36,6 +61,31 @@
       font-size: 16px;
       line-height: 1.6;
       overflow-x: hidden;
+      transition: background 300ms ease, color 300ms ease;
+    }
+
+    .theme-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 200;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+      transition: color 180ms ease, border-color 180ms ease, background 300ms ease, transform 180ms ease;
+    }
+    .theme-btn:hover {
+      color: var(--text);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
     }
 
     /* Grain overlay */
@@ -48,6 +98,7 @@
       z-index: 9999;
       opacity: 0.45;
     }
+    [data-theme="light"] body::before { opacity: 0.16; }
 
     /* ── CURSOR GLOW ── */
     #cursor-glow {
@@ -60,6 +111,10 @@
       transform: translate(-50%, -50%);
       z-index: 1;
       will-change: left, top;
+    }
+    [data-theme="light"] #cursor-glow {
+      background: radial-gradient(circle, rgba(182,91,18,0.08) 0%, transparent 72%);
+      opacity: 0.72;
     }
 
     /* ── NAV ── */
@@ -80,6 +135,13 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-color: var(--border);
+    }
+    [data-theme="light"] nav {
+      background: linear-gradient(to bottom, rgba(246,243,236,0.92), rgba(246,243,236,0.6));
+      border-bottom-color: rgba(23,20,28,0.06);
+    }
+    [data-theme="light"] nav.scrolled {
+      background: rgba(246,243,236,0.96);
     }
     .nav-logo {
       display: flex;
@@ -116,6 +178,7 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--text); }
+    [data-theme="light"] .nav-links a { color: var(--text-muted); }
     .nav-cta {
       color: var(--amber) !important;
       border: 1px solid var(--amber-glow) !important;
@@ -146,6 +209,12 @@
       z-index: 0;
       pointer-events: none;
     }
+    [data-theme="light"] #hero::before {
+      background:
+        radial-gradient(circle at 20% 25%, rgba(17,111,159,0.10), transparent 28%),
+        radial-gradient(circle at 75% 30%, rgba(182,91,18,0.12), transparent 32%),
+        radial-gradient(circle at 50% 78%, rgba(182,91,18,0.06), transparent 24%);
+    }
     #hero::after {
       content: '';
       position: absolute;
@@ -155,6 +224,11 @@
         radial-gradient(circle at center, transparent 0 36%, rgba(10,10,15,0.22) 62%, rgba(10,10,15,0.72) 100%);
       z-index: 1;
       pointer-events: none;
+    }
+    [data-theme="light"] #hero::after {
+      background:
+        linear-gradient(180deg, rgba(246,243,236,0.20) 0%, rgba(246,243,236,0.04) 35%, rgba(246,243,236,0.45) 100%),
+        radial-gradient(circle at center, transparent 0 36%, rgba(246,243,236,0.18) 62%, rgba(246,243,236,0.76) 100%);
     }
     #hero-canvas {
       position: absolute;
@@ -178,6 +252,11 @@
       border-radius: 28px;
       padding-top: 44px;
       padding-bottom: 44px;
+    }
+    [data-theme="light"] .hero-content {
+      background: linear-gradient(180deg, rgba(255,253,248,0.92), rgba(255,253,248,0.78));
+      border-color: rgba(23,20,28,0.10);
+      box-shadow: 0 24px 70px rgba(82,61,28,0.08);
     }
     .hero-eyebrow {
       font-family: 'DM Mono', monospace;
@@ -745,6 +824,76 @@
     }
     .footer-links a:hover { color: #d4d4e2; }
 
+    [data-theme="light"] #hero-canvas {
+      opacity: 0.42;
+      mix-blend-mode: multiply;
+    }
+
+    [data-theme="light"] .hero-title,
+    [data-theme="light"] .section-title,
+    [data-theme="light"] .product-name,
+    [data-theme="light"] .number-val,
+    [data-theme="light"] .step-title,
+    [data-theme="light"] .founder-name,
+    [data-theme="light"] .cta-title,
+    [data-theme="light"] .footer-brand strong {
+      color: var(--text);
+      text-shadow: none;
+    }
+
+    [data-theme="light"] .hero-sub,
+    [data-theme="light"] .hero-proof,
+    [data-theme="light"] .section-kicker,
+    [data-theme="light"] .section-body,
+    [data-theme="light"] .product-desc,
+    [data-theme="light"] .product-specs li,
+    [data-theme="light"] .number-label,
+    [data-theme="light"] .step-body,
+    [data-theme="light"] .founder-role,
+    [data-theme="light"] .founder-bio,
+    [data-theme="light"] .credential,
+    [data-theme="light"] .cta-sub,
+    [data-theme="light"] .contact-email,
+    [data-theme="light"] .footer-brand,
+    [data-theme="light"] .footer-links a {
+      color: var(--text-dim);
+    }
+
+    [data-theme="light"] .hero-proof {
+      border-color: rgba(23,20,28,0.10);
+      background: rgba(255,255,255,0.75);
+    }
+
+    [data-theme="light"] .step,
+    [data-theme="light"] .product-card,
+    [data-theme="light"] .number-block,
+    [data-theme="light"] .founder-card,
+    [data-theme="light"] .cta-box {
+      box-shadow: 0 18px 46px rgba(82,61,28,0.05);
+    }
+
+    [data-theme="light"] .badge-live {
+      color: #29774f;
+      border-color: rgba(41,119,79,0.22);
+      background: rgba(41,119,79,0.08);
+    }
+
+    [data-theme="light"] .btn-primary {
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .btn-primary:hover {
+      background: #9f4f12;
+    }
+
+    [data-theme="light"] .btn-secondary {
+      border-color: rgba(23,20,28,0.16);
+    }
+
+    [data-theme="light"] .btn-secondary:hover {
+      background: rgba(23,20,28,0.04);
+    }
+
     /* ── KEYFRAMES ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(22px); }
@@ -766,6 +915,7 @@
     @media (max-width: 900px) {
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
+      .theme-btn { right: 16px; bottom: 16px; }
       .section-inner { padding: 80px 24px; }
       .hero-content { padding-left: 20px; padding-right: 20px; }
       .problem-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -810,6 +960,10 @@
   </style>
 </head>
 <body>
+
+<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle color theme">
+  <span id="themeLabel">Light</span>
+</button>
 
 <div id="cursor-glow"></div>
 
@@ -1066,6 +1220,19 @@ document.addEventListener('mousemove', e => { glowX = e.clientX; glowY = e.clien
 })();
 
 // ── NAV SCROLL ──
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('maplesilicon-theme', theme);
+  document.getElementById('themeLabel').textContent = theme === 'dark' ? 'Light' : 'Dark';
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+
+applyTheme(document.documentElement.getAttribute('data-theme') || 'dark');
+
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 50);
