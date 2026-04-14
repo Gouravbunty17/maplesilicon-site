@@ -71,6 +71,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(10,10,15,0.78), rgba(10,10,15,0.2));
       border-bottom: 1px solid transparent;
       transition: background 0.3s, border-color 0.3s;
     }
@@ -169,6 +170,14 @@
       text-align: center;
       padding: 0 24px;
       max-width: 900px;
+      background: linear-gradient(180deg, rgba(10,10,15,0.78), rgba(10,10,15,0.52));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 28px 90px rgba(0,0,0,0.28);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 28px;
+      padding-top: 44px;
+      padding-bottom: 44px;
     }
     .hero-eyebrow {
       font-family: 'DM Mono', monospace;
@@ -191,13 +200,14 @@
       margin-bottom: 32px;
       opacity: 0;
       animation: fadeUp 0.8s 0.5s forwards;
+      text-shadow: 0 8px 28px rgba(0,0,0,0.42);
     }
     .hero-title .accent { color: var(--amber); }
     .hero-sub {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(16px, 2.2vw, 21px);
       font-weight: 300;
-      color: var(--text-dim);
+      color: #b8b8d0;
       margin-bottom: 20px;
       opacity: 0;
       animation: fadeUp 0.8s 0.7s forwards;
@@ -209,7 +219,7 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       /* FIX: uses --text-muted, now #8585a5 for sufficient contrast */
-      color: var(--text-muted);
+      color: #c4c4dc;
       text-align: right;
       margin-bottom: 52px;
       opacity: 0;
@@ -230,8 +240,9 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       /* FIX: --text-muted now #8585a5 */
-      color: var(--text-muted);
-      border: 1px solid var(--border);
+      color: #d2d2e6;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.02);
       padding: 6px 14px;
       transition: color 0.4s, border-color 0.4s;
     }
@@ -264,7 +275,7 @@
       font-size: 12px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: #d2d2e6;
     }
 
     /* ── SECTIONS COMMON ── */
@@ -727,6 +738,7 @@
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
       .section-inner { padding: 80px 24px; }
+      .hero-content { padding-left: 20px; padding-right: 20px; }
       .problem-grid { grid-template-columns: 1fr; gap: 48px; }
       .products-grid { grid-template-columns: 1fr; }
       .numbers-grid { grid-template-columns: 1fr; }
@@ -737,6 +749,11 @@
       footer { flex-direction: column; gap: 24px; text-align: center; padding: 32px 24px; }
     }
     @media (max-width: 540px) {
+      .hero-content {
+        border-radius: 22px;
+        padding-top: 32px;
+        padding-bottom: 32px;
+      }
       .pipeline-steps { grid-template-columns: 1fr; }
       .problem-stat-grid { grid-template-columns: 1fr; }
     }
