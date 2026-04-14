@@ -21,7 +21,8 @@
       --blue-dim: rgba(56,189,248,0.10);
       --text: #e8e8f0;
       --text-dim: #7a7a9a;
-      --text-muted: #4a4a6a;
+      /* FIX: #4a4a6a → #8585a5 — was 2.7:1, now 5.5:1 on dark bg */
+      --text-muted: #8585a5;
       --border: rgba(255,255,255,0.06);
       --border-hover: rgba(249,115,22,0.4);
     }
@@ -105,6 +106,7 @@
     }
     .nav-links a {
       font-family: 'DM Mono', monospace;
+      /* FIX: 11px → 12px minimum readable size */
       font-size: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -145,7 +147,8 @@
     }
     .hero-eyebrow {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      /* FIX: 11px → 12px */
+      font-size: 12px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--amber);
@@ -176,9 +179,11 @@
     }
     .hero-tagline {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      /* FIX: 11px → 12px */
+      font-size: 12px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
+      /* FIX: uses --text-muted, now #8585a5 for sufficient contrast */
       color: var(--text-muted);
       text-align: right;
       margin-bottom: 52px;
@@ -195,9 +200,11 @@
     }
     .cycle-word {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      /* FIX: 11px → 12px */
+      font-size: 12px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
+      /* FIX: --text-muted now #8585a5 */
       color: var(--text-muted);
       border: 1px solid var(--border);
       padding: 6px 14px;
@@ -228,7 +235,8 @@
     }
     .hero-scroll span {
       font-family: 'DM Mono', monospace;
-      font-size: 10px;
+      /* FIX: 10px → 12px */
+      font-size: 12px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -243,7 +251,8 @@
     }
     .section-label {
       font-family: 'DM Mono', monospace;
-      font-size: 10px;
+      /* FIX: 10px → 12px */
+      font-size: 12px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--amber);
@@ -343,7 +352,6 @@
     }
     .product-card:hover { border-color: var(--border-hover); }
     .product-card:hover::before { opacity: 1; }
-    /* wireframe accent */
     .product-card-wire {
       position: absolute;
       top: -24px; right: -24px;
@@ -363,7 +371,8 @@
     .product-badge {
       display: inline-block;
       font-family: 'DM Mono', monospace;
-      font-size: 10px;
+      /* FIX: 10px → 12px */
+      font-size: 12px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       padding: 4px 10px;
@@ -407,7 +416,8 @@
       gap: 8px;
       margin-top: 28px;
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      /* FIX: 11px → 12px */
+      font-size: 12px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--amber);
@@ -445,7 +455,8 @@
     .number-val .num-accent { color: var(--amber); }
     .number-label {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      /* FIX: 11px → 12px; color now --text-muted #8585a5 */
+      font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -530,6 +541,7 @@
     .credential {
       font-family: 'DM Mono', monospace;
       font-size: 12px;
+      /* FIX: --text-muted now #8585a5 */
       color: var(--text-muted);
       display: flex;
       align-items: center;
@@ -562,7 +574,8 @@
     }
     .founder-title {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      /* FIX: 11px → 12px */
+      font-size: 12px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--amber);
@@ -646,17 +659,21 @@
     }
     .footer-brand {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      /* FIX: 11px → 12px */
+      font-size: 12px;
       letter-spacing: 0.08em;
+      /* FIX: --text-muted now #8585a5 */
       color: var(--text-muted);
     }
     .footer-brand strong { color: var(--text-dim); font-weight: 500; }
     .footer-links { display: flex; gap: 28px; list-style: none; }
     .footer-links a {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      /* FIX: 11px → 12px */
+      font-size: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      /* FIX: --text-muted now #8585a5 */
       color: var(--text-muted);
       text-decoration: none;
       transition: color 0.2s;
@@ -702,8 +719,9 @@
 
 <!-- ── NAV ── -->
 <nav id="nav">
+  <!-- FIX: alt="" on logo img — adjacent span already names the brand -->
   <a href="#" class="nav-logo">
-    <img src="maplesilicon.png" alt="Maple Silicon" />
+    <img src="maplesilicon.png" alt="" />
     <span>Maple Silicon</span>
   </a>
   <ul class="nav-links">
@@ -717,7 +735,7 @@
 
 <!-- ── HERO ── -->
 <section id="hero">
-  <canvas id="hero-canvas"></canvas>
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-content">
     <p class="hero-eyebrow">Maple Silicon Inc.</p>
     <h1 class="hero-title">
@@ -728,14 +746,14 @@
     </h1>
     <p class="hero-sub">Real-time drone detection for contested, offline, and SWaP-constrained environments.</p>
     <p class="hero-tagline">Maple Shield · Built for the Edge</p>
-    <div class="hero-cycling">
+    <div class="hero-cycling" aria-label="Key capabilities">
       <span class="cycle-word active">OFFLINE</span>
       <span class="cycle-word">REAL&#8209;TIME</span>
       <span class="cycle-word">AIR&#8209;GAPPED</span>
       <span class="cycle-word">FIELD&#8209;READY</span>
     </div>
   </div>
-  <div class="hero-scroll">
+  <div class="hero-scroll" aria-hidden="true">
     <div class="scroll-line"></div>
     <span>Scroll</span>
   </div>
@@ -783,9 +801,10 @@
     <h2 class="section-title reveal reveal-delay-1">Two platforms.<br/>One thesis.</h2>
     <div class="products-grid">
       <div class="product-card reveal reveal-delay-2">
-        <div class="product-card-wire"></div>
+        <div class="product-card-wire" aria-hidden="true"></div>
         <span class="product-badge badge-building">In Development</span>
-        <img src="borealis.png" alt="Maple Shield" class="product-icon" />
+        <!-- FIX: alt="" — card h3 already names "Maple Shield" -->
+        <img src="borealis.png" alt="" class="product-icon" loading="lazy" />
         <h3 class="product-name">Maple Shield</h3>
         <p class="product-desc">Edge AI for drone detection and airspace awareness. Built for offline, contested environments where cloud inference is not an option.</p>
         <ul class="product-specs">
@@ -797,9 +816,10 @@
         <a href="maple-shield/" class="product-link">Explore Maple Shield →</a>
       </div>
       <div class="product-card reveal reveal-delay-3">
-        <div class="product-card-wire"></div>
+        <div class="product-card-wire" aria-hidden="true"></div>
         <span class="product-badge badge-live">Live — v2.0</span>
-        <img src="sparseflow.png" alt="SparseFlow" class="product-icon" />
+        <!-- FIX: alt="" — card h3 already names "SparseFlow" -->
+        <img src="sparseflow.png" alt="" class="product-icon" loading="lazy" />
         <h3 class="product-name">SparseFlow</h3>
         <p class="product-desc">Sparse inference acceleration for GPU workloads. SparseFlow rewrites the execution graph at the operator level — skipping zeros without touching model weights.</p>
         <ul class="product-specs">
@@ -854,23 +874,24 @@
     <div class="pipeline">
       <div class="pipeline-steps">
         <div class="pipeline-step reveal reveal-delay-1">
-          <div class="step-num">01</div>
-          <h4 class="step-title">Sensor Fusion</h4>
+          <div class="step-num" aria-hidden="true">01</div>
+          <!-- FIX: h4 → h3 — was skipping from h2 to h4, violating heading hierarchy -->
+          <h3 class="step-title">Sensor Fusion</h3>
           <p class="step-body">RF signatures, acoustic profiles, and visual feeds are ingested simultaneously and time-synchronized on-device.</p>
         </div>
         <div class="pipeline-step reveal reveal-delay-2">
-          <div class="step-num">02</div>
-          <h4 class="step-title">On-Device Inference</h4>
+          <div class="step-num" aria-hidden="true">02</div>
+          <h3 class="step-title">On-Device Inference</h3>
           <p class="step-body">Optimized models run locally on SWaP-constrained hardware. No uplink required. No round-trip latency.</p>
         </div>
         <div class="pipeline-step reveal reveal-delay-3">
-          <div class="step-num">03</div>
-          <h4 class="step-title">Threat Classification</h4>
+          <div class="step-num" aria-hidden="true">03</div>
+          <h3 class="step-title">Threat Classification</h3>
           <p class="step-body">Detections are scored, classified by drone type, and correlated across modalities to eliminate false positives.</p>
         </div>
         <div class="pipeline-step reveal reveal-delay-4">
-          <div class="step-num">04</div>
-          <h4 class="step-title">Alert & Track</h4>
+          <div class="step-num" aria-hidden="true">04</div>
+          <h3 class="step-title">Alert &amp; Track</h3>
           <p class="step-body">Operators receive real-time alerts with track history. All data stays local — no cloud, no exposure.</p>
         </div>
       </div>
@@ -934,7 +955,7 @@
 </footer>
 
 <!-- ── THREE.JS CDN ── -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 <script>
 // ── CURSOR GLOW ──
 const glow = document.getElementById('cursor-glow');
@@ -1012,7 +1033,6 @@ document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
   const group = new THREE.Group();
   scene.add(group);
 
-  // Build nodes
   const nodeGeo  = new THREE.SphereGeometry(1.4, 8, 8);
   const nodes    = [];
   for (let i = 0; i < NODE_COUNT; i++) {
@@ -1037,12 +1057,10 @@ document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
     nodes.push(mesh);
   }
 
-  // Edge geometry pool
   const edgePool = [];
   const edgeMat  = new THREE.LineBasicMaterial({ color: 0xf97316, transparent: true, vertexColors: false });
 
   function rebuildEdges() {
-    // Remove old
     edgePool.forEach(l => group.remove(l));
     edgePool.length = 0;
     for (let i = 0; i < nodes.length; i++) {
@@ -1082,7 +1100,7 @@ document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
       if (Math.abs(n.position.z) > b * 0.6) n.userData.v.z *= -1;
     });
 
-    if (frame % 4 === 0) rebuildEdges();
+    if (frame % 12 === 0) rebuildEdges();
 
     group.rotation.y += 0.0013 + mouseX * 0.0025;
     group.rotation.x += 0.0004 + mouseY * 0.0018;

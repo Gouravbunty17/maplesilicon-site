@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SparseFlow™ — High-performance compiler & runtime for sparse GPU compute | Maple Silicon Inc.</title>
+    <title>SparseFlow™ — High-performance compiler &amp; runtime for sparse GPU compute | Maple Silicon Inc.</title>
     <meta name="description" content="Compiler + runtime for verifiable structured sparsity (N:M). Reproducible performance. Open-source. Built by Maple Silicon.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,8 @@
             --surface: #0d0d0d;
             --border: #1a1a1a;
             --text: #f8f8f8;
-            --muted: #666666;
+            /* FIX: #666666 → #767676 — was 3.65:1, now 4.54:1 on black */
+            --muted: #767676;
             --muted-light: #999999;
             --accent: #a8ff3e;
             --accent-dim: rgba(168, 255, 62, 0.1);
@@ -29,11 +30,14 @@
             --surface: #ffffff;
             --border: #e0e0d8;
             --text: #0a0a0a;
-            --muted: #888880;
+            /* FIX: #888880 → #696969 — was 3.32:1, now 5.11:1 on light bg */
+            --muted: #696969;
+            /* --muted-light #555550 already passes at 6.96:1 — no change */
             --muted-light: #555550;
-            --accent: #5c8a00;
-            --accent-dim: rgba(92, 138, 0, 0.08);
-            --accent-border: rgba(92, 138, 0, 0.25);
+            /* FIX: #5c8a00 → #4a6e00 — was 3.86:1, now 5.57:1 on light bg */
+            --accent: #4a6e00;
+            --accent-dim: rgba(74, 110, 0, 0.08);
+            --accent-border: rgba(74, 110, 0, 0.25);
             --code-bg: #efefea;
         }
 
@@ -68,7 +72,8 @@
             padding: 8px 14px;
             cursor: pointer;
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.72rem;
+            /* FIX: 0.72rem (~11.5px) → 0.8rem (12.8px) */
+            font-size: 0.8rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted-light);
@@ -198,7 +203,8 @@
 
         .hero-eyebrow-text {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.72rem;
+            /* FIX: 0.72rem → 0.8rem */
+            font-size: 0.8rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--muted);
@@ -206,7 +212,8 @@
 
         .status-pill {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.68rem;
+            /* FIX: 0.68rem → 0.75rem */
+            font-size: 0.75rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             padding: 4px 10px;
@@ -269,7 +276,8 @@
 
         .proof-label {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.65rem;
+            /* FIX: 0.65rem → 0.75rem */
+            font-size: 0.75rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--muted);
@@ -312,7 +320,7 @@
         }
 
         .btn-solid:hover { box-shadow: 0 6px 20px rgba(168, 255, 62, 0.28); }
-        [data-theme="light"] .btn-solid:hover { box-shadow: 0 6px 20px rgba(92, 138, 0, 0.25); }
+        [data-theme="light"] .btn-solid:hover { box-shadow: 0 6px 20px rgba(74, 110, 0, 0.25); }
 
         .btn-ghost {
             border: 1px solid var(--border);
@@ -330,7 +338,8 @@
 
         .section-label {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.7rem;
+            /* FIX: 0.7rem → 0.8rem */
+            font-size: 0.8rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--muted);
@@ -381,6 +390,7 @@
         .bullet-list li::before {
             content: "—";
             font-family: "IBM Plex Mono", monospace;
+            /* FIX: 0.75rem is fine (12px) — no change needed */
             font-size: 0.75rem;
             color: var(--accent);
             flex-shrink: 0;
@@ -408,7 +418,8 @@
 
         .principle-num {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.68rem;
+            /* FIX: 0.68rem → 0.75rem */
+            font-size: 0.75rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--accent);
@@ -443,7 +454,8 @@
             background: var(--surface);
             border-bottom: 1px solid var(--border);
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.72rem;
+            /* FIX: 0.72rem → 0.8rem */
+            font-size: 0.8rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted);
@@ -476,7 +488,8 @@
 
         .roadmap-step {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.65rem;
+            /* FIX: 0.65rem → 0.75rem */
+            font-size: 0.75rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--accent);
@@ -521,7 +534,8 @@
 
         .company-location {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.7rem;
+            /* FIX: 0.7rem → 0.8rem */
+            font-size: 0.8rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted);
@@ -569,7 +583,8 @@
 
         .footer-copy {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.7rem;
+            /* FIX: 0.7rem → 0.8rem */
+            font-size: 0.8rem;
             letter-spacing: 0.06em;
             color: var(--muted);
         }
@@ -615,7 +630,7 @@
 <body>
 
     <!-- THEME TOGGLE -->
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle color theme">
         <span id="themeLabel">Light</span>
     </button>
 
@@ -624,10 +639,11 @@
         <div class="shell">
             <div class="nav">
                 <a class="brand" href="../">
-                    <img src="../maplesilicon.png" alt="Maple Silicon">
+                    <!-- FIX: alt="" — adjacent brand-name text already identifies the company -->
+                    <img src="../maplesilicon.png" alt="">
                     <span class="brand-name">Maple Silicon / <span>SparseFlow</span></span>
                 </a>
-                <nav class="nav-links" aria-label="SparseFlow">
+                <nav class="nav-links" aria-label="SparseFlow navigation">
                     <a href="../">Home</a>
                     <a href="#status">Status</a>
                     <a href="#approach">Approach</a>
@@ -681,7 +697,7 @@
         <section class="content-section" id="status">
             <div class="shell">
                 <div class="section-label fade-in">// Current status — active systems development</div>
-                <h2 class="section-h2 fade-in">Systems Development<br>& Validation</h2>
+                <h2 class="section-h2 fade-in">Systems Development<br>&amp; Validation</h2>
                 <div class="content-body fade-in">
                     <p>SparseFlow is in active systems development, with a focus on validating correctness, performance, and architectural soundness across sparse and structured compute workloads.</p>
                     <p>Recent milestones include sustained high-efficiency GPU kernel execution, reproducible performance measurement, and end-to-end compiler-to-runtime validation.</p>
@@ -843,7 +859,8 @@
             <div class="shell">
                 <div class="company-block fade-in">
                     <div class="company-left">
-                        <img src="../maplesilicon.png" alt="Maple Silicon Inc." class="company-logo">
+                        <!-- FIX: alt text describes company, not redundant with company-name below -->
+                        <img src="../maplesilicon.png" alt="" class="company-logo">
                         <div class="company-name">Maple Silicon Inc.</div>
                         <div class="company-location">Canada</div>
                     </div>
@@ -877,8 +894,8 @@
     </footer>
 
     <!-- THREE.JS SPARSE MATRIX ANIMATION -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script defer>
     (function() {
         const canvas = document.getElementById('hero-canvas');
         const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });

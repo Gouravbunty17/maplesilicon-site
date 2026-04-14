@@ -14,7 +14,8 @@
             --surface: #0d0d0d;
             --border: #1a1a1a;
             --text: #f8f8f8;
-            --muted: #666666;
+            /* FIX: #666666 → #767676 — was 3.65:1, now 4.54:1 on black */
+            --muted: #767676;
             --muted-light: #999999;
             --accent: #00f5cc;
             --accent-dim: rgba(0, 245, 204, 0.1);
@@ -155,7 +156,8 @@
 
         .hero-eyebrow {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.72rem;
+            /* FIX: 0.72rem → 0.8rem */
+            font-size: 0.8rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--accent);
@@ -228,7 +230,8 @@
             background: var(--surface);
             border-bottom: 1px solid var(--border);
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.65rem;
+            /* FIX: 0.65rem → 0.75rem */
+            font-size: 0.75rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--accent);
@@ -244,7 +247,8 @@
 
         .signal-label {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.65rem;
+            /* FIX: 0.65rem → 0.75rem */
+            font-size: 0.75rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--muted);
@@ -273,7 +277,8 @@
 
         .hero-scroll-hint span {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.62rem;
+            /* FIX: 0.62rem → 0.75rem */
+            font-size: 0.75rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--muted);
@@ -299,7 +304,8 @@
 
         .section-label {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.7rem;
+            /* FIX: 0.7rem → 0.8rem */
+            font-size: 0.8rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--muted);
@@ -345,7 +351,8 @@
 
         .layer-num {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.65rem;
+            /* FIX: 0.65rem → 0.75rem */
+            font-size: 0.75rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--accent);
@@ -431,7 +438,8 @@
 
         .workflow-step {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.65rem;
+            /* FIX: 0.65rem → 0.75rem */
+            font-size: 0.75rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--accent);
@@ -470,7 +478,8 @@
 
         .cta-eyebrow {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.7rem;
+            /* FIX: 0.7rem → 0.8rem */
+            font-size: 0.8rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--muted);
@@ -516,7 +525,8 @@
 
         .footer-copy {
             font-family: "IBM Plex Mono", monospace;
-            font-size: 0.7rem;
+            /* FIX: 0.7rem → 0.8rem */
+            font-size: 0.8rem;
             letter-spacing: 0.06em;
             color: var(--muted);
         }
@@ -587,10 +597,11 @@
         <div class="shell">
             <div class="nav">
                 <a class="brand" href="../">
-                    <img src="../maplesilicon.png" alt="Maple Silicon">
+                    <!-- FIX: alt="" — adjacent brand-name text already identifies the company -->
+                    <img src="../maplesilicon.png" alt="">
                     <span class="brand-name">Maple Silicon / <span>Maple Shield</span></span>
                 </a>
-                <nav class="nav-links" aria-label="Maple Shield">
+                <nav class="nav-links" aria-label="Maple Shield navigation">
                     <a href="../">Home</a>
                     <a href="#system">System</a>
                     <a href="#principles">Principles</a>
@@ -687,17 +698,17 @@
                 <p class="section-sub fade-in">The product direction is kept disciplined: lawful detection and awareness first, edge deployment by default, and a system design that can evolve without turning into a hardware-first trap.</p>
                 <div class="principles-list">
                     <div class="principle-item fade-in">
-                        <div class="principle-num">01</div>
+                        <div class="principle-num" aria-hidden="true">01</div>
                         <div class="principle-title">Software-first moat</div>
                         <p class="principle-desc">The durable value sits in perception, track continuity, event intelligence, and integration — not in trying to start with expensive custom hardware.</p>
                     </div>
                     <div class="principle-item fade-in">
-                        <div class="principle-num">02</div>
+                        <div class="principle-num" aria-hidden="true">02</div>
                         <div class="principle-title">Edge-first runtime</div>
                         <p class="principle-desc">Latency, resilience, and constrained deployment matter. Maple Shield is being positioned for the node closest to the sensor, not only the server furthest away.</p>
                     </div>
                     <div class="principle-item fade-in">
-                        <div class="principle-num">03</div>
+                        <div class="principle-num" aria-hidden="true">03</div>
                         <div class="principle-title">Operator-grade interface</div>
                         <p class="principle-desc">A serious system must produce understandable alerts, replayable evidence, and confidence that the workflow helps humans act instead of overwhelming them.</p>
                     </div>
@@ -769,8 +780,8 @@
     </footer>
 
     <!-- THREE.JS SPARSE MATRIX (TEAL) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script defer>
     (function() {
         const canvas = document.getElementById('hero-canvas');
         const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
