@@ -431,6 +431,12 @@
     .badge-live { color: #4ade80; border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.05); }
     .badge-building { color: var(--blue); border-color: rgba(56,189,248,0.3); background: var(--blue-dim); }
     .product-icon { height: 46px; width: auto; margin-bottom: 22px; position: relative; z-index: 1; }
+    .product-icon-lockup {
+      width: min(100%, 220px);
+      height: auto;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 24px rgba(126, 186, 214, 0.12));
+    }
     .product-name {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 28px;
@@ -910,7 +916,7 @@
         <div class="product-card-wire" aria-hidden="true"></div>
         <span class="product-badge badge-live">Live — v2.0</span>
         <!-- FIX: alt="" — card h3 already names "SparseFlow" -->
-        <img src="sparseflow.png" alt="" class="product-icon" loading="lazy" />
+        <img src="sparseflow-logo-lockup.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
         <h3 class="product-name">SparseFlow</h3>
         <p class="product-desc">Sparse inference acceleration for GPU workloads. SparseFlow rewrites the execution graph at the operator level — skipping zeros without touching model weights.</p>
         <ul class="product-specs">

@@ -207,6 +207,15 @@
             padding-top: 80px;
         }
 
+        .hero-logo {
+            width: clamp(220px, 32vw, 360px);
+            max-width: 100%;
+            height: auto;
+            margin: 0 0 26px;
+            display: block;
+            filter: drop-shadow(0 0 34px rgba(114, 171, 198, 0.2));
+        }
+
         .hero-eyebrow {
             display: flex;
             align-items: center;
@@ -690,6 +699,7 @@
         <canvas id="hero-canvas" aria-hidden="true"></canvas>
         <div class="hero-overlay" aria-hidden="true"></div>
         <div class="shell hero-content">
+            <img src="../sparseflow-logo-lockup.png" alt="" class="hero-logo" loading="eager" />
             <div class="hero-eyebrow">
                 <span class="hero-eyebrow-text">// Sparse GPU inference platform</span>
                 <span class="status-pill">v2.0 live</span>
