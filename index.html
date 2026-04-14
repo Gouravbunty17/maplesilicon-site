@@ -665,6 +665,18 @@
       margin-right: auto;
     }
     .cta-buttons { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .cta-meta {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #c2c2d6;
+      line-height: 1.7;
+    }
+    .cta-meta a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+    }
+    .cta-meta a:hover { border-color: var(--amber-glow); color: var(--amber); }
     .btn-primary {
       font-family: 'DM Mono', monospace;
       font-size: 12px;
@@ -798,7 +810,7 @@
 <!-- ── NAV ── -->
 <nav id="nav">
   <!-- FIX: alt="" on logo img — adjacent span already names the brand -->
-  <a href="#" class="nav-logo">
+  <a href="#hero" class="nav-logo">
     <img src="maplesilicon.png" alt="" />
     <span>Maple Silicon</span>
   </a>
@@ -807,7 +819,7 @@
     <li><a href="#numbers">Results</a></li>
     <li><a href="#how">How It Works</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="mailto:contact@maplesilicon.com" class="nav-cta">Contact</a></li>
+    <li><a href="mailto:contact@maplesilicon.com" class="nav-cta">Email Us</a></li>
   </ul>
 </nav>
 
@@ -883,7 +895,7 @@
         <div class="product-card-wire" aria-hidden="true"></div>
         <span class="product-badge badge-building">Early Access</span>
         <!-- FIX: alt="" — card h3 already names "Maple Shield" -->
-        <img src="borealis.png" alt="" class="product-icon" loading="lazy" />
+        <img src="maple-shield/maple-shield-icon.png" alt="" class="product-icon" loading="lazy" />
         <h3 class="product-name">Maple Shield</h3>
         <p class="product-desc">Edge AI for drone detection and airspace awareness. Built for offline, contested environments where low-latency local inference and operator trust both matter.</p>
         <ul class="product-specs">
@@ -1016,8 +1028,9 @@
     <div class="cta-buttons reveal reveal-delay-3">
       <a href="maple-shield/" class="btn-primary">Explore Maple Shield</a>
       <a href="mailto:contact@maplesilicon.com?subject=Maple%20Shield%20Demo" class="btn-secondary">Request a Demo</a>
-      <a href="mailto:contact@maplesilicon.com?subject=Partnership" class="btn-secondary">Get in Touch</a>
+      <a href="mailto:contact@maplesilicon.com?subject=Partnership" class="btn-secondary">Discuss Partnerships</a>
     </div>
+    <p class="cta-meta reveal reveal-delay-4">Prefer email? Reach us directly at <a href="mailto:contact@maplesilicon.com">contact@maplesilicon.com</a>.</p>
   </div>
 </section>
 
@@ -1029,7 +1042,7 @@
   <ul class="footer-links">
     <li><a href="maple-shield/">Maple Shield</a></li>
     <li><a href="sparseflow/">SparseFlow</a></li>
-    <li><a href="mailto:contact@maplesilicon.com">Contact</a></li>
+    <li><a href="mailto:contact@maplesilicon.com">Email</a></li>
   </ul>
 </footer>
 
