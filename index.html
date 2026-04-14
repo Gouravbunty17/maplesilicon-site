@@ -133,10 +133,35 @@
       justify-content: center;
       overflow: hidden;
     }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: -12% -8%;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(56,189,248,0.12), transparent 30%),
+        radial-gradient(circle at 75% 30%, rgba(249,115,22,0.16), transparent 34%),
+        radial-gradient(circle at 50% 78%, rgba(249,115,22,0.08), transparent 28%);
+      animation: heroBloom 16s ease-in-out infinite alternate;
+      z-index: 0;
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(10,10,15,0.25) 0%, rgba(10,10,15,0.05) 35%, rgba(10,10,15,0.5) 100%),
+        radial-gradient(circle at center, transparent 0 36%, rgba(10,10,15,0.22) 62%, rgba(10,10,15,0.72) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
     #hero-canvas {
       position: absolute;
       inset: 0;
       z-index: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.95;
     }
     .hero-content {
       position: relative;
@@ -692,6 +717,10 @@
       0%, 100% { opacity: 0.3; }
       50%       { opacity: 1; }
     }
+    @keyframes heroBloom {
+      from { transform: scale(1) translate3d(0, 0, 0); opacity: 0.85; }
+      to   { transform: scale(1.08) translate3d(1.5%, -1.5%, 0); opacity: 1; }
+    }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
@@ -710,6 +739,26 @@
     @media (max-width: 540px) {
       .pipeline-steps { grid-template-columns: 1fr; }
       .problem-stat-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      body::before,
+      #hero::before,
+      .hero-eyebrow,
+      .hero-title,
+      .hero-sub,
+      .hero-tagline,
+      .hero-cycling,
+      .hero-scroll,
+      .scroll-line {
+        animation: none !important;
+      }
+      .reveal,
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
     }
   </style>
 </head>
@@ -954,8 +1003,6 @@
   </ul>
 </footer>
 
-<!-- ── THREE.JS CDN ── -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 <script>
 // ── CURSOR GLOW ──
 const glow = document.getElementById('cursor-glow');
@@ -1013,107 +1060,178 @@ const counterObs = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
 
-// ── THREE.JS NEURAL MESH ──
+// ── HERO RADAR FIELD ──
 (function () {
-  if (typeof THREE === 'undefined') return;
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
 
-  const canvas   = document.getElementById('hero-canvas');
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const particles = [];
+  let width = 0;
+  let height = 0;
+  let centerX = 0;
+  let centerY = 0;
+  let radius = 0;
+  let sweepAngle = -Math.PI * 0.35;
+  let pointerX = 0;
+  let pointerY = 0;
 
-  const scene  = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 320;
-
-  const NODE_COUNT = 70;
-  const SPREAD     = 210;
-  const MAX_DIST   = 82;
-
-  const group = new THREE.Group();
-  scene.add(group);
-
-  const nodeGeo  = new THREE.SphereGeometry(1.4, 8, 8);
-  const nodes    = [];
-  for (let i = 0; i < NODE_COUNT; i++) {
-    const isAmber = Math.random() > 0.65;
-    const mat  = new THREE.MeshBasicMaterial({
-      color: isAmber ? 0xf97316 : 0x38bdf8,
-      transparent: true,
-      opacity: 0.45 + Math.random() * 0.45
-    });
-    const mesh = new THREE.Mesh(nodeGeo, mat);
-    mesh.position.set(
-      (Math.random() - 0.5) * SPREAD,
-      (Math.random() - 0.5) * SPREAD,
-      (Math.random() - 0.5) * SPREAD * 0.6
-    );
-    mesh.userData.v = new THREE.Vector3(
-      (Math.random() - 0.5) * 0.11,
-      (Math.random() - 0.5) * 0.11,
-      (Math.random() - 0.5) * 0.05
-    );
-    group.add(mesh);
-    nodes.push(mesh);
+  function createParticle() {
+    return {
+      orbit: 0.18 + Math.random() * 0.78,
+      angle: Math.random() * Math.PI * 2,
+      speed: 0.0015 + Math.random() * 0.003,
+      size: 1.2 + Math.random() * 2.4,
+      color: Math.random() > 0.72 ? '249,115,22' : '56,189,248',
+      pulse: Math.random() * Math.PI * 2
+    };
   }
 
-  const edgePool = [];
-  const edgeMat  = new THREE.LineBasicMaterial({ color: 0xf97316, transparent: true, vertexColors: false });
+  function populateParticles() {
+    particles.length = 0;
+    const count = Math.max(22, Math.min(44, Math.round(width / 34)));
+    for (let i = 0; i < count; i++) particles.push(createParticle());
+  }
 
-  function rebuildEdges() {
-    edgePool.forEach(l => group.remove(l));
-    edgePool.length = 0;
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const d = nodes[i].position.distanceTo(nodes[j].position);
-        if (d < MAX_DIST) {
-          const alpha = (1 - d / MAX_DIST) * 0.3;
-          const geo = new THREE.BufferGeometry().setFromPoints([
-            nodes[i].position.clone(),
-            nodes[j].position.clone()
-          ]);
-          const mat = new THREE.LineBasicMaterial({ color: 0xf97316, transparent: true, opacity: alpha });
-          const line = new THREE.Line(geo, mat);
-          group.add(line);
-          edgePool.push(line);
-        }
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = canvas.clientWidth || window.innerWidth;
+    height = canvas.clientHeight || window.innerHeight;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    centerX = width * 0.5;
+    centerY = height * 0.52;
+    radius = Math.min(width, height) * 0.34;
+    populateParticles();
+  }
+
+  function drawBackdrop() {
+    const glow = ctx.createRadialGradient(centerX, centerY, radius * 0.08, centerX, centerY, radius * 1.15);
+    glow.addColorStop(0, 'rgba(249,115,22,0.16)');
+    glow.addColorStop(0.45, 'rgba(56,189,248,0.08)');
+    glow.addColorStop(1, 'rgba(10,10,15,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    ctx.lineWidth = 1;
+    [0.38, 0.62, 0.86].forEach(scale => {
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius * scale, 0, Math.PI * 2);
+      ctx.stroke();
+    });
+    ctx.beginPath();
+    ctx.moveTo(centerX - radius * 1.12, centerY);
+    ctx.lineTo(centerX + radius * 1.12, centerY);
+    ctx.moveTo(centerX, centerY - radius * 1.12);
+    ctx.lineTo(centerX, centerY + radius * 1.12);
+    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawSweep() {
+    const sweepRadius = radius * 1.06;
+    const beam = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, sweepRadius);
+    beam.addColorStop(0, 'rgba(249,115,22,0.22)');
+    beam.addColorStop(0.6, 'rgba(249,115,22,0.08)');
+    beam.addColorStop(1, 'rgba(249,115,22,0)');
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.arc(centerX, centerY, sweepRadius, sweepAngle - 0.42, sweepAngle + 0.06);
+    ctx.closePath();
+    ctx.fillStyle = beam;
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(
+      centerX + Math.cos(sweepAngle) * sweepRadius,
+      centerY + Math.sin(sweepAngle) * sweepRadius
+    );
+    ctx.strokeStyle = 'rgba(249,115,22,0.45)';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawParticles(time) {
+    particles.forEach((particle, index) => {
+      const orbitRadius = radius * particle.orbit;
+      const driftX = pointerX * 18 * particle.orbit;
+      const driftY = pointerY * 14 * particle.orbit;
+      const x = centerX + Math.cos(particle.angle) * orbitRadius + driftX;
+      const y = centerY + Math.sin(particle.angle) * orbitRadius * 0.72 + driftY;
+      const pulse = 0.55 + Math.sin(time * 0.002 + particle.pulse) * 0.25;
+
+      particle.x = x;
+      particle.y = y;
+      particle.angle += prefersReducedMotion ? 0 : particle.speed;
+
+      ctx.beginPath();
+      ctx.arc(x, y, particle.size * pulse, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${particle.color},${0.35 + pulse * 0.4})`;
+      ctx.fill();
+
+      if (index % 4 === 0) {
+        ctx.beginPath();
+        ctx.arc(x, y, particle.size * 4.2, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(${particle.color},0.12)`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    });
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(56,189,248,0.08)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < particles.length; i++) {
+      const a = particles[i];
+      const b = particles[(i + 7) % particles.length];
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < radius * 0.42) {
+        ctx.globalAlpha = 1 - dist / (radius * 0.42);
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
       }
     }
+    ctx.restore();
   }
 
-  let mouseX = 0, mouseY = 0;
-  document.addEventListener('mousemove', e => {
-    mouseX = (e.clientX / window.innerWidth  - 0.5) * 0.5;
-    mouseY = (e.clientY / window.innerHeight - 0.5) * 0.4;
-  });
-
-  let frame = 0;
-  function animate() {
-    requestAnimationFrame(animate);
-    frame++;
-
-    const b = SPREAD / 2;
-    nodes.forEach(n => {
-      n.position.addScaledVector(n.userData.v, 1);
-      if (Math.abs(n.position.x) > b) n.userData.v.x *= -1;
-      if (Math.abs(n.position.y) > b) n.userData.v.y *= -1;
-      if (Math.abs(n.position.z) > b * 0.6) n.userData.v.z *= -1;
-    });
-
-    if (frame % 12 === 0) rebuildEdges();
-
-    group.rotation.y += 0.0013 + mouseX * 0.0025;
-    group.rotation.x += 0.0004 + mouseY * 0.0018;
-
-    renderer.render(scene, camera);
+  function frame(time) {
+    ctx.clearRect(0, 0, width, height);
+    drawBackdrop();
+    drawSweep();
+    drawParticles(time);
+    sweepAngle += prefersReducedMotion ? 0 : 0.0085;
+    requestAnimationFrame(frame);
   }
-  animate();
 
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
+  window.addEventListener('mousemove', e => {
+    pointerX = (e.clientX / window.innerWidth - 0.5) * 0.8;
+    pointerY = (e.clientY / window.innerHeight - 0.5) * 0.8;
+  }, { passive: true });
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  if (prefersReducedMotion) {
+    frame(0);
+    return;
+  }
+
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>
