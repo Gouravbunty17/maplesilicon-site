@@ -303,6 +303,14 @@
       color: #fff;
       margin-bottom: 20px;
     }
+    .section-kicker {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      color: #b8b8d0;
+      line-height: 1.7;
+      max-width: 760px;
+      margin-bottom: 42px;
+    }
     .section-body {
       font-size: 17px;
       color: var(--text-dim);
@@ -347,6 +355,9 @@
       background: var(--bg3);
       border: 1px solid var(--border);
       padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .problem-stat-val {
       font-family: 'Space Grotesk', sans-serif;
@@ -754,6 +765,7 @@
         padding-top: 32px;
         padding-bottom: 32px;
       }
+      .section-kicker { font-size: 16px; }
       .pipeline-steps { grid-template-columns: 1fr; }
       .problem-stat-grid { grid-template-columns: 1fr; }
     }
@@ -850,8 +862,8 @@
           <div class="problem-stat-label">cloud dependencies — fully air-gapped operation</div>
         </div>
         <div class="problem-stat">
-          <div class="problem-stat-val">Multi</div>
-          <div class="problem-stat-label">-modal fusion: RF, acoustic, and visual detection signals</div>
+          <div class="problem-stat-val">Multimodal</div>
+          <div class="problem-stat-label">fusion across RF, acoustic, and visual detection signals</div>
         </div>
       </div>
     </div>
@@ -865,14 +877,15 @@
   <div class="section-inner">
     <p class="section-label reveal">02 — Products</p>
     <h2 class="section-title reveal reveal-delay-1">Two platforms.<br/>One thesis.</h2>
+    <p class="section-kicker reveal reveal-delay-2">We build the software layer between raw compute and field-ready intelligence. SparseFlow makes inference execution faster and more efficient. Maple Shield applies that same systems discipline to real-time edge awareness in the field.</p>
     <div class="products-grid">
       <div class="product-card reveal reveal-delay-2">
         <div class="product-card-wire" aria-hidden="true"></div>
-        <span class="product-badge badge-building">In Development</span>
+        <span class="product-badge badge-building">Early Access</span>
         <!-- FIX: alt="" — card h3 already names "Maple Shield" -->
         <img src="borealis.png" alt="" class="product-icon" loading="lazy" />
         <h3 class="product-name">Maple Shield</h3>
-        <p class="product-desc">Edge AI for drone detection and airspace awareness. Built for offline, contested environments where cloud inference is not an option.</p>
+        <p class="product-desc">Edge AI for drone detection and airspace awareness. Built for offline, contested environments where low-latency local inference and operator trust both matter.</p>
         <ul class="product-specs">
           <li>Real-time detection on constrained hardware</li>
           <li>Air-gapped deployment — no cloud dependency</li>
