@@ -168,8 +168,7 @@
         /* ── HERO ── */
         .hero {
             position: relative;
-            height: 100vh;
-            min-height: 700px;
+            min-height: max(820px, 100vh);
             overflow: hidden;
         }
         .hero::before {
@@ -197,7 +196,7 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            opacity: 0.92;
+            opacity: 1;
         }
 
         .hero-overlay {
@@ -218,12 +217,13 @@
         .hero-inner {
             position: relative;
             z-index: 2;
-            height: 100%;
+            min-height: 100vh;
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
             align-items: center;
             gap: 60px;
             padding-top: 80px;
+            padding-bottom: 80px;
         }
 
         .hero-left {}
@@ -256,10 +256,11 @@
         h1 {
             font-family: "Syne", sans-serif;
             font-weight: 800;
-            font-size: clamp(2.6rem, 5.5vw, 5rem);
-            line-height: 0.95;
+            font-size: clamp(2.5rem, 5vw, 4.6rem);
+            line-height: 1.02;
             letter-spacing: -0.04em;
             margin-bottom: 28px;
+            max-width: 7.5ch;
         }
 
         .hero-lead {
@@ -652,9 +653,14 @@
         }
 
         .fade-in {
+            opacity: 1;
+            transform: none;
+            transition: opacity 600ms ease, transform 600ms ease;
+        }
+
+        .js-ready .fade-in {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 600ms ease, transform 600ms ease;
         }
 
         .fade-in.visible { opacity: 1; transform: translateY(0); }
@@ -743,7 +749,7 @@
         <div class="shell hero-inner">
             <div class="hero-left">
                 <div class="hero-mark">
-                    <img src="maple-shield-logo-site.png" alt="Maple Shield logo">
+                    <img src="maple-shield-logo-site.png" data-dark-src="maple-shield-logo-site.png" data-light-src="maple-shield-logo-full.png" alt="Maple Shield logo">
                 </div>
                 <div class="hero-eyebrow">// Maple Shield — edge AI airspace awareness</div>
                 <h1>Detection, tracking, and operator clarity at the edge.</h1>
@@ -946,7 +952,7 @@
 
         function drawGrid() {
             ctx.save();
-            ctx.strokeStyle = 'rgba(0,245,204,0.08)';
+            ctx.strokeStyle = 'rgba(0,245,204,0.16)';
             ctx.lineWidth = 1;
             for (let i = 1; i <= 4; i++) {
                 ctx.beginPath();
@@ -958,15 +964,15 @@
             ctx.lineTo(centerX + radius, centerY);
             ctx.moveTo(centerX, centerY - radius);
             ctx.lineTo(centerX, centerY + radius);
-            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+            ctx.strokeStyle = 'rgba(255,255,255,0.10)';
             ctx.stroke();
             ctx.restore();
         }
 
         function drawSweep() {
             const beam = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
-            beam.addColorStop(0, 'rgba(0,245,204,0.2)');
-            beam.addColorStop(0.6, 'rgba(0,245,204,0.08)');
+            beam.addColorStop(0, 'rgba(0,245,204,0.34)');
+            beam.addColorStop(0.6, 'rgba(0,245,204,0.16)');
             beam.addColorStop(1, 'rgba(0,245,204,0)');
 
             ctx.save();
@@ -993,7 +999,7 @@
 
                 ctx.beginPath();
                 ctx.arc(x, y, contact.size * 3.6, 0, Math.PI * 2);
-                ctx.strokeStyle = 'rgba(0,245,204,0.12)';
+                ctx.strokeStyle = 'rgba(0,245,204,0.24)';
                 ctx.stroke();
             });
         }
@@ -1002,8 +1008,8 @@
             ctx.clearRect(0, 0, width, height);
 
             const bg = ctx.createRadialGradient(centerX, centerY, radius * 0.08, centerX, centerY, radius * 1.18);
-            bg.addColorStop(0, 'rgba(0,245,204,0.12)');
-            bg.addColorStop(0.55, 'rgba(0,245,204,0.04)');
+            bg.addColorStop(0, 'rgba(0,245,204,0.20)');
+            bg.addColorStop(0.55, 'rgba(0,245,204,0.08)');
             bg.addColorStop(1, 'rgba(0,0,0,0)');
             ctx.fillStyle = bg;
             ctx.fillRect(0, 0, width, height);
@@ -1031,6 +1037,9 @@
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('maplesilicon-theme', theme);
         document.getElementById('themeLabel').textContent = theme === 'dark' ? 'Light' : 'Dark';
+        document.querySelectorAll('[data-dark-src][data-light-src]').forEach((img) => {
+            img.src = theme === 'dark' ? img.dataset.darkSrc : img.dataset.lightSrc;
+        });
     }
 
     function toggleTheme() {
@@ -1040,6 +1049,7 @@
 
     (function() {
         applyTheme(document.documentElement.getAttribute('data-theme') || 'dark');
+        document.documentElement.classList.add('js-ready');
 
         // Nav scroll
         const header = document.getElementById('site-header');

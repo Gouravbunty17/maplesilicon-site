@@ -236,7 +236,7 @@
       z-index: 0;
       width: 100%;
       height: 100%;
-      opacity: 0.95;
+      opacity: 1;
     }
     .hero-content {
       position: relative;
@@ -825,7 +825,7 @@
     .footer-links a:hover { color: #d4d4e2; }
 
     [data-theme="light"] #hero-canvas {
-      opacity: 0.42;
+      opacity: 0.72;
       mix-blend-mode: multiply;
     }
 
@@ -1055,7 +1055,9 @@
         <div class="product-card-wire" aria-hidden="true"></div>
         <span class="product-badge badge-building">Early Access</span>
         <!-- FIX: alt="" — card h3 already names "Maple Shield" -->
-        <img src="maple-shield/maple-shield-logo-site.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
+        <a href="maple-shield/" aria-label="Open Maple Shield">
+          <img src="maple-shield/maple-shield-logo-site.png" data-dark-src="maple-shield/maple-shield-logo-site.png" data-light-src="maple-shield/maple-shield-logo-full.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
+        </a>
         <h3 class="product-name">Maple Shield</h3>
         <p class="product-desc">Edge AI for drone detection and airspace awareness. Built for offline, contested environments where low-latency local inference and operator trust both matter.</p>
         <ul class="product-specs">
@@ -1070,7 +1072,9 @@
         <div class="product-card-wire" aria-hidden="true"></div>
         <span class="product-badge badge-live">Live — v2.0</span>
         <!-- FIX: alt="" — card h3 already names "SparseFlow" -->
-        <img src="sparseflow-logo-lockup.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
+        <a href="sparseflow/" aria-label="Open SparseFlow">
+          <img src="sparseflow-logo-lockup.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
+        </a>
         <h3 class="product-name">SparseFlow</h3>
         <p class="product-desc">Sparse inference acceleration for GPU workloads. SparseFlow rewrites the execution graph at the operator level — skipping zeros without touching model weights.</p>
         <ul class="product-specs">
@@ -1224,6 +1228,9 @@ function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('maplesilicon-theme', theme);
   document.getElementById('themeLabel').textContent = theme === 'dark' ? 'Light' : 'Dark';
+  document.querySelectorAll('[data-dark-src][data-light-src]').forEach((img) => {
+    img.src = theme === 'dark' ? img.dataset.darkSrc : img.dataset.lightSrc;
+  });
 }
 
 function toggleTheme() {
@@ -1325,14 +1332,14 @@ document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
 
   function drawBackdrop() {
     const glow = ctx.createRadialGradient(centerX, centerY, radius * 0.08, centerX, centerY, radius * 1.15);
-    glow.addColorStop(0, 'rgba(249,115,22,0.16)');
-    glow.addColorStop(0.45, 'rgba(56,189,248,0.08)');
-    glow.addColorStop(1, 'rgba(10,10,15,0)');
+      glow.addColorStop(0, 'rgba(249,115,22,0.26)');
+      glow.addColorStop(0.45, 'rgba(56,189,248,0.16)');
+      glow.addColorStop(1, 'rgba(10,10,15,0)');
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, width, height);
 
     ctx.save();
-    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      ctx.strokeStyle = 'rgba(255,255,255,0.10)';
     ctx.lineWidth = 1;
     [0.38, 0.62, 0.86].forEach(scale => {
       ctx.beginPath();
@@ -1344,7 +1351,7 @@ document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
     ctx.lineTo(centerX + radius * 1.12, centerY);
     ctx.moveTo(centerX, centerY - radius * 1.12);
     ctx.lineTo(centerX, centerY + radius * 1.12);
-    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
     ctx.stroke();
     ctx.restore();
   }
@@ -1352,9 +1359,9 @@ document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
   function drawSweep() {
     const sweepRadius = radius * 1.06;
     const beam = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, sweepRadius);
-    beam.addColorStop(0, 'rgba(249,115,22,0.22)');
-    beam.addColorStop(0.6, 'rgba(249,115,22,0.08)');
-    beam.addColorStop(1, 'rgba(249,115,22,0)');
+      beam.addColorStop(0, 'rgba(249,115,22,0.36)');
+      beam.addColorStop(0.6, 'rgba(249,115,22,0.14)');
+      beam.addColorStop(1, 'rgba(249,115,22,0)');
 
     ctx.save();
     ctx.beginPath();
@@ -1372,7 +1379,7 @@ document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
       centerX + Math.cos(sweepAngle) * sweepRadius,
       centerY + Math.sin(sweepAngle) * sweepRadius
     );
-    ctx.strokeStyle = 'rgba(249,115,22,0.45)';
+      ctx.strokeStyle = 'rgba(249,115,22,0.68)';
     ctx.lineWidth = 1.2;
     ctx.stroke();
     ctx.restore();
@@ -1399,14 +1406,14 @@ document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
       if (index % 4 === 0) {
         ctx.beginPath();
         ctx.arc(x, y, particle.size * 4.2, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(${particle.color},0.12)`;
+        ctx.strokeStyle = `rgba(${particle.color},0.22)`;
         ctx.lineWidth = 1;
         ctx.stroke();
       }
     });
 
     ctx.save();
-    ctx.strokeStyle = 'rgba(56,189,248,0.08)';
+      ctx.strokeStyle = 'rgba(56,189,248,0.16)';
     ctx.lineWidth = 1;
     for (let i = 0; i < particles.length; i++) {
       const a = particles[i];
