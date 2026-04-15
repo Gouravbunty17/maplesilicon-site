@@ -1071,7 +1071,7 @@
         <span class="product-badge badge-building">Early Access</span>
         <!-- FIX: alt="" — card h3 already names "Maple Shield" -->
         <a href="maple-shield/" aria-label="Open Maple Shield" class="product-logo-frame">
-          <img src="maple-shield/maple-shield-logo-site.png" data-dark-src="maple-shield/maple-shield-logo-site.png" data-light-src="maple-shield/maple-shield-logo-full.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
+          <img src="maple-shield/maple-shield-logo-site.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
         </a>
         <h3 class="product-name">Maple Shield</h3>
         <p class="product-desc">Edge AI for drone detection and airspace awareness. Built for offline, contested environments where low-latency local inference and operator trust both matter.</p>
@@ -1087,7 +1087,7 @@
         <div class="product-card-wire" aria-hidden="true"></div>
         <span class="product-badge badge-live">Live — v2.0</span>
         <!-- FIX: alt="" — card h3 already names "SparseFlow" -->
-        <a href="sparseflow/" aria-label="Open SparseFlow">
+        <a href="sparseflow/" aria-label="Open SparseFlow" class="product-logo-frame">
           <img src="sparseflow-logo-lockup.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
         </a>
         <h3 class="product-name">SparseFlow</h3>
@@ -1243,9 +1243,6 @@ function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('maplesilicon-theme', theme);
   document.getElementById('themeLabel').textContent = theme === 'dark' ? 'Light' : 'Dark';
-  document.querySelectorAll('[data-dark-src][data-light-src]').forEach((img) => {
-    img.src = theme === 'dark' ? img.dataset.darkSrc : img.dataset.lightSrc;
-  });
 }
 
 function toggleTheme() {

@@ -755,7 +755,7 @@
         <div class="shell hero-inner">
             <div class="hero-left">
                 <div class="hero-mark">
-                    <img src="maple-shield-logo-site.png" data-dark-src="maple-shield-logo-site.png" data-light-src="maple-shield-logo-full.png" alt="Maple Shield logo">
+                    <img src="maple-shield-logo-site.png" alt="Maple Shield logo">
                 </div>
                 <div class="hero-eyebrow">// Maple Shield — edge AI airspace awareness</div>
                 <h1>Detection, tracking, and operator clarity at the edge.</h1>
@@ -1043,9 +1043,6 @@
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('maplesilicon-theme', theme);
         document.getElementById('themeLabel').textContent = theme === 'dark' ? 'Light' : 'Dark';
-        document.querySelectorAll('[data-dark-src][data-light-src]').forEach((img) => {
-            img.src = theme === 'dark' ? img.dataset.darkSrc : img.dataset.lightSrc;
-        });
     }
 
     function toggleTheme() {
