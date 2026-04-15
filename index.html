@@ -516,6 +516,12 @@
       margin-bottom: 20px;
       filter: drop-shadow(0 0 24px rgba(126, 186, 214, 0.12));
     }
+    .product-icon-maple {
+      width: min(100%, 250px);
+    }
+    .product-icon-sparse {
+      width: min(100%, 208px);
+    }
     .product-logo-frame {
       display: inline-flex;
       align-items: center;
@@ -1071,7 +1077,7 @@
         <span class="product-badge badge-building">Early Access</span>
         <!-- FIX: alt="" — card h3 already names "Maple Shield" -->
         <a href="maple-shield/" aria-label="Open Maple Shield" class="product-logo-frame">
-          <img src="maple-shield/maple-shield-logo-site.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
+          <img src="maple-shield/maple-shield-logo-site.png" alt="" class="product-icon product-icon-lockup product-icon-maple" loading="lazy" />
         </a>
         <h3 class="product-name">Maple Shield</h3>
         <p class="product-desc">Edge AI for drone detection and airspace awareness. Built for offline, contested environments where low-latency local inference and operator trust both matter.</p>
@@ -1088,7 +1094,7 @@
         <span class="product-badge badge-live">Live — v2.0</span>
         <!-- FIX: alt="" — card h3 already names "SparseFlow" -->
         <a href="sparseflow/" aria-label="Open SparseFlow" class="product-logo-frame">
-          <img src="sparseflow-logo-lockup.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
+          <img src="sparseflow-logo-lockup.png" alt="" class="product-icon product-icon-lockup product-icon-sparse" loading="lazy" />
         </a>
         <h3 class="product-name">SparseFlow</h3>
         <p class="product-desc">Sparse inference acceleration for GPU workloads. SparseFlow rewrites the execution graph at the operator level — skipping zeros without touching model weights.</p>
