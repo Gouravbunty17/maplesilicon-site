@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SparseFlow™ — High-performance compiler &amp; runtime for sparse GPU compute | Maple Silicon Inc.</title>
-    <meta name="description" content="Compiler + runtime for verifiable structured sparsity (N:M). Reproducible performance. Open-source. Built by Maple Silicon Inc.">
+    <title>SparseFlow™ — Reduce LLM inference cost with sparse GPU execution | Maple Silicon Inc.</title>
+    <meta name="description" content="SparseFlow helps teams improve LLM inference throughput and lower GPU cost on supported NVIDIA hardware. Benchmarks, validation, and open-source implementation from Maple Silicon Inc.">
     <script>
         (function() {
             try {
@@ -714,26 +714,27 @@
                 <span class="status-pill">v2.0 live</span>
             </div>
             <h1>SparseFlow<span class="tm">™</span></h1>
-            <p class="hero-subtitle">High-performance compiler and runtime infrastructure for sparse and structured GPU compute</p>
+            <p class="hero-subtitle">Reduce LLM inference cost with sparse GPU execution on supported NVIDIA hardware. Built for teams that care about throughput, latency, and benchmarkable savings.</p>
 
             <div class="proof-card fade-in">
                 <div class="proof-item">
-                    <div class="proof-label">Performance</div>
-                    <div class="proof-value">82.93 TFLOPS<br>RTX 4090 Ada Tensor Cores</div>
+                    <div class="proof-label">Speedup</div>
+                    <div class="proof-value">1.4× average<br>validated production shapes</div>
                 </div>
                 <div class="proof-item">
-                    <div class="proof-label">Method</div>
-                    <div class="proof-value">PTX-level tuning +<br>memory hierarchy optimization</div>
+                    <div class="proof-label">Cost Impact</div>
+                    <div class="proof-value">30-40% target reduction<br>on the right workload fit</div>
                 </div>
                 <div class="proof-item">
-                    <div class="proof-label">Reproducibility</div>
-                    <div class="proof-value">Open-source + <a href="https://github.com/MapleSilicon/SparseFlow#benchmarks">benchmark command</a></div>
+                    <div class="proof-label">Benchmark Path</div>
+                    <div class="proof-value">Open-source repo + <a href="https://github.com/MapleSilicon/SparseFlow#benchmarks">reproducible commands</a></div>
                 </div>
             </div>
 
             <div class="hero-actions">
-                <a class="btn btn-solid" href="https://github.com/MapleSilicon/SparseFlow">View on GitHub</a>
-                <a class="btn btn-ghost" href="https://github.com/MapleSilicon/SparseFlow#benchmarks">Benchmark Results</a>
+                <a class="btn btn-solid" href="mailto:info@maplesilicon.co?subject=SparseFlow%20Benchmark">Request a Benchmark</a>
+                <a class="btn btn-ghost" href="https://github.com/MapleSilicon/SparseFlow#benchmarks">View Benchmark Results</a>
+                <a class="btn btn-ghost" href="https://github.com/MapleSilicon/SparseFlow">View on GitHub</a>
                 <a class="btn btn-ghost" href="../">← Home</a>
             </div>
         </div>
@@ -745,17 +746,17 @@
         <!-- CURRENT STATUS -->
         <section class="content-section" id="status">
             <div class="shell">
-                <div class="section-label fade-in">// Current status — active systems development</div>
-                <h2 class="section-h2 fade-in">Systems Development<br>&amp; Validation</h2>
+                <div class="section-label fade-in">// Current status</div>
+                <h2 class="section-h2 fade-in">Benchmark-ready<br>platform work</h2>
                 <div class="content-body fade-in">
-                    <p>SparseFlow is in active systems development, with a focus on validating correctness, performance, and architectural soundness across sparse and structured compute workloads.</p>
-                    <p>Recent milestones include sustained high-efficiency GPU kernel execution, reproducible performance measurement, and end-to-end compiler-to-runtime validation.</p>
+                    <p>SparseFlow is positioned for technical evaluation around one question: can it improve throughput per GPU on real inference workloads?</p>
+                    <p>The current work centers on correctness validation, reproducible benchmarking, and execution paths that can be tested against dense baselines with minimal integration friction.</p>
                 </div>
                 <ul class="bullet-list fade-in">
-                    <li>Designing structured sparsity-aware compiler passes with correctness guarantees</li>
+                    <li>Benchmarking sparse execution against dense baselines on practical inference shapes</li>
                     <li>Validating GPU execution paths through low-level, memory-aware kernel design</li>
-                    <li>Measuring performance using reproducible, architecture-grounded benchmarks</li>
-                    <li>Building a foundation for automating performance-critical decisions in sparse compute pipelines</li>
+                    <li>Focusing on throughput, latency, and workload-fit rather than generic AI claims</li>
+                    <li>Building a path for teams to evaluate savings before deeper integration work</li>
                 </ul>
             </div>
         </section>
@@ -766,11 +767,11 @@
         <section class="content-section">
             <div class="shell">
                 <div class="section-label fade-in">// The problem</div>
-                <h2 class="section-h2 fade-in">Fragmented<br>Sparsity Support</h2>
+                <h2 class="section-h2 fade-in">Inference cost keeps<br>rising with scale</h2>
                 <div class="content-body fade-in">
-                    <p>Structured sparsity is increasingly supported by modern hardware, but its practical adoption remains fragmented across frameworks, compilers, and runtimes.</p>
-                    <p>As a result, sparse execution often relies on fragile, hardware-specific implementations that are difficult to verify, reproduce, or maintain at scale.</p>
-                    <p>Structurally sparse models are frequently executed as dense workloads, leaving potential efficiency gains unrealized.</p>
+                    <p>Inference teams are asked to improve latency and throughput while controlling GPU spend. In practice, that usually means buying more hardware because efficient sparse execution is hard to operationalize.</p>
+                    <p>Modern hardware supports structured sparsity, but adoption remains fragmented across frameworks, compilers, and runtimes.</p>
+                    <p>That leaves many structurally sparse workloads running like dense ones, with potential savings left on the table.</p>
                 </div>
             </div>
         </section>
@@ -781,10 +782,10 @@
         <section class="content-section">
             <div class="shell">
                 <div class="section-label fade-in">// Why SparseFlow</div>
-                <h2 class="section-h2 fade-in">Sparsity as a<br>Systems Problem</h2>
+                <h2 class="section-h2 fade-in">Built for measurable<br>throughput gains</h2>
                 <div class="content-body fade-in">
                     <p>SparseFlow approaches sparsity as a systems problem, not a collection of isolated optimizations.</p>
-                    <p>By integrating compiler transformations, runtime execution, and performance validation into a single pipeline, SparseFlow aims to make sparse and structured compute predictable, reproducible, and scalable across hardware generations.</p>
+                    <p>By integrating compiler transformations, runtime execution, and performance validation into one path, it gives teams a cleaner way to test whether sparse execution produces real savings on their workloads.</p>
                 </div>
             </div>
         </section>
@@ -795,9 +796,9 @@
         <section class="content-section" id="approach">
             <div class="shell">
                 <div class="section-label fade-in">// Approach</div>
-                <h2 class="section-h2 fade-in">Compiler-First<br>Philosophy</h2>
+                <h2 class="section-h2 fade-in">Benchmark-first<br>engineering</h2>
                 <div class="content-body fade-in">
-                    <p>SparseFlow treats structured sparsity as a first-class compiler concern. The platform is designed around four core principles:</p>
+                    <p>SparseFlow treats structured sparsity as a first-class compiler concern, but the product decision still comes down to benchmark evidence. The platform is designed around four core principles:</p>
                 </div>
                 <div class="principles-grid fade-in">
                     <div class="principle-card">
@@ -830,19 +831,19 @@
         <section class="content-section" id="scope">
             <div class="shell">
                 <div class="section-label fade-in">// Technical scope</div>
-                <h2 class="section-h2 fade-in">Current<br>Capabilities</h2>
+                <h2 class="section-h2 fade-in">Current evaluation<br>scope</h2>
                 <div class="content-body fade-in">
-                    <p>The current technical scope of SparseFlow includes:</p>
+                    <p>The current technical scope is oriented around reproducible evaluation, validation, and targeted inference acceleration:</p>
                 </div>
                 <div class="scope-block fade-in">
                     <div class="scope-block-header">// sparseflow.capabilities</div>
                     <div class="scope-block-body">
                         <ul class="bullet-list">
                             <li>MLIR-based compiler infrastructure for sparsity propagation and verification</li>
-                            <li>Initial support for structured N:M sparsity patterns (starting with 2:4)</li>
-                            <li>CPU and GPU validation paths, with reproducible correctness testing</li>
-                            <li>Deterministic test cases and baseline comparisons</li>
-                            <li>A modular design intended to support future GPU and accelerator backends</li>
+                            <li>Structured N:M sparsity support starting with 2:4</li>
+                            <li>CPU and GPU validation paths with reproducible correctness testing</li>
+                            <li>Deterministic test cases and dense-baseline comparisons</li>
+                            <li>Modular design intended to expand across future GPU and accelerator backends</li>
                         </ul>
                     </div>
                 </div>
@@ -850,12 +851,12 @@
                     <div class="scope-block-header">// sparseflow.current_limits</div>
                     <div class="scope-block-body">
                         <div class="content-body" style="margin-bottom: 16px;">
-                            <p>SparseFlow is an active systems effort. At this stage, the following areas are under development:</p>
+                            <p>SparseFlow is still a focused systems effort. At this stage, the following areas remain under development:</p>
                         </div>
                         <ul class="bullet-list">
                             <li>Full production deployment at scale</li>
-                            <li>Performance guarantees across all workloads</li>
-                            <li>Complete framework integration</li>
+                            <li>Performance guarantees across every workload shape</li>
+                            <li>Complete framework integration across all stacks</li>
                             <li>Full GPU backend coverage across all operators</li>
                         </ul>
                         <div class="content-body" style="margin-top: 16px;">
@@ -872,30 +873,30 @@
         <section class="content-section" id="roadmap">
             <div class="shell">
                 <div class="section-label fade-in">// Next steps</div>
-                <h2 class="section-h2 fade-in">Development<br>Roadmap</h2>
+                <h2 class="section-h2 fade-in">What we would test<br>with your team</h2>
                 <div class="content-body fade-in">
-                    <p>The next phase focuses on validation and expansion. These steps are aimed at building confidence in the architecture before pursuing broader adoption claims.</p>
+                    <p>The next phase is about turning technical promise into evaluation evidence. These are the workstreams most relevant to a pilot benchmark engagement.</p>
                 </div>
                 <div class="roadmap-list fade-in">
                     <div class="roadmap-item">
                         <div class="roadmap-step">01</div>
-                        <p class="roadmap-text">Expanding correctness testing across a broader set of models and shapes</p>
+                        <p class="roadmap-text">Expand correctness testing across the model shapes that dominate real inference cost</p>
                     </div>
                     <div class="roadmap-item">
                         <div class="roadmap-step">02</div>
-                        <p class="roadmap-text">Establishing reproducible benchmarking against dense baselines</p>
+                        <p class="roadmap-text">Run reproducible benchmark comparisons against dense baselines</p>
                     </div>
                     <div class="roadmap-item">
                         <div class="roadmap-step">03</div>
-                        <p class="roadmap-text">Validating sparse lowering behavior on GPU hardware using controlled test environments</p>
+                        <p class="roadmap-text">Validate sparse lowering behavior on target GPU hardware in controlled environments</p>
                     </div>
                     <div class="roadmap-item">
                         <div class="roadmap-step">04</div>
-                        <p class="roadmap-text">Extending support to additional N:M sparsity configurations</p>
+                        <p class="roadmap-text">Extend support to additional N:M sparsity configurations where workload fit is strong</p>
                     </div>
                     <div class="roadmap-item">
                         <div class="roadmap-step">05</div>
-                        <p class="roadmap-text">Improving documentation and developer-facing visibility into compiler decisions</p>
+                        <p class="roadmap-text">Improve developer visibility into compiler decisions and integration tradeoffs</p>
                     </div>
                 </div>
             </div>
@@ -914,10 +915,11 @@
                         <div class="company-location">Canada</div>
                     </div>
                     <div class="company-right">
-                        <p>Maple Silicon Inc. is a Canadian technology company focused on compiler infrastructure and systems-level optimization for machine learning and high-performance computing workloads.</p>
-                        <p>SparseFlow™ is the company's initial platform, built as part of ongoing engineering efforts into structured sparsity and efficient execution.</p>
-                        <p>Open to collaboration, pilot evaluations, and discussions related to Canadian innovation and funding programs, including NRC IRAP. We're open to 1–2 pilot evaluations with teams exploring structured sparsity or compiler/runtime assessment.</p>
+                        <p>Maple Silicon Inc. is a Canadian technology company focused on compiler infrastructure and systems-level optimization for machine learning workloads.</p>
+                        <p>SparseFlow™ is the company's lead platform for teams exploring whether sparse execution can improve inference economics on supported NVIDIA hardware.</p>
+                        <p>We are open to pilot evaluations with teams that want to benchmark SparseFlow against an existing inference path and identify where savings are real.</p>
                         <div class="contact-row">
+                            <a class="contact-link" href="mailto:info@maplesilicon.co?subject=SparseFlow%20Benchmark">Request Benchmark</a>
                             <a class="contact-link" href="mailto:info@maplesilicon.co">info@maplesilicon.co</a>
                             <a class="contact-link" href="https://github.com/MapleSilicon/SparseFlow">GitHub</a>
                             <a class="contact-link" href="../">Back to Home</a>
