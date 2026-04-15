@@ -516,6 +516,21 @@
       margin-bottom: 20px;
       filter: drop-shadow(0 0 24px rgba(126, 186, 214, 0.12));
     }
+    .product-logo-frame {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #020303;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.22);
+    }
+    [data-theme="light"] .product-logo-frame {
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.10);
+    }
     .product-name {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 28px;
@@ -1055,7 +1070,7 @@
         <div class="product-card-wire" aria-hidden="true"></div>
         <span class="product-badge badge-building">Early Access</span>
         <!-- FIX: alt="" — card h3 already names "Maple Shield" -->
-        <a href="maple-shield/" aria-label="Open Maple Shield">
+        <a href="maple-shield/" aria-label="Open Maple Shield" class="product-logo-frame">
           <img src="maple-shield/maple-shield-logo-site.png" data-dark-src="maple-shield/maple-shield-logo-site.png" data-light-src="maple-shield/maple-shield-logo-full.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
         </a>
         <h3 class="product-name">Maple Shield</h3>
