@@ -501,6 +501,34 @@
             background: var(--code-bg);
         }
 
+        .faq-list {
+            margin-top: 48px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .faq-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 24px;
+        }
+
+        .faq-question {
+            font-family: "Syne", sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+
+        .faq-answer {
+            color: var(--muted-light);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
         /* ── ROADMAP TIMELINE ── */
         .roadmap-list {
             margin-top: 48px;
@@ -693,9 +721,11 @@
                 </a>
                 <nav class="nav-links" aria-label="SparseFlow navigation">
                     <a href="../">Home</a>
+                    <a href="../about/">About</a>
                     <a href="#status">Status</a>
                     <a href="#approach">Approach</a>
                     <a href="#scope">Scope</a>
+                    <a href="#faq">FAQ</a>
                     <a href="#roadmap">Roadmap</a>
                     <a href="#contact">Contact</a>
                 </nav>
@@ -714,7 +744,7 @@
                 <span class="status-pill">v2.0 live</span>
             </div>
             <h1>SparseFlow<span class="tm">™</span></h1>
-            <p class="hero-subtitle">Reduce LLM inference cost by 30-40%. SparseFlow is an MLIR-based runtime that accelerates LLM inference on NVIDIA GPUs, with A100 and RTX 4090 benchmark paths already in focus.</p>
+            <p class="hero-subtitle">Reduce LLM inference cost by 30-40%. SparseFlow is an MLIR-based runtime that accelerates LLM inference on NVIDIA GPUs, with A100 validated and RTX 4090 in active validation.</p>
 
             <div class="proof-card fade-in">
                 <div class="proof-item">
@@ -727,12 +757,12 @@
                 </div>
                 <div class="proof-item">
                     <div class="proof-label">No Friction</div>
-                    <div class="proof-value">No model changes +<br>24-48h benchmark turnaround</div>
+                    <div class="proof-value">No model changes +<br>24-48h review turnaround</div>
                 </div>
             </div>
 
             <div class="hero-actions">
-                <a class="btn btn-solid" href="mailto:info@maplesilicon.co?subject=SparseFlow%20Free%20Benchmark">Run a Free Benchmark</a>
+                <a class="btn btn-solid" href="mailto:info@maplesilicon.co?subject=SparseFlow%20Free%20Benchmark%20Review">Request Free Benchmark Review</a>
                 <a class="btn btn-ghost" href="https://github.com/MapleSilicon/SparseFlow#benchmarks">View Benchmark Results</a>
                 <a class="btn btn-ghost" href="https://github.com/MapleSilicon/SparseFlow">View on GitHub</a>
                 <a class="btn btn-ghost" href="../">← Home</a>
@@ -843,7 +873,7 @@
                             <li>Structured N:M sparsity support starting with 2:4</li>
                             <li>CPU and GPU validation paths with reproducible correctness testing</li>
                             <li>Deterministic test cases and dense-baseline comparisons</li>
-                            <li>Modular design intended to expand across future GPU and accelerator backends</li>
+                            <li>A100 validated; RTX 4090 in active validation</li>
                         </ul>
                     </div>
                 </div>
@@ -862,6 +892,34 @@
                         <div class="content-body" style="margin-top: 16px;">
                             <p>These areas are being approached incrementally, following correctness validation and reproducible benchmarking.</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- FAQ -->
+        <section class="content-section" id="faq">
+            <div class="shell">
+                <div class="section-label fade-in">// Technical FAQ</div>
+                <h2 class="section-h2 fade-in">Answers before the<br>first call</h2>
+                <div class="faq-list fade-in">
+                    <div class="faq-item">
+                        <div class="faq-question">Does SparseFlow require model retraining?</div>
+                        <p class="faq-answer">No. SparseFlow is positioned as an inference optimization path. The current evaluation flow is designed to benchmark against your existing inference workload without requiring retraining to assess potential value.</p>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Which frameworks fit the current evaluation path?</div>
+                        <p class="faq-answer">The current benchmark path is oriented around existing PyTorch and Hugging Face style inference flows, so teams can compare SparseFlow against a practical dense baseline instead of a synthetic integration target.</p>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Which GPUs are supported today?</div>
+                        <p class="faq-answer">A100 is currently validated. RTX 4090 is in active validation. SparseFlow is aimed at supported NVIDIA hardware where structured sparsity can translate into real throughput and cost gains.</p>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Is SparseFlow self-hosted or SaaS?</div>
+                        <p class="faq-answer">SparseFlow is presented as infrastructure for customer workloads rather than a hosted consumer service. The current commercial path is a founder-led evaluation and pilot, with validation performed against the customer’s target environment.</p>
                     </div>
                 </div>
             </div>
@@ -917,9 +975,10 @@
                     <div class="company-right">
                         <p>Maple Silicon Inc. is a Canadian technology company focused on compiler infrastructure and systems-level optimization for machine learning workloads.</p>
                         <p>SparseFlow™ is the company's lead platform for teams exploring whether sparse execution can improve inference economics on supported NVIDIA hardware.</p>
-                        <p>We are open to pilot evaluations with teams that want to benchmark SparseFlow against an existing inference path and identify where savings are real.</p>
+                        <p>We are open to pilot evaluations with teams that want to benchmark SparseFlow against an existing inference path and identify where savings are real. The free benchmark review is a lightweight screening step; the paid pilot is the hands-on evaluation inside your stack.</p>
                         <div class="contact-row">
-                            <a class="contact-link" href="mailto:info@maplesilicon.co?subject=SparseFlow%20Free%20Benchmark">Run a Free Benchmark</a>
+                            <a class="contact-link" href="mailto:info@maplesilicon.co?subject=SparseFlow%20Free%20Benchmark%20Review">Free Benchmark Review</a>
+                            <a class="contact-link" href="mailto:info@maplesilicon.co?subject=SparseFlow%20Pilot">Request a Pilot</a>
                             <a class="contact-link" href="mailto:info@maplesilicon.co">info@maplesilicon.co</a>
                             <a class="contact-link" href="https://github.com/MapleSilicon/SparseFlow">GitHub</a>
                             <a class="contact-link" href="../">Back to Home</a>
@@ -935,6 +994,7 @@
             <div class="footer-inner">
                 <div class="footer-copy">© 2025 Maple Silicon Inc. — SparseFlow™ is a trademark.</div>
                 <div class="footer-links">
+                    <a href="../about/">About</a>
                     <a href="../">Home</a>
                     <a href="https://github.com/MapleSilicon/SparseFlow">GitHub</a>
                     <a href="https://github.com/MapleSilicon/SparseFlow/blob/main/LICENSE">License</a>

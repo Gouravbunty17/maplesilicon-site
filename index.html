@@ -357,6 +357,51 @@
       color: #d2d2e6;
     }
 
+    /* ── PROOF STRIP ── */
+    .proof-strip {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 32px 48px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: transparent;
+    }
+    .proof-tile {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 24px;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .proof-tile:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+    .proof-kicker {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 10px;
+    }
+    .proof-title {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .proof-copy {
+      display: block;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-dim);
+    }
+
     /* ── SECTIONS COMMON ── */
     section { position: relative; z-index: 2; }
     .section-inner {
@@ -733,6 +778,42 @@
       margin-bottom: 28px;
       position: relative;
     }
+    .founder-email {
+      display: inline-block;
+      margin-bottom: 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--amber);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s;
+    }
+    .founder-email:hover { color: var(--text); }
+    .founder-bio {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .founder-links {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 24px;
+      position: relative;
+      flex-wrap: wrap;
+    }
+    .founder-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .founder-links a:hover { color: var(--amber); }
     .founder-quote {
       font-size: 15px;
       color: var(--text-dim);
@@ -942,6 +1023,7 @@
       .numbers-grid { grid-template-columns: 1fr; }
       .pipeline-steps { grid-template-columns: 1fr 1fr; }
       .pipeline-steps::before { display: none; }
+      .proof-strip { grid-template-columns: 1fr; padding: 24px; }
       .about-grid { grid-template-columns: 1fr; gap: 48px; }
       .cta-inner { padding: 80px 24px; }
       footer { flex-direction: column; gap: 24px; text-align: center; padding: 32px 24px; }
@@ -997,7 +1079,7 @@
     <li><a href="#products">Product</a></li>
     <li><a href="#numbers">Results</a></li>
     <li><a href="#how">How It Works</a></li>
-    <li><a href="#about">About</a></li>
+    <li><a href="about/">About</a></li>
     <li><a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Benchmark" class="nav-cta">Request Benchmark</a></li>
   </ul>
 </nav>
@@ -1012,8 +1094,8 @@
       inference cost by<br/>
       <span class="accent">30-40%</span>.
     </h1>
-    <p class="hero-sub">SparseFlow is an MLIR-based runtime that accelerates LLM inference on NVIDIA GPUs. A100 and RTX 4090 tested benchmark paths are already in focus.</p>
-    <p class="hero-tagline">Run a free benchmark · No model changes required</p>
+    <p class="hero-sub">SparseFlow is an MLIR-based runtime that accelerates LLM inference on NVIDIA GPUs. A100 validated; RTX 4090 in active validation.</p>
+    <p class="hero-tagline">Free benchmark review · Paid pilot for deployment validation</p>
     <div class="hero-cycling" aria-label="Key capabilities">
       <span class="cycle-word active">1.4× AVG SPEEDUP</span>
       <span class="cycle-word">UP TO 1.6-1.7×</span>
@@ -1021,13 +1103,31 @@
       <span class="cycle-word">24-48H RESULTS</span>
     </div>
     <div class="hero-cycling" aria-label="Primary call to action" style="margin-top:18px;">
-      <a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Free%20Benchmark" class="cycle-word active" style="text-decoration:none;">RUN A FREE BENCHMARK</a>
+      <a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Free%20Benchmark%20Review" class="cycle-word active" style="text-decoration:none;">REQUEST A FREE BENCHMARK REVIEW</a>
     </div>
   </div>
   <div class="hero-scroll" aria-hidden="true">
     <div class="scroll-line"></div>
     <span>Scroll</span>
   </div>
+</section>
+
+<section class="proof-strip">
+  <a class="proof-tile reveal reveal-delay-1" href="about/">
+    <span class="proof-kicker">About</span>
+    <span class="proof-title">Founder and company background</span>
+    <span class="proof-copy">Review Maple Silicon, Gourav Kumar, and the technical background behind SparseFlow.</span>
+  </a>
+  <a class="proof-tile reveal reveal-delay-2" href="https://github.com/MapleSilicon/SparseFlow">
+    <span class="proof-kicker">GitHub</span>
+    <span class="proof-title">Open-source work in public</span>
+    <span class="proof-copy">Browse the public SparseFlow repository, benchmark framing, and active product surface.</span>
+  </a>
+  <a class="proof-tile reveal reveal-delay-3" href="https://github.com/MapleSilicon/SparseFlow#benchmarks">
+    <span class="proof-kicker">Results</span>
+    <span class="proof-title">Benchmark-first engineering</span>
+    <span class="proof-copy">See the benchmark framing first, including validated speedups and current evaluation focus.</span>
+  </a>
 </section>
 
 <!-- ── PROBLEM ── -->
@@ -1055,8 +1155,8 @@
           <div class="problem-stat-label">potential inference cost reduction on a good workload fit</div>
         </div>
         <div class="problem-stat">
-          <div class="problem-stat-val">0</div>
-          <div class="problem-stat-label">model architecture changes required to start evaluating</div>
+          <div class="problem-stat-val">Zero</div>
+          <div class="problem-stat-label">model changes required to start evaluating</div>
         </div>
       </div>
     </div>
@@ -1069,41 +1169,40 @@
 <section id="products">
   <div class="section-inner">
     <p class="section-label reveal">02 — Product</p>
-    <h2 class="section-title reveal reveal-delay-1">One product for this<br/>buying conversation.</h2>
-    <p class="section-kicker reveal reveal-delay-2">SparseFlow is the lead story because it solves an immediate infrastructure problem: reducing inference cost while improving throughput on supported NVIDIA GPUs. Other company projects stay off the main homepage narrative so the message remains clear.</p>
+    <h2 class="section-title reveal reveal-delay-1">Product first,<br/>pilot second.</h2>
+    <p class="section-kicker reveal reveal-delay-2">SparseFlow is the product. The benchmark engagement is the path to evaluate it on your workload. The free benchmark review is a lightweight screening step; the paid pilot is where we validate fit in your stack.</p>
     <div class="products-grid">
       <div class="product-card reveal reveal-delay-2">
         <div class="product-card-wire" aria-hidden="true"></div>
-        <span class="product-badge badge-building">Benchmark Path</span>
-        <a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Benchmark" aria-label="Request a SparseFlow benchmark" class="product-logo-frame">
-          <img src="sparseflow-logo-lockup.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
-        </a>
-        <h3 class="product-name">Benchmark Engagement</h3>
-        <p class="product-desc">The fastest way to evaluate SparseFlow is against your existing inference path. We focus on real bottleneck layers, real hardware, and real baseline comparisons.</p>
-        <ul class="product-specs">
-          <li>Bring your target model and shapes</li>
-          <li>Measure throughput, latency, and cost deltas</li>
-          <li>Prioritize the highest-impact inference paths</li>
-          <li>Decide with evidence, not pitch decks</li>
-        </ul>
-        <a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Benchmark" class="product-link">Request Benchmark →</a>
-      </div>
-      <div class="product-card reveal reveal-delay-3">
-        <div class="product-card-wire" aria-hidden="true"></div>
         <span class="product-badge badge-live">Live — v2.0</span>
-        <!-- FIX: alt="" — card h3 already names "SparseFlow" -->
         <a href="sparseflow/" aria-label="Open SparseFlow" class="product-logo-frame">
           <img src="sparseflow-logo-lockup.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
         </a>
         <h3 class="product-name">SparseFlow</h3>
         <p class="product-desc">Sparse inference acceleration for GPU workloads. SparseFlow improves execution efficiency at the operator level so teams can benchmark real savings without rebuilding their model pipeline.</p>
         <ul class="product-specs">
-          <li>Up to 1.68× end-to-end speedup on tested paths</li>
-          <li>Drop-in benchmark path for existing inference workloads</li>
+          <li>A100 validated; RTX 4090 in active validation</li>
+          <li>Up to 1.6-1.7× on FFN-heavy inference paths</li>
           <li>No retraining required to evaluate value</li>
           <li>Built for throughput, latency, and cost-sensitive deployment</li>
         </ul>
         <a href="sparseflow/" class="product-link">Explore SparseFlow →</a>
+      </div>
+      <div class="product-card reveal reveal-delay-3">
+        <div class="product-card-wire" aria-hidden="true"></div>
+        <span class="product-badge badge-building">Pilot Path</span>
+        <a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Pilot" aria-label="Request a SparseFlow pilot" class="product-logo-frame">
+          <img src="sparseflow-logo-lockup.png" alt="" class="product-icon product-icon-lockup" loading="lazy" />
+        </a>
+        <h3 class="product-name">Benchmark Engagement</h3>
+        <p class="product-desc">The benchmark engagement is the paid pilot path. We evaluate SparseFlow against your existing inference path on your workload and identify where savings are real.</p>
+        <ul class="product-specs">
+          <li>Bring your target model, shapes, and serving context</li>
+          <li>Measure throughput, latency, and cost deltas</li>
+          <li>Validate fit inside your stack and deployment workflow</li>
+          <li>Use the free benchmark review as the pre-pilot screen</li>
+        </ul>
+        <a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Pilot" class="product-link">Request a Pilot →</a>
       </div>
     </div>
   </div>
@@ -1131,7 +1230,7 @@
       </div>
       <div class="number-block reveal reveal-delay-3">
         <div class="number-val">
-          <span class="num-accent">0</span>
+          <span class="num-accent">Zero</span>
         </div>
         <div class="number-label">model changes required<br/>to start evaluating</div>
       </div>
@@ -1180,21 +1279,27 @@
 <section id="about">
   <div class="section-inner">
     <p class="section-label reveal">05 — About</p>
-    <h2 class="section-title reveal reveal-delay-1">Focused positioning,<br/>not generic AI branding.</h2>
+    <h2 class="section-title reveal reveal-delay-1">About Maple Silicon</h2>
+    <p class="section-kicker reveal reveal-delay-2">Built by a GPU systems engineer for teams who pay real money for inference.</p>
     <div class="about-grid">
       <div class="about-text reveal reveal-delay-2">
-<p>Maple Silicon Inc. is leading with one commercial story on the homepage: <strong>SparseFlow helps teams lower inference cost and raise throughput</strong>. That clarity matters more than trying to look broad.</p>
-        <p>Our work sits at the intersection of GPU architecture, compiler optimization, and deployment. We lead with benchmarks, workload fit, and practical integration instead of abstract AI claims.</p>
+        <p>Maple Silicon Inc. is a Canadian company building runtime and compiler infrastructure for LLM inference on NVIDIA GPUs. We focus on one problem: cutting the cost of every token a production model serves, without forcing teams to retrain or change architectures.</p>
+        <p>Most inference optimization tools describe gains. We measure them. SparseFlow ships with a benchmark harness because the only number that matters is the one that holds up on your workload, on your hardware, in your serving stack.</p>
         <div class="about-credentials">
-          <span class="credential">Focused on GPU inference economics</span>
-          <span class="credential">Compiler and runtime optimization background</span>
-          <span class="credential">Benchmark-led technical positioning</span>
-          <span class="credential">Clear commercial narrative for buyer trust</span>
+          <span class="credential">Incorporated in Canada</span>
+          <span class="credential">A100 validated; RTX 4090 in active validation</span>
+          <span class="credential">Open-source SparseFlow runtime on GitHub</span>
+          <span class="credential">Direct founder contact: gourav.kumar@maplesilicon.co</span>
         </div>
       </div>
       <div class="about-visual reveal reveal-delay-3">
         <div class="founder-name">Gourav Kumar</div>
         <div class="founder-title">Founder &amp; Lead Engineer</div>
+        <a class="founder-email" href="mailto:gourav.kumar@maplesilicon.co">gourav.kumar@maplesilicon.co</a>
+        <p class="founder-bio">Background in CUDA kernel development and GPU systems engineering. Built dense GEMM kernels reaching 31.47 TFLOPS on RTX 3090. Currently leading SparseFlow development and customer engagements end-to-end.</p>
+        <div class="founder-links">
+          <a href="https://github.com/MapleSilicon">GitHub</a>
+        </div>
         <p class="founder-quote">"The next performance win is not just a better model. It's better execution on the GPUs teams already pay for."</p>
       </div>
     </div>
@@ -1207,14 +1312,14 @@
 <section id="cta">
   <div class="cta-inner">
     <p class="section-label reveal" style="text-align:center;">06 — Work With Us</p>
-    <h2 class="cta-title reveal reveal-delay-1">Run a free benchmark.</h2>
-    <p class="cta-sub reveal reveal-delay-2">Send your target model, shapes, or workload profile. We will benchmark SparseFlow against your existing path and show where the gains are real.</p>
+    <h2 class="cta-title reveal reveal-delay-1">Start with a review, then run a pilot.</h2>
+    <p class="cta-sub reveal reveal-delay-2">The free benchmark review is a lightweight first pass using your workload details, target shapes, or representative configs. The paid pilot is where we validate SparseFlow on your stack and infrastructure.</p>
     <div class="cta-buttons reveal reveal-delay-3">
       <a href="sparseflow/" class="btn-primary">Explore SparseFlow</a>
-      <a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Free%20Benchmark" class="btn-secondary">Run a Free Benchmark</a>
-      <a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Integration" class="btn-secondary">Discuss Integration</a>
+      <a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Free%20Benchmark%20Review" class="btn-secondary">Request Free Benchmark Review</a>
+      <a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Pilot" class="btn-secondary">Request a Pilot</a>
     </div>
-    <p class="cta-meta reveal reveal-delay-4">Prefer email? Reach us directly at <a href="mailto:info@maplesilicon.co">info@maplesilicon.co</a>.</p>
+    <p class="cta-meta reveal reveal-delay-4">Founder contact for product conversations: <a href="mailto:gourav.kumar@maplesilicon.co">gourav.kumar@maplesilicon.co</a>. General inquiries: <a href="mailto:info@maplesilicon.co">info@maplesilicon.co</a>.</p>
   </div>
 </section>
 
@@ -1224,9 +1329,10 @@
     <strong>Maple Silicon Inc.</strong> · Sparse GPU inference optimization
   </div>
   <ul class="footer-links">
+    <li><a href="about/">About</a></li>
     <li><a href="sparseflow/">SparseFlow</a></li>
     <li><a href="maple-shield/">Maple Shield</a></li>
-    <li><a href="mailto:info@maplesilicon.co">Email</a></li>
+    <li><a href="mailto:info@maplesilicon.co">info@maplesilicon.co</a></li>
   </ul>
 </footer>
 
