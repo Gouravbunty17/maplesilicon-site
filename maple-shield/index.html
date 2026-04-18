@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maple Shield — Edge AI for Drone Detection and Airspace Security | Maple Silicon Inc.</title>
-    <meta name="description" content="Maple Shield is Maple Silicon Inc.'s edge AI platform for drone detection, persistent tracking, operator alerting, and airspace awareness.">
+    <title>Maple Shield | Passive drone detection and airspace awareness | Maple Silicon Inc.</title>
+    <meta name="description" content="Maple Shield is Maple Silicon Inc.'s passive drone detection system for contested and remote environments, built around the Argus detection engine, track continuity, operator alerting, and replayable evidence.">
     <script>
         (function() {
             try {
@@ -437,7 +437,7 @@
         /* ── SYSTEM LAYERS ── */
         .layers-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 1px;
             border: 1px solid var(--border);
             border-radius: 4px;
@@ -745,9 +745,9 @@
                 </a>
                 <nav class="nav-links" aria-label="Maple Shield navigation">
                     <a href="../">Home</a>
-                    <a href="#system">System</a>
-                    <a href="#principles">Principles</a>
-                    <a href="#workflow">Workflow</a>
+                    <a href="#system">Argus</a>
+                    <a href="#passive">Why Passive</a>
+                    <a href="#scenarios">Scenarios</a>
                     <a href="../sparseflow/">SparseFlow</a>
                 </nav>
             </div>
@@ -763,12 +763,12 @@
                 <div class="hero-mark">
                     <img src="maple-shield-logo-site.png" alt="Maple Shield logo">
                 </div>
-                <div class="hero-eyebrow">// Maple Shield — edge AI airspace awareness</div>
-                <h1>Detection, tracking, and operator clarity at the edge.</h1>
-                <p class="hero-lead">Maple Shield is Maple Silicon Inc.'s platform for drone detection, persistent multi-target tracking, alerting, and replayable incident intelligence in authorized environments.</p>
+                <div class="hero-eyebrow">// Maple Shield - passive drone detection</div>
+                <h1>Passive drone detection and airspace awareness for contested and remote environments.</h1>
+                <p class="hero-lead">Maple Shield is Maple Silicon Inc.'s passive detection system. Argus handles detection and intelligence, while the wider platform focuses on track continuity, operator alerting, and replayable evidence.</p>
                 <div class="hero-actions">
-                    <a class="btn btn-solid" href="#system">View System Layers</a>
-                    <a class="btn btn-ghost" href="../">← Back to Home</a>
+                    <a class="btn btn-solid" href="#system">View Argus Stack</a>
+                    <a class="btn btn-ghost" href="../">Back to Home</a>
                 </div>
             </div>
             <div class="hero-right">
@@ -776,19 +776,23 @@
                     <div class="signal-header">// Platform signals</div>
                     <div class="signal-item">
                         <div class="signal-label">Positioning</div>
-                        <div class="signal-value">Edge AI for drone detection and airspace security.</div>
+                        <div class="signal-value">Passive drone detection and operator-facing airspace awareness.</div>
                     </div>
                     <div class="signal-item">
-                        <div class="signal-label">Current direction</div>
-                        <div class="signal-value">Operator-ready workflows with logging, replay, and track continuity.</div>
+                        <div class="signal-label">Argus</div>
+                        <div class="signal-value">The 5-layer detection and intelligence engine inside Maple Shield.</div>
                     </div>
                     <div class="signal-item">
-                        <div class="signal-label">Deployment bias</div>
-                        <div class="signal-value">Low-latency inference near the sensor, not cloud-first dependence.</div>
+                        <div class="signal-label">Scenario bias</div>
+                        <div class="signal-value">EMCON-sensitive, remote, and cold-weather operating environments.</div>
                     </div>
                     <div class="signal-item">
-                        <div class="signal-label">Status</div>
-                        <div class="signal-value" style="color: var(--accent);">In active development</div>
+                        <div class="signal-label">Program signal</div>
+                        <div class="signal-value">Submitted to NATO Innovation Continuum 2026 (IC26).</div>
+                    </div>
+                    <div class="signal-item">
+                        <div class="signal-label">Availability</div>
+                        <div class="signal-value" style="color: var(--accent);">Open for evaluation conversations.</div>
                     </div>
                 </div>
             </div>
@@ -802,32 +806,65 @@
     <hr class="rule">
 
     <main>
+        <!-- READINESS SIGNALS -->
+        <section class="content-section" id="signals">
+            <div class="shell">
+                <div class="section-label fade-in">// Readiness signals</div>
+                <h2 class="section-h2 fade-in">Early proof,<br>kept honest.</h2>
+                <p class="section-sub fade-in">The credibility work here is simple: show the direction, show the doctrine relevance, and avoid pretending the product is further along than it is.</p>
+                <div class="workflow-strip fade-in">
+                    <div class="workflow-card">
+                        <div class="workflow-step">01 / NATO IC26</div>
+                        <div class="workflow-title">NATO submission note</div>
+                        <p class="workflow-desc">Submitted to NATO Innovation Continuum 2026 as part of the current Maple Shield product direction.</p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-step">02 / Edge bias</div>
+                        <div class="workflow-title">Passive edge deployment</div>
+                        <p class="workflow-desc">Positioned for passive sensing close to the sensor, with doctrine fit prioritized ahead of cloud-first assumptions.</p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-step">03 / Availability</div>
+                        <div class="workflow-title">Evaluation conversations</div>
+                        <p class="workflow-desc">Open to discussions with relevant programs and operators. TRL framing and hardware path are handled directly against the use case.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="rule">
+
         <!-- SYSTEM LAYERS -->
         <section class="content-section" id="system">
             <div class="shell">
-                <div class="section-label fade-in">// System layers — a clear job at each level</div>
-                <h2 class="section-h2 fade-in">System layers with<br>a clear job to do.</h2>
-                <p class="section-sub fade-in">Maple Shield is being shaped as a full sensing and operator layer. The opportunity is not a single dramatic component — it is the integrated stack that sees, tracks, scores, and explains.</p>
+                <div class="section-label fade-in">// Argus detection engine</div>
+                <h2 class="section-h2 fade-in">Argus is the 5-layer<br>engine inside Maple Shield.</h2>
+                <p class="section-sub fade-in">Maple Shield is the system. Argus is the detection and intelligence engine inside it. The stack moves from passive sensing intake to operator-ready evidence without collapsing the whole product into a single model.</p>
                 <div class="layers-grid fade-in">
                     <div class="layer-card">
                         <div class="layer-num">Layer 01</div>
-                        <div class="layer-title">Detection engine</div>
-                        <p class="layer-desc">Computer vision for live video and edge sensor feeds, tuned to surface airborne objects quickly enough for real-time workflows.</p>
+                        <div class="layer-title">Passive sensing intake</div>
+                        <p class="layer-desc">Ingest video and adjacent sensor feeds in a workflow that preserves passive operation as the starting assumption.</p>
                     </div>
                     <div class="layer-card">
                         <div class="layer-num">Layer 02</div>
-                        <div class="layer-title">Persistent tracking</div>
-                        <p class="layer-desc">Stable track identities, continuity across frames, and the ability to maintain operator trust even when clutter and occlusion appear.</p>
+                        <div class="layer-title">Detection and classification</div>
+                        <p class="layer-desc">Surface airborne objects quickly enough for live operator use, with the detection layer tuned for practical review rather than demo-only output.</p>
                     </div>
                     <div class="layer-card">
                         <div class="layer-num">Layer 03</div>
-                        <div class="layer-title">Alerting and scoring</div>
-                        <p class="layer-desc">Risk-aware operator cues that prioritize what matters, reduce noise, and keep human decision-making readable under pressure.</p>
+                        <div class="layer-title">Track continuity</div>
+                        <p class="layer-desc">Maintain identity through clutter, occlusion, and movement so the operator sees a coherent track instead of a flickering sequence of detections.</p>
                     </div>
                     <div class="layer-card">
                         <div class="layer-num">Layer 04</div>
-                        <div class="layer-title">Replay and evidence</div>
-                        <p class="layer-desc">Incident history, replayable logs, and a structured audit trail that turns raw detections into useful post-event intelligence.</p>
+                        <div class="layer-title">Alerting and scoring</div>
+                        <p class="layer-desc">Prioritize likely threats, reduce noise, and keep the human decision chain readable under pressure.</p>
+                    </div>
+                    <div class="layer-card">
+                        <div class="layer-num">Layer 05</div>
+                        <div class="layer-title">Replay and intelligence</div>
+                        <p class="layer-desc">Preserve event history, evidence, and replayable incident context for review, tuning, and post-event intelligence.</p>
                     </div>
                 </div>
             </div>
@@ -835,27 +872,27 @@
 
         <hr class="rule">
 
-        <!-- PRINCIPLES -->
-        <section class="content-section" id="principles">
+        <!-- WHY PASSIVE -->
+        <section class="content-section" id="passive">
             <div class="shell">
-                <div class="section-label fade-in">// Product principles</div>
-                <h2 class="section-h2 fade-in">Principles behind<br>the product.</h2>
-                <p class="section-sub fade-in">The product direction is kept disciplined: lawful detection and awareness first, edge deployment by default, and a system design that can evolve without turning into a hardware-first trap.</p>
+                <div class="section-label fade-in">// Why passive matters</div>
+                <h2 class="section-h2 fade-in">Why passive matters<br>before everything else.</h2>
+                <p class="section-sub fade-in">For the environments Maple Shield is aimed at, the sensing doctrine matters as much as the model quality. Passive operation is not a side detail; it is the reason the system belongs in the conversation.</p>
                 <div class="principles-list">
                     <div class="principle-item fade-in">
                         <div class="principle-num" aria-hidden="true">01</div>
-                        <div class="principle-title">Software-first moat</div>
-                        <p class="principle-desc">The durable value sits in perception, track continuity, event intelligence, and integration — not in trying to start with expensive custom hardware.</p>
+                        <div class="principle-title">EMCON-sensitive environments</div>
+                        <p class="principle-desc">In Latvia-style EMCON conditions, passive detection helps preserve awareness without creating an unnecessary signal.</p>
                     </div>
                     <div class="principle-item fade-in">
                         <div class="principle-num" aria-hidden="true">02</div>
-                        <div class="principle-title">Edge-first runtime</div>
-                        <p class="principle-desc">Latency, resilience, and constrained deployment matter. Maple Shield is being positioned for the node closest to the sensor, not only the server furthest away.</p>
+                        <div class="principle-title">Remote and Arctic operations</div>
+                        <p class="principle-desc">In Arctic and other remote deployments, infrastructure is limited, weather is unforgiving, and the system has to stay useful without leaning on a rich backend.</p>
                     </div>
                     <div class="principle-item fade-in">
                         <div class="principle-num" aria-hidden="true">03</div>
-                        <div class="principle-title">Operator-grade interface</div>
-                        <p class="principle-desc">A serious system must produce understandable alerts, replayable evidence, and confidence that the workflow helps humans act instead of overwhelming them.</p>
+                        <div class="principle-title">Operator trust and evidence</div>
+                        <p class="principle-desc">Passive sensing only matters if operators can trust the alert flow, review the event, and explain why the system raised the signal in the first place.</p>
                     </div>
                 </div>
             </div>
@@ -863,27 +900,55 @@
 
         <hr class="rule">
 
-        <!-- WORKFLOW -->
-        <section class="content-section" id="workflow">
+        <!-- OPERATIONAL SCENARIOS -->
+        <section class="content-section" id="scenarios">
             <div class="shell">
-                <div class="section-label fade-in">// Operator workflow</div>
-                <h2 class="section-h2 fade-in">How the workflow<br>is meant to feel.</h2>
-                <p class="section-sub fade-in">The architecture is not just model-in, box-out. The experience should move from sensor feed to trusted action with a chain that remains understandable at every step.</p>
+                <div class="section-label fade-in">// Operational scenarios</div>
+                <h2 class="section-h2 fade-in">Operational scenarios that<br>make the value concrete.</h2>
+                <p class="section-sub fade-in">Maple Shield becomes easier to understand when it is anchored to likely deployments instead of generic airspace language.</p>
                 <div class="workflow-strip fade-in">
                     <div class="workflow-card">
-                        <div class="workflow-step">01 / Sense</div>
-                        <div class="workflow-title">Sense</div>
-                        <p class="workflow-desc">Ingest video or adjacent sensor data, perform real-time detection, and establish an initial track candidate with minimal delay.</p>
+                        <div class="workflow-step">01 / Latvia</div>
+                        <div class="workflow-title">Latvia EMCON example</div>
+                        <p class="workflow-desc">A passive detection layer for settings where active emissions are constrained, operationally undesirable, or likely to draw the wrong kind of attention.</p>
                     </div>
                     <div class="workflow-card">
-                        <div class="workflow-step">02 / Interpret</div>
-                        <div class="workflow-title">Interpret</div>
-                        <p class="workflow-desc">Stabilize the track, maintain identity, score the event against zone or scenario context, and filter away alert noise.</p>
+                        <div class="workflow-step">02 / Arctic</div>
+                        <div class="workflow-title">Arctic and remote coverage</div>
+                        <p class="workflow-desc">Airspace awareness for northern, border, maritime, and other remote sites where weather, bandwidth, and logistics all work against bulky infrastructure.</p>
                     </div>
                     <div class="workflow-card">
-                        <div class="workflow-step">03 / Record</div>
-                        <div class="workflow-title">Record</div>
-                        <p class="workflow-desc">Log the event, preserve evidence, and make the incident replayable so teams can validate performance and understand what happened.</p>
+                        <div class="workflow-step">03 / Critical sites</div>
+                        <div class="workflow-title">Critical infrastructure overwatch</div>
+                        <p class="workflow-desc">Persistent monitoring for energy, industrial, and other fixed sites that need earlier warning and a cleaner handoff from machine signal to human response.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- WHO THIS IS FOR -->
+        <section class="content-section" id="fit">
+            <div class="shell">
+                <div class="section-label fade-in">// Who this is for</div>
+                <h2 class="section-h2 fade-in">Who Maple Shield<br>is for.</h2>
+                <p class="section-sub fade-in">This is not a mass-market drone app. The product direction is shaped around operators and programs that care about passive sensing, auditability, and low-infrastructure deployment.</p>
+                <div class="workflow-strip fade-in">
+                    <div class="workflow-card">
+                        <div class="workflow-step">01 / Defence</div>
+                        <div class="workflow-title">Defence programs</div>
+                        <p class="workflow-desc">Programs evaluating passive drone detection, airspace awareness, and operator-ready incident intelligence for sensitive environments.</p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-step">02 / Infrastructure</div>
+                        <div class="workflow-title">Critical infrastructure operators</div>
+                        <p class="workflow-desc">Energy, industrial, and other site operators that need persistent awareness and cleaner escalation around low-altitude aerial activity.</p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-step">03 / Remote ops</div>
+                        <div class="workflow-title">Remote surveillance teams</div>
+                        <p class="workflow-desc">Operators covering remote, border, maritime, or cold-weather locations where passive sensing and edge deployment matter more than cloud convenience.</p>
                     </div>
                 </div>
             </div>
@@ -896,15 +961,16 @@
             <div class="shell">
                 <div class="cta-inner">
                     <div class="cta-left fade-in">
-                        <div class="cta-eyebrow">// Company direction</div>
-                        <h2 class="cta-title">Maple Shield now looks like a product, not a placeholder.</h2>
+                        <div class="cta-eyebrow">// Evaluation path</div>
+                        <h2 class="cta-title">Maple Shield should read like a serious passive-detection system.</h2>
                     </div>
                     <div class="cta-right fade-in">
-                        <p>This platform is designed to present Maple Shield as a focused advanced product inside Maple Silicon Inc., with enough seriousness for technical reviewers, customers, and partners to immediately understand what category it belongs to and why it matters.</p>
-                        <p>Part of a two-product systems company: SparseFlow for compute efficiency, Maple Shield for edge awareness.</p>
+                        <p>The goal is not to oversell maturity. It is to make the category, doctrine fit, and system architecture clear enough that the right reviewer immediately understands why Maple Shield exists.</p>
+                        <p>Maple Shield stays separate from SparseFlow. SparseFlow addresses compute efficiency. Maple Shield addresses passive drone detection. Argus is the detection and intelligence engine inside Maple Shield.</p>
                         <div class="cta-links">
-                            <a class="btn btn-solid" href="../">Back to Maple Silicon Inc.</a>
-                            <a class="btn btn-ghost" href="../sparseflow/">See SparseFlow →</a>
+                            <a class="btn btn-solid" href="mailto:info@maplesilicon.co?subject=Maple%20Shield%20Evaluation">Request Evaluation</a>
+                            <a class="btn btn-ghost" href="../">Back to Maple Silicon Inc.</a>
+                            <a class="btn btn-ghost" href="../sparseflow/">See SparseFlow -></a>
                         </div>
                     </div>
                 </div>
