@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Maple Silicon Inc. | Sparse GPU inference infrastructure</title>
-    <meta name="description" content="About Maple Silicon Inc., Gourav Kumar, and the engineering background behind SparseFlow.">
+    <title>About Maple Silicon Inc. | Inference acceleration and passive drone detection</title>
+    <meta name="description" content="About Maple Silicon Inc., Gourav Kumar, SparseFlow, and Maple Shield.">
     <script>
         (function() {
             try {
@@ -230,6 +230,13 @@
             line-height: 1.7;
         }
 
+        .note-line {
+            margin-top: 28px;
+            color: var(--text-dim);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
         footer {
             max-width: 1160px;
             margin: 0 auto;
@@ -283,6 +290,7 @@
         <ul class="nav-links">
             <li><a href="../">Home</a></li>
             <li><a href="../sparseflow/">SparseFlow</a></li>
+            <li><a href="../maple-shield/">Maple Shield</a></li>
             <li><a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Pilot">Request a Pilot</a></li>
         </ul>
     </nav>
@@ -291,8 +299,8 @@
         <div class="stack">
             <p class="eyebrow">About Maple Silicon</p>
             <h1>Built by a GPU systems engineer for teams who pay real money for inference.</h1>
-            <p class="lede">Maple Silicon Inc. is a Canadian company building runtime and compiler infrastructure for LLM inference on NVIDIA GPUs. We focus on one problem: cutting the cost of every token a production model serves, without forcing teams to retrain or change architectures.</p>
-            <p class="body-copy">Most inference optimization tools describe gains. We measure them. SparseFlow ships with a benchmark harness because the only number that matters is the one that holds up on your workload, on your hardware, in your serving stack.</p>
+            <p class="lede">Maple Silicon Inc. is a Canadian company building systems for AI inference acceleration and passive drone detection in real-world operating environments.</p>
+            <p class="body-copy">Most optimization stories sound compelling until they meet real power, cost, and latency constraints. Maple Silicon is built around making advanced computation practical under those constraints instead of pretending they do not exist.</p>
             <div class="credentials">
                 <span class="credential">Maple Silicon Inc., incorporated in Canada</span>
                 <span class="credential">A100 validated; RTX 4090 in active validation</span>
@@ -303,13 +311,35 @@
         <div class="founder-card">
             <div class="founder-name">Gourav Kumar</div>
             <div class="founder-title">Founder &amp; Lead Engineer</div>
-            <p class="body-copy">Background in CUDA kernel development and GPU systems engineering. Built dense GEMM kernels reaching 31.47 TFLOPS on RTX 3090. Currently leading SparseFlow development and customer engagements end-to-end.</p>
+            <p class="body-copy">Background in CUDA kernel development and GPU systems engineering. Built dense GEMM kernels reaching 31.47 TFLOPS on RTX 3090. Currently leading Maple Silicon product development and customer engagements end-to-end.</p>
             <div class="founder-links">
                 <a href="mailto:gourav.kumar@maplesilicon.co">gourav.kumar@maplesilicon.co</a>
                 <a href="https://github.com/MapleSilicon">GitHub</a>
                 <a href="mailto:info@maplesilicon.co?subject=SparseFlow%20Pilot">Request a Pilot</a>
             </div>
             <p class="body-copy" style="margin-top: 24px;"><em>"The next performance win is not just a better model. It's better execution on the GPUs teams already pay for."</em></p>
+        </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+        <p class="eyebrow">Dual-System Approach</p>
+        <h2>Two complementary systems, built on one engineering bias.</h2>
+        <div class="proof-grid">
+            <div class="proof-card">
+                <div class="micro">SparseFlow</div>
+                <h3>Compiler-driven inference engine</h3>
+                <p>A compiler-driven inference engine focused on accelerating machine learning workloads efficiently across GPU architectures.</p>
+            </div>
+            <div class="proof-card">
+                <div class="micro">Maple Shield</div>
+                <h3>Passive drone detection system</h3>
+                <p>A passive drone detection system designed for edge deployment in contested and remote environments, powered by real-time computer vision and optimized inference.</p>
+            </div>
+            <div class="proof-card">
+                <div class="micro">Shared foundation</div>
+                <h3>Power, cost, and latency first</h3>
+                <p>Both systems are built on a shared foundation: making advanced computation practical under real-world constraints - power, cost, and latency.</p>
+            </div>
         </div>
     </section>
 
@@ -343,13 +373,15 @@
                 </div>
             </div>
         </div>
+        <p class="note-line">Maple Shield was submitted to NATO's Innovation Continuum 2026 for evaluation under the Layered Counter-UAS Initiative.</p>
     </section>
 
     <footer>
-        <div class="footer-brand">Maple Silicon Inc. · GPU inference infrastructure</div>
+        <div class="footer-brand">&copy; 2026 Maple Silicon Inc.</div>
         <ul class="footer-links">
             <li><a href="../">Home</a></li>
             <li><a href="../sparseflow/">SparseFlow</a></li>
+            <li><a href="../maple-shield/">Maple Shield</a></li>
             <li><a href="mailto:gourav.kumar@maplesilicon.co">gourav.kumar@maplesilicon.co</a></li>
         </ul>
     </footer>
