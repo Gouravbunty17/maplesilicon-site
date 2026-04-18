@@ -569,9 +569,37 @@
             font-weight: 300;
         }
 
+        .workflow-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+            margin-top: 18px;
+            color: var(--muted-light);
+            font-size: 0.86rem;
+            line-height: 1.65;
+            font-weight: 300;
+        }
+
+        .workflow-list li {
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .workflow-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.7em;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            transform: translateY(-50%);
+        }
+
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 1px;
             border: 1px solid var(--border);
             border-radius: 4px;
@@ -605,6 +633,34 @@
             margin-bottom: 10px;
         }
 
+        .metric-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .metric-list li {
+            position: relative;
+            padding-left: 16px;
+            color: var(--muted-light);
+            font-size: 0.86rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .metric-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.72em;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            transform: translateY(-50%);
+        }
+
         .metric-desc {
             color: var(--muted-light);
             font-size: 0.86rem;
@@ -617,6 +673,64 @@
             color: var(--muted-light);
             font-size: 0.92rem;
             line-height: 1.85;
+            font-weight: 300;
+        }
+
+        .compare-wrap {
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow-x: auto;
+            background: var(--surface);
+        }
+
+        .compare-table {
+            width: 100%;
+            min-width: 820px;
+            border-collapse: collapse;
+        }
+
+        .compare-table th,
+        .compare-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .compare-table th {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: var(--bg);
+        }
+
+        .compare-table td {
+            font-size: 0.88rem;
+            line-height: 1.65;
+            color: var(--muted-light);
+        }
+
+        .compare-table tbody tr:hover td {
+            background: rgba(0, 245, 204, 0.03);
+        }
+        [data-theme="light"] .compare-table tbody tr:hover td {
+            background: rgba(0, 122, 102, 0.04);
+        }
+
+        .compare-system {
+            font-family: "Syne", sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .compare-note {
+            margin-top: 20px;
+            color: var(--muted-light);
+            font-size: 0.88rem;
+            line-height: 1.75;
             font-weight: 300;
         }
 
@@ -750,7 +864,7 @@
             .principle-num { font-size: 2.2rem; }
 
             .workflow-strip { grid-template-columns: 1fr; }
-            .metrics-grid { grid-template-columns: 1fr 1fr; }
+            .metrics-grid { grid-template-columns: 1fr; }
 
             .cta-inner { grid-template-columns: 1fr; gap: 40px; }
         }
@@ -799,7 +913,7 @@
                 <nav class="nav-links" aria-label="Maple Shield navigation">
                     <a href="../">Home</a>
                     <a href="#system">CAIRN</a>
-                    <a href="#passive">Why Passive</a>
+                    <a href="#passive">Why Maple Shield</a>
                     <a href="#scenarios">Scenarios</a>
                     <a href="../sparseflow/">SparseFlow</a>
                 </nav>
@@ -818,7 +932,7 @@
                 </div>
                 <div class="hero-eyebrow">// Maple Shield - passive drone detection</div>
                 <h1>Passive drone detection and airspace awareness for contested and remote environments.</h1>
-                <p class="hero-lead">Maple Shield is Maple Silicon Inc.'s passive detection system. CAIRN handles detection and intelligence, while the wider platform focuses on track continuity, operator alerting, and replayable evidence.</p>
+                <p class="hero-lead">Maple Shield is Maple Silicon Inc.'s passive drone detection system for contested and remote environments. CAIRN combines real-time vision inference, multi-object tracking, and probabilistic risk scoring to generate operator-ready airspace awareness at the edge.</p>
                 <div class="hero-actions">
                     <a class="btn btn-solid" href="#system">View CAIRN Stack</a>
                     <a class="btn btn-ghost" href="../">Back to Home</a>
@@ -833,11 +947,11 @@
                     </div>
                     <div class="signal-item">
                         <div class="signal-label">CAIRN</div>
-                        <div class="signal-value">The 5-layer detection and intelligence engine inside Maple Shield.</div>
+                        <div class="signal-value">Architecture-level detection and intelligence designed for real-time edge deployment.</div>
                     </div>
                     <div class="signal-item">
-                        <div class="signal-label">Scenario bias</div>
-                        <div class="signal-value">EMCON-sensitive, remote, and cold-weather operating environments.</div>
+                        <div class="signal-label">Scale advantage</div>
+                        <div class="signal-value">Higher sensor density at a fraction of the cost of traditional systems.</div>
                     </div>
                     <div class="signal-item">
                         <div class="signal-label">Program signal</div>
@@ -892,42 +1006,39 @@
             <div class="shell">
                 <div class="section-label fade-in">// System Performance (Current Targets)</div>
                 <h2 class="section-h2 fade-in">System performance<br>current targets.</h2>
-                <p class="section-sub fade-in">These are the practical targets shaping the current Maple Shield prototype and evaluation path.</p>
+                <p class="section-sub fade-in">Grouped the way an evaluator reads them: detection, performance, deployment, and reliability.</p>
                 <div class="metrics-grid fade-in">
                     <div class="metric-card">
-                        <div class="metric-label">Detection range</div>
-                        <div class="metric-value">300-800 m</div>
-                        <p class="metric-desc">Class I targets, with up to 1,500 m targeted for Class II.</p>
+                        <div class="metric-label">Detection</div>
+                        <div class="metric-value">Coverage targets</div>
+                        <ul class="metric-list">
+                            <li>300-800 m for Class I UAS</li>
+                            <li>Up to 1,500 m target for Class II</li>
+                        </ul>
                     </div>
                     <div class="metric-card">
-                        <div class="metric-label">Inference performance</div>
-                        <div class="metric-value">30+ FPS</div>
-                        <p class="metric-desc">Targeted on Jetson-class edge GPU hardware.</p>
+                        <div class="metric-label">Performance</div>
+                        <div class="metric-value">Real-time edge runtime</div>
+                        <ul class="metric-list">
+                            <li>&lt;50 ms end-to-end latency target</li>
+                            <li>30+ FPS on Jetson-class edge GPU hardware</li>
+                        </ul>
                     </div>
                     <div class="metric-card">
-                        <div class="metric-label">Detection latency</div>
-                        <div class="metric-value">&lt;50 ms</div>
-                        <p class="metric-desc">End-to-end latency target through the current pipeline.</p>
+                        <div class="metric-label">Deployment</div>
+                        <div class="metric-value">Node economics</div>
+                        <ul class="metric-list">
+                            <li>&lt;$1,000 CAD target cost per node</li>
+                            <li>&lt;25W power target per node</li>
+                        </ul>
                     </div>
                     <div class="metric-card">
-                        <div class="metric-label">False positive rate</div>
-                        <div class="metric-value">&lt;2%</div>
-                        <p class="metric-desc">Using multi-frame validation as the operating assumption.</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Power consumption</div>
-                        <div class="metric-value">&lt;25W</div>
-                        <p class="metric-desc">Per node target for low-infrastructure deployments.</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Operating range</div>
-                        <div class="metric-value">-40C to +50C</div>
-                        <p class="metric-desc">With enclosure, for harsh-weather deployment goals.</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Cost per node</div>
-                        <div class="metric-value">&lt;$1,000 CAD</div>
-                        <p class="metric-desc">Using commercial off-the-shelf hardware as the target baseline.</p>
+                        <div class="metric-label">Reliability</div>
+                        <div class="metric-value">Field conditions</div>
+                        <ul class="metric-list">
+                            <li>&lt;2% false positives with multi-frame validation</li>
+                            <li>-40C to +50C target operating range with enclosure</li>
+                        </ul>
                     </div>
                 </div>
                 <p class="metric-note fade-in">These values are based on current prototype targets and ongoing validation. The goal is to keep claims grounded in measurable system behavior rather than theoretical capability.</p>
@@ -941,32 +1052,32 @@
             <div class="shell">
                 <div class="section-label fade-in">// CAIRN Detection Engine</div>
                 <h2 class="section-h2 fade-in">CAIRN Detection<br>Engine</h2>
-                <p class="section-sub fade-in">Maple Shield is powered by CAIRN, a multi-stage detection and analysis pipeline designed for real-time edge deployment.</p>
+                <p class="section-sub fade-in">CAIRN combines real-time vision inference, multi-object tracking, and probabilistic risk scoring to identify and prioritize aerial threats under constrained edge environments. It is accelerated by the SparseFlow inference stack, enabling real-time performance on low-power edge hardware.</p>
                 <div class="layers-grid fade-in">
                     <div class="layer-card">
                         <div class="layer-num">Layer 01</div>
                         <div class="layer-title">Perception Layer</div>
-                        <p class="layer-desc">Object detection using optimized CNN inference with YOLO-based models and ONNX/TensorRT acceleration, designed for consistent performance under edge constraints.</p>
+                        <p class="layer-desc">Real-time vision inference tuned for passive sensing on constrained edge hardware.</p>
                     </div>
                     <div class="layer-card">
                         <div class="layer-num">Layer 02</div>
                         <div class="layer-title">Tracking Layer</div>
-                        <p class="layer-desc">IoU-based multi-object tracking with temporal smoothing to maintain identity across frames and reduce detection noise.</p>
+                        <p class="layer-desc">Multi-object track continuity that preserves identity through clutter, motion, and partial occlusion.</p>
                     </div>
                     <div class="layer-card">
                         <div class="layer-num">Layer 03</div>
                         <div class="layer-title">Motion Intelligence Layer</div>
-                        <p class="layer-desc">Estimates velocity, heading, and trajectory from frame sequences. Enables early detection of approach vectors and potential threat paths.</p>
+                        <p class="layer-desc">Trajectory and movement interpretation for earlier recognition of approach vectors and threat behavior.</p>
                     </div>
                     <div class="layer-card">
                         <div class="layer-num">Layer 04</div>
                         <div class="layer-title">Risk Evaluation Layer</div>
-                        <p class="layer-desc">Assigns a dynamic 0.0 -> 1.0 risk score based on persistence, directionality, and behavior patterns rather than single-frame detection.</p>
+                        <p class="layer-desc">Probabilistic scoring that prioritizes persistence, directionality, and operationally relevant behavior.</p>
                     </div>
                     <div class="layer-card">
                         <div class="layer-num">Layer 05</div>
                         <div class="layer-title">Audit &amp; Replay Layer</div>
-                        <p class="layer-desc">Structured logging (JSONL format) for deterministic replay, debugging, and post-event analysis. Designed for traceability in operational environments.</p>
+                        <p class="layer-desc">Replayable event evidence for operator review, debugging, and post-incident analysis.</p>
                     </div>
                 </div>
             </div>
@@ -974,29 +1085,85 @@
 
         <hr class="rule">
 
-        <!-- WHY PASSIVE -->
+        <!-- WHY MAPLE SHIELD -->
         <section class="content-section" id="passive">
             <div class="shell">
-                <div class="section-label fade-in">// Why passive matters</div>
-                <h2 class="section-h2 fade-in">Why passive matters<br>before everything else.</h2>
-                <p class="section-sub fade-in">For the environments Maple Shield is aimed at, the sensing doctrine matters as much as the model quality. Passive operation is not a side detail; it is the reason the system belongs in the conversation.</p>
+                <div class="section-label fade-in">// Why Maple Shield</div>
+                <h2 class="section-h2 fade-in">Why Maple Shield wins<br>on deployment scale.</h2>
+                <p class="section-sub fade-in">Maple Shield enables significantly higher sensor density at a fraction of the cost of traditional systems. The advantage is not just detecting drones. It is distributing more passive nodes across more space, with lower cost and lower infrastructure burden.</p>
                 <div class="principles-list">
                     <div class="principle-item fade-in">
                         <div class="principle-num" aria-hidden="true">01</div>
-                        <div class="principle-title">EMCON-sensitive environments</div>
-                        <p class="principle-desc">In Latvia-style EMCON conditions, passive detection helps preserve awareness without creating an unnecessary signal.</p>
+                        <div class="principle-title">Higher sensor density</div>
+                        <p class="principle-desc">Low-cost passive nodes make it practical to field more sensing coverage than radar-heavy architectures and extend awareness across larger sites.</p>
                     </div>
                     <div class="principle-item fade-in">
                         <div class="principle-num" aria-hidden="true">02</div>
-                        <div class="principle-title">Remote and Arctic operations</div>
-                        <p class="principle-desc">In Arctic and other remote deployments, infrastructure is limited, weather is unforgiving, and the system has to stay useful without leaning on a rich backend.</p>
+                        <div class="principle-title">Passive and EMCON-compatible</div>
+                        <p class="principle-desc">No active RF emissions keeps Maple Shield aligned with EMCON-sensitive deployments where awareness matters but unnecessary signal exposure is unacceptable.</p>
                     </div>
                     <div class="principle-item fade-in">
                         <div class="principle-num" aria-hidden="true">03</div>
-                        <div class="principle-title">Operator trust and evidence</div>
-                        <p class="principle-desc">Passive sensing only matters if operators can trust the alert flow, review the event, and explain why the system raised the signal in the first place.</p>
+                        <div class="principle-title">Faster fielding in harsh environments</div>
+                        <p class="principle-desc">Low-power edge nodes and commercial hardware targets make Maple Shield easier to distribute across remote, Arctic, and fixed-site operating environments.</p>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- COMPARISON -->
+        <section class="content-section" id="comparison">
+            <div class="shell">
+                <div class="section-label fade-in">// Deployment comparison</div>
+                <h2 class="section-h2 fade-in">Positioned against system<br>categories, not hype.</h2>
+                <p class="section-sub fade-in">This is the category-level positioning Maple Shield is built around. The strongest advantage is deployment density: more passive nodes, distributed faster, at lower node cost.</p>
+                <div class="compare-wrap fade-in">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>System</th>
+                                <th>Cost per node</th>
+                                <th>Emissions</th>
+                                <th>Arctic capability</th>
+                                <th>EMCON compatibility</th>
+                                <th>Deployment speed</th>
+                                <th>Deployment density</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="compare-system">Maple Shield</td>
+                                <td>&lt;$1,000 CAD target</td>
+                                <td>None</td>
+                                <td>Targeted</td>
+                                <td>Native</td>
+                                <td>Fast</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td class="compare-system">Radar-heavy systems</td>
+                                <td>High</td>
+                                <td>Active</td>
+                                <td>Program dependent</td>
+                                <td>Limited</td>
+                                <td>Slower</td>
+                                <td>Low</td>
+                            </tr>
+                            <tr>
+                                <td class="compare-system">RF-only systems</td>
+                                <td>Medium</td>
+                                <td>Passive</td>
+                                <td>Environment dependent</td>
+                                <td>Partial</td>
+                                <td>Fast</td>
+                                <td>Medium</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="compare-note fade-in">Illustrative positioning only. Actual program fit depends on mission profile, terrain, and the wider sensor stack.</p>
             </div>
         </section>
 
@@ -1007,22 +1174,37 @@
             <div class="shell">
                 <div class="section-label fade-in">// Operational scenarios</div>
                 <h2 class="section-h2 fade-in">Operational scenarios that<br>make the value concrete.</h2>
-                <p class="section-sub fade-in">Maple Shield becomes easier to understand when it is anchored to likely deployments instead of generic airspace language.</p>
+                <p class="section-sub fade-in">Structured like operational notes instead of generic airspace language, so reviewers can see how the system would actually be evaluated.</p>
                 <div class="workflow-strip fade-in">
                     <div class="workflow-card">
-                        <div class="workflow-step">01 / Latvia</div>
-                        <div class="workflow-title">Latvia EMCON example</div>
-                        <p class="workflow-desc">A passive detection layer for settings where active emissions are constrained, operationally undesirable, or likely to draw the wrong kind of attention.</p>
+                        <div class="workflow-step">01 / Forward operating base</div>
+                        <div class="workflow-title">EMCON scenario</div>
+                        <ul class="workflow-list">
+                            <li>Detection: 600 m quadcopter target</li>
+                            <li>Latency: &lt;50 ms target</li>
+                            <li>RF emissions: none</li>
+                            <li>Outcome: early warning without detection exposure</li>
+                        </ul>
                     </div>
                     <div class="workflow-card">
-                        <div class="workflow-step">02 / Arctic</div>
-                        <div class="workflow-title">Arctic and remote coverage</div>
-                        <p class="workflow-desc">Airspace awareness for northern, border, maritime, and other remote sites where weather, bandwidth, and logistics all work against bulky infrastructure.</p>
+                        <div class="workflow-step">02 / Remote Arctic site</div>
+                        <div class="workflow-title">Low-infrastructure coverage</div>
+                        <ul class="workflow-list">
+                            <li>Detection: Class I UAS within current target range</li>
+                            <li>Power: &lt;25W per node target</li>
+                            <li>Deployment: passive edge node on commercial hardware</li>
+                            <li>Outcome: persistent awareness where logistics are thin</li>
+                        </ul>
                     </div>
                     <div class="workflow-card">
-                        <div class="workflow-step">03 / Critical sites</div>
-                        <div class="workflow-title">Critical infrastructure overwatch</div>
-                        <p class="workflow-desc">Persistent monitoring for energy, industrial, and other fixed sites that need earlier warning and a cleaner handoff from machine signal to human response.</p>
+                        <div class="workflow-step">03 / Critical infrastructure</div>
+                        <div class="workflow-title">Distributed site coverage</div>
+                        <ul class="workflow-list">
+                            <li>Coverage: multi-node low-altitude monitoring</li>
+                            <li>Cost: &lt;$1,000 CAD per node target</li>
+                            <li>Deployment density: significantly higher than traditional systems</li>
+                            <li>Outcome: faster site coverage and cleaner operator escalation</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -1067,8 +1249,8 @@
                         <h2 class="cta-title">Maple Shield should read like a serious passive-detection system.</h2>
                     </div>
                     <div class="cta-right fade-in">
-                        <p>The goal is not to oversell maturity. It is to make the category, doctrine fit, and system architecture clear enough that the right reviewer immediately understands why Maple Shield exists.</p>
-                        <p>Maple Shield stays separate from SparseFlow. SparseFlow addresses compute efficiency. Maple Shield addresses passive drone detection. CAIRN is the detection and intelligence engine inside Maple Shield.</p>
+                        <p>The goal is not to oversell maturity. It is to make the category, doctrine fit, and deployment advantage clear enough that the right reviewer immediately understands why Maple Shield exists.</p>
+                        <p>CAIRN is accelerated by the SparseFlow inference stack, enabling real-time performance on low-power edge hardware while Maple Shield stays focused on passive drone detection and operator-ready airspace awareness.</p>
                         <div class="cta-links">
                             <a class="btn btn-solid" href="mailto:info@maplesilicon.co?subject=Maple%20Shield%20Evaluation">Request Evaluation</a>
                             <a class="btn btn-ghost" href="../">Back to Maple Silicon Inc.</a>
