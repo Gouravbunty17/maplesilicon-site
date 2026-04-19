@@ -630,7 +630,7 @@
     #numbers { background: var(--bg2); }
     .numbers-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 2px;
       margin-top: 60px;
     }
@@ -1096,11 +1096,11 @@
       and securing airspace.
     </h1>
     <p class="hero-sub">SparseFlow accelerates AI inference. Maple Shield enables passive drone detection for contested and remote environments.</p>
-    <p class="hero-tagline">Two systems. One optimization core.</p>
+    <p class="hero-tagline">Built by one GPU systems team for two different missions.</p>
     <div class="hero-cycling" aria-label="Key capabilities">
       <span class="cycle-word active">SPARSEFLOW / INFERENCE ACCELERATION</span>
       <span class="cycle-word">MAPLE SHIELD / PASSIVE DETECTION</span>
-      <span class="cycle-word">CAIRN / DETECTION ENGINE</span>
+      <span class="cycle-word">DEPLOYMENT / CANADA</span>
       <span class="cycle-word">EVALUATION / AVAILABLE</span>
     </div>
     <div class="hero-cycling" aria-label="Primary call to action" style="margin-top:18px;">
@@ -1148,12 +1148,12 @@
           <div class="problem-stat-label">average speedup on validated production benchmark shapes</div>
         </div>
         <div class="problem-stat">
-          <div class="problem-stat-val">1.6×</div>
-          <div class="problem-stat-label">peak tested speedup on end-to-end inference paths</div>
+          <div class="problem-stat-val">1.6-1.7×</div>
+          <div class="problem-stat-label">peak tested speedup on FFN-heavy inference paths</div>
         </div>
         <div class="problem-stat">
-          <div class="problem-stat-val">30-40%</div>
-          <div class="problem-stat-label">potential inference cost reduction on a good workload fit</div>
+          <div class="problem-stat-val">Up to 40%</div>
+          <div class="problem-stat-label">inference cost reduction on FFN-heavy workloads</div>
         </div>
         <div class="problem-stat">
           <div class="problem-stat-val">Zero</div>
@@ -1199,8 +1199,9 @@
         <p class="product-desc">Passive drone detection, persistent tracking, and operator-facing airspace awareness for contested and remote environments.</p>
         <ul class="product-specs">
           <li>CAIRN 5-layer detection and intelligence engine</li>
-          <li>Passive-first positioning for EMCON-sensitive operations</li>
-          <li>Scenario-driven for remote, Arctic, and critical-site coverage</li>
+          <li>Passive vision detection - zero RF emissions</li>
+          <li>Integrates with existing Axis, Bosch, and Hanwha camera infrastructure</li>
+          <li>10 km vision target for fixed critical-site coverage</li>
           <li>Evaluation conversations available</li>
         </ul>
         <a href="maple-shield/" class="product-link">Explore Maple Shield -></a>
@@ -1214,26 +1215,32 @@
 <!-- ── NUMBERS ── -->
 <section id="numbers">
   <div class="section-inner">
-    <p class="section-label reveal">03 — Real Performance Results</p>
-    <h2 class="section-title reveal reveal-delay-1">Proof should land in<br/>one scroll.</h2>
+    <p class="section-label reveal">03 — Engineering Signals</p>
+    <h2 class="section-title reveal reveal-delay-1">Numbers behind the<br/>product.</h2>
     <div class="numbers-grid">
       <div class="number-block reveal reveal-delay-1">
         <div class="number-val">
-          <span class="num-accent">1.4×</span>
+          <span class="num-accent">31.47 TFLOPS</span>
         </div>
-        <div class="number-label">average validated<br/>speedup</div>
+        <div class="number-label">dense GEMM kernel on RTX 3090,<br/>150% of cuBLAS baseline</div>
       </div>
       <div class="number-block reveal reveal-delay-2">
         <div class="number-val">
-          <span class="num-accent">1.6-1.7×</span>
+          <span class="num-accent">A100</span>
         </div>
-        <div class="number-label">up to peak gains on<br/>FFN-heavy paths</div>
+        <div class="number-label">validated production<br/>benchmark platform</div>
       </div>
       <div class="number-block reveal reveal-delay-3">
         <div class="number-val">
-          <span class="num-accent">Zero</span>
+          <span class="num-accent">v2.0</span>
         </div>
-        <div class="number-label">model changes required<br/>to start evaluating</div>
+        <div class="number-label">current SparseFlow<br/>release, open source</div>
+      </div>
+      <div class="number-block reveal reveal-delay-4">
+        <div class="number-val">
+          <span class="num-accent">NATO IC26</span>
+        </div>
+        <div class="number-label">Maple Shield submission<br/>(2026)</div>
       </div>
     </div>
   </div>
