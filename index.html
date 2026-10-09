@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maple Silicon Inc. | AI systems for compute efficiency and passive drone detection</title>
-  <meta name="description" content="Maple Silicon builds two systems: SparseFlow for model inference acceleration and Maple Shield for passive drone detection and airspace awareness." />
+  <meta name="description" content="Maple Silicon builds SparseFlow for inference efficiency and Maple Shield for passive airspace awareness, with independent SparseFlow V2 research on Apple devices." />
   <script>
     (function() {
       try {
@@ -1060,8 +1060,11 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="assets/spatial.css" />
+  <script defer src="assets/spatial.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle color theme">
   <span id="themeLabel">Light</span>
@@ -1080,31 +1083,44 @@
     <li><a href="#hero">Home</a></li>
     <li><a href="sparseflow/">SparseFlow</a></li>
     <li><a href="maple-shield/">Maple Shield</a></li>
+    <li><a href="research/apple/">Apple Research</a></li>
     <li><a href="about/">About</a></li>
     <li><a href="mailto:info@maplesilicon.co?subject=Maple%20Silicon%20Evaluation" class="nav-cta">Request Evaluation</a></li>
   </ul>
 </nav>
 
 <!-- ── HERO ── -->
+<main id="main-content">
 <section id="hero">
   <canvas id="hero-canvas" aria-hidden="true"></canvas>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Maple Silicon Inc.</p>
-    <h1 class="hero-title">
-      Accelerating<br/>
-      <span class="accent">AI Compute</span><br/>
-      and securing airspace.
-    </h1>
-    <p class="hero-sub">SparseFlow accelerates AI inference. Maple Shield enables passive drone detection for contested and remote environments.</p>
-    <p class="hero-tagline">Built by one GPU systems team for two different missions.</p>
-    <div class="hero-cycling" aria-label="Key capabilities">
-      <span class="cycle-word active">SPARSEFLOW / INFERENCE ACCELERATION</span>
-      <span class="cycle-word">MAPLE SHIELD / PASSIVE DETECTION</span>
-      <span class="cycle-word">DEPLOYMENT / CANADA</span>
-      <span class="cycle-word">EVALUATION / AVAILABLE</span>
+  <div class="spatial-hero-layout">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Canadian engineering. Real-world constraints.</p>
+      <h1 class="hero-title">More intelligence.<br/><span class="accent">Less overhead.</span></h1>
+      <p class="hero-sub">Efficient AI execution. Passive airspace awareness. Maple Silicon builds systems for the hardware and environments that matter.</p>
+      <div class="spatial-actions">
+        <a href="#products" class="spatial-button primary">Explore our systems <span aria-hidden="true">↗</span></a>
+        <a href="research/apple/" class="spatial-button">Our work on Apple devices</a>
+      </div>
+      <p class="hero-note">Built in Canada · NVIDIA compute · Core ML research</p>
     </div>
-    <div class="hero-cycling" aria-label="Primary call to action" style="margin-top:18px;">
-      <a href="mailto:info@maplesilicon.co?subject=Maple%20Silicon%20Evaluation" class="cycle-word active" style="text-decoration:none;">REQUEST EVALUATION</a>
+    <div class="spatial-stage" aria-label="Explore Maple Silicon programs">
+      <a class="mission-plane" href="sparseflow/">
+        <span class="plane-glyph" aria-hidden="true"></span>
+        <div class="plane-top"><span class="spatial-label">01 / Compute</span><span class="plane-state">SparseFlow</span></div>
+        <h2>Make every GPU count.</h2>
+        <p>Compiler-driven inference acceleration for NVIDIA workloads.</p><span class="plane-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="mission-plane" href="research/apple/">
+        <div class="plane-top"><span class="spatial-label">02 / On-device AI</span><span class="plane-state">Active research</span></div>
+        <h2>Smaller models. Real devices.</h2>
+        <p>SparseFlow V2: model compaction and Core ML evaluation on iPhone.</p><span class="plane-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="mission-plane" href="maple-shield/">
+        <div class="plane-top"><span class="spatial-label">03 / Awareness</span><span class="plane-state">Maple Shield</span></div>
+        <h2>See without transmitting.</h2>
+        <p>Passive drone detection and operator-facing airspace awareness.</p><span class="plane-arrow" aria-hidden="true">↗</span>
+      </a>
     </div>
   </div>
   <div class="hero-scroll" aria-hidden="true">
@@ -1114,17 +1130,17 @@
 </section>
 
 <section class="proof-strip">
-  <a class="proof-tile reveal reveal-delay-1" href="about/">
-    <span class="proof-kicker">About</span>
-    <span class="proof-title">Founder and company background</span>
-    <span class="proof-copy">Review Maple Silicon, Gourav Kumar, and the engineering background behind the company.</span>
+  <a data-spatial-tilt class="proof-tile reveal reveal-delay-1" href="research/apple/">
+    <span class="proof-kicker">SparseFlow V2 / Apple devices</span>
+    <span class="proof-title">On-device AI research</span>
+    <span class="proof-copy">Core ML exports, model compaction, and iPhone benchmarking. See the progress and the open questions.</span>
   </a>
-  <a class="proof-tile reveal reveal-delay-2" href="maple-shield/">
+  <a data-spatial-tilt class="proof-tile reveal reveal-delay-2" href="maple-shield/">
     <span class="proof-kicker">Maple Shield</span>
     <span class="proof-title">Passive drone detection system</span>
     <span class="proof-copy">See why deployment density matters, how CAIRN is structured, and where Maple Shield fits operationally.</span>
   </a>
-  <a class="proof-tile reveal reveal-delay-3" href="sparseflow/">
+  <a data-spatial-tilt class="proof-tile reveal reveal-delay-3" href="sparseflow/">
     <span class="proof-kicker">SparseFlow</span>
     <span class="proof-title">Benchmark-first GPU efficiency</span>
     <span class="proof-copy">Explore the current benchmark framing, validated hardware, and product surface for sparse inference.</span>
@@ -1173,7 +1189,7 @@
     <h2 class="section-title reveal reveal-delay-1">Two systems,<br/>kept separate.</h2>
     <p class="section-kicker reveal reveal-delay-2">SparseFlow is the compute product. Maple Shield is the passive drone detection system. CAIRN is the detection and intelligence engine inside Maple Shield.</p>
     <div class="products-grid">
-      <div class="product-card reveal reveal-delay-2">
+      <div data-spatial-tilt class="product-card reveal reveal-delay-2">
         <div class="product-card-wire" aria-hidden="true"></div>
         <span class="product-badge badge-live">Live — v2.0</span>
         <a href="sparseflow/" aria-label="Open SparseFlow" class="product-logo-frame">
@@ -1189,7 +1205,7 @@
         </ul>
         <a href="sparseflow/" class="product-link">Explore SparseFlow →</a>
       </div>
-      <div class="product-card reveal reveal-delay-3">
+      <div data-spatial-tilt class="product-card reveal reveal-delay-3">
         <div class="product-card-wire" aria-hidden="true"></div>
         <span class="product-badge badge-building">Active Product</span>
         <a href="maple-shield/" aria-label="Open Maple Shield" class="product-logo-frame">
@@ -1210,6 +1226,24 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
+<section id="apple-research">
+  <div class="section-inner research-feature">
+    <div>
+      <p class="section-label">Research / SparseFlow V2</p>
+      <h2 class="section-title">AI efficiency,<br/>closer to the device.</h2>
+      <p class="spatial-copy">We are extending SparseFlow research into the Apple ecosystem: physically compacting vision models, exporting them to Core ML, and measuring how they behave on an actual iPhone.</p>
+      <div class="spatial-actions"><a href="research/apple/" class="spatial-button primary">Explore the Apple-device research <span aria-hidden="true">↗</span></a></div>
+      <p class="research-note">Independent research by Maple Silicon. This work does not imply an Apple partnership, endorsement, or contract.</p>
+    </div>
+    <div class="spatial-panel" data-spatial-tilt>
+      <div class="research-milestone"><h3>Model compaction</h3><p>Compare recovered dense, channel-pruned, and physically compact vision models.</p></div>
+      <div class="research-milestone"><h3>Core ML evaluation</h3><p>Connect source-model validation to Core ML export and device-side benchmarking.</p></div>
+      <div class="research-milestone"><h3>Evidence before claims</h3><p>Short-run iPhone latency results are mixed. Sustained performance, energy use, and on-phone task accuracy remain open.</p></div>
+    </div>
+  </div>
+</section>
 <div class="divider"></div>
 
 <!-- ── NUMBERS ── -->
@@ -1331,12 +1365,14 @@
   </div>
 </section>
 
+</main>
 <!-- ── FOOTER ── -->
 <footer>
   <div class="footer-brand">
     <strong>&copy; 2026 Maple Silicon Inc.</strong>
   </div>
   <ul class="footer-links">
+    <li><a href="research/apple/">Apple Research</a></li>
     <li><a href="about/">About</a></li>
     <li><a href="sparseflow/">SparseFlow</a></li>
     <li><a href="maple-shield/">Maple Shield</a></li>
@@ -1346,6 +1382,7 @@
 
 <script>
 // ── CURSOR GLOW ──
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const glow = document.getElementById('cursor-glow');
 let glowX = 0, glowY = 0, curX = 0, curY = 0;
 document.addEventListener('mousemove', e => { glowX = e.clientX; glowY = e.clientY; });
@@ -1354,13 +1391,13 @@ document.addEventListener('mousemove', e => { glowX = e.clientX; glowY = e.clien
   curY += (glowY - curY) * 0.08;
   glow.style.left = curX + 'px';
   glow.style.top  = curY + 'px';
-  requestAnimationFrame(moveGlow);
+  if (!reduceMotion) requestAnimationFrame(moveGlow);
 })();
 
 // ── NAV SCROLL ──
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('maplesilicon-theme', theme);
+  try { localStorage.setItem('maplesilicon-theme', theme); } catch (error) {}
   document.getElementById('themeLabel').textContent = theme === 'dark' ? 'Light' : 'Dark';
 }
 
@@ -1375,15 +1412,6 @@ const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
-
-// ── WORD CYCLING ──
-const words = document.querySelectorAll('.cycle-word');
-let wordIdx = 0;
-setInterval(() => {
-  words[wordIdx].classList.remove('active');
-  wordIdx = (wordIdx + 1) % words.length;
-  words[wordIdx].classList.add('active');
-}, 1800);
 
 // ── SCROLL REVEAL ──
 const revealObs = new IntersectionObserver(entries => {
@@ -1569,7 +1597,7 @@ document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
     drawSweep();
     drawParticles(time);
     sweepAngle += prefersReducedMotion ? 0 : 0.0085;
-    requestAnimationFrame(frame);
+    if (!prefersReducedMotion) requestAnimationFrame(frame);
   }
 
   window.addEventListener('mousemove', e => {
@@ -1577,7 +1605,7 @@ document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
     pointerY = (e.clientY / window.innerHeight - 0.5) * 0.8;
   }, { passive: true });
 
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', () => { resize(); if (prefersReducedMotion) frame(0); });
   resize();
 
   if (prefersReducedMotion) {

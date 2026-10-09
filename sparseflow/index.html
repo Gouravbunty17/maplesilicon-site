@@ -717,8 +717,11 @@
             }
         }
     </style>
+  <link rel="stylesheet" href="../assets/spatial.css" />
+  <script defer src="../assets/spatial.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
     <!-- THEME TOGGLE -->
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle color theme">
@@ -738,6 +741,7 @@
                     <a href="../">Home</a>
                     <a href="../sparseflow/">SparseFlow</a>
                     <a href="../maple-shield/">Maple Shield</a>
+                    <a href="../research/apple/">Apple Research</a>
                     <a href="../about/">About</a>
                     <a href="mailto:info@maplesilicon.co?subject=Maple%20Silicon%20Evaluation">Request Evaluation</a>
                 </nav>
@@ -784,7 +788,23 @@
 
     <hr class="rule">
 
-    <main>
+    <main id="main-content">
+        <section class="content-section" id="apple-research">
+            <div class="shell research-feature">
+                <div>
+                    <p class="section-label">// SparseFlow V2 · Apple-device research</p>
+                    <h2 class="section-h2">From GPU execution<br>to on-device evaluation.</h2>
+                    <p class="spatial-copy">Our independent Apple-ecosystem research compares dense, channel-pruned, and physically compact vision models through Core ML on iPhone. This research track is separate from the NVIDIA results on this page.</p>
+                    <a class="spatial-link" href="../research/apple/">Read the research overview <span aria-hidden="true">↗</span></a>
+                </div>
+                <div class="spatial-panel">
+                    <div class="research-milestone"><h3>Compaction → export → device</h3><p>Source-model validation, Core ML export, and real-device short-run measurements.</p></div>
+                    <div class="research-milestone"><h3>Current status: mixed latency results</h3><p>No general iPhone speedup claim. Sustained performance and energy savings are not yet established.</p></div>
+                    <p class="research-note">Independent Maple Silicon research; no Apple partnership or endorsement is implied.</p>
+                </div>
+            </div>
+        </section>
+        <hr class="rule">
         <!-- CURRENT STATUS -->
         <section class="content-section" id="status">
             <div class="shell">
@@ -1008,6 +1028,7 @@
             <div class="footer-inner">
                 <div class="footer-copy">&copy; 2026 Maple Silicon Inc.</div>
                 <div class="footer-links">
+                    <a href="../research/apple/">Apple Research</a>
                     <a href="../about/">About</a>
                     <a href="../">Home</a>
                     <a href="https://github.com/MapleSilicon/SparseFlow">GitHub</a>
@@ -1122,7 +1143,7 @@
             drawBackdrop();
             drawGrid();
             drawLanes(time);
-            requestAnimationFrame(frame);
+            if (!prefersReducedMotion) requestAnimationFrame(frame);
         }
 
         window.addEventListener('mousemove', (e) => {
@@ -1130,7 +1151,7 @@
             mouseY = (e.clientY / window.innerHeight - 0.5) * 0.6;
         }, { passive: true });
 
-        new ResizeObserver(resize).observe(canvas);
+        new ResizeObserver(() => { resize(); if (prefersReducedMotion) frame(0); }).observe(canvas);
         resize();
 
         if (prefersReducedMotion) {
@@ -1148,12 +1169,12 @@
         const html = document.documentElement;
         const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         html.setAttribute('data-theme', next);
-        localStorage.setItem('maplesilicon-theme', next);
+        try { localStorage.setItem('maplesilicon-theme', next); } catch (error) {}
         document.getElementById('themeLabel').textContent = next === 'dark' ? 'Light' : 'Dark';
     }
 
     (function() {
-        const saved = localStorage.getItem('maplesilicon-theme') || 'dark';
+        const saved = document.documentElement.getAttribute('data-theme') || 'dark';
         document.documentElement.setAttribute('data-theme', saved);
         document.getElementById('themeLabel').textContent = saved === 'dark' ? 'Light' : 'Dark';
 
