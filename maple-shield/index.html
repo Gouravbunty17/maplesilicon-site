@@ -894,8 +894,11 @@
             }
         }
     </style>
+  <link rel="stylesheet" href="../assets/spatial.css" />
+  <script defer src="../assets/spatial.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle color theme">
         <span id="themeLabel">Light</span>
@@ -914,6 +917,7 @@
                     <a href="../">Home</a>
                     <a href="../sparseflow/">SparseFlow</a>
                     <a href="../maple-shield/">Maple Shield</a>
+                    <a href="../research/apple/">Apple Research</a>
                     <a href="../about/">About</a>
                     <a href="mailto:info@maplesilicon.co?subject=Maple%20Silicon%20Evaluation">Request Evaluation</a>
                 </nav>
@@ -980,7 +984,7 @@
 
     <hr class="rule">
 
-    <main>
+    <main id="main-content">
         <!-- READINESS SIGNALS -->
         <section class="content-section" id="signals">
             <div class="shell">
@@ -1277,6 +1281,7 @@
                 <div class="footer-links">
                     <a href="../">Home</a>
                     <a href="../sparseflow/">SparseFlow</a>
+                    <a href="../research/apple/">Apple Research</a>
                     <a href="../about/">About</a>
                 </div>
             </div>
@@ -1389,7 +1394,7 @@
             drawSweep();
             drawContacts(time);
             sweep += prefersReducedMotion ? 0 : 0.01;
-            requestAnimationFrame(frame);
+            if (!prefersReducedMotion) requestAnimationFrame(frame);
         }
 
         window.addEventListener('mousemove', (e) => {
@@ -1397,7 +1402,7 @@
             mouseY = (e.clientY / window.innerHeight - 0.5) * 0.9;
         }, { passive: true });
 
-        new ResizeObserver(resize).observe(canvas);
+        new ResizeObserver(() => { resize(); if (prefersReducedMotion) frame(0); }).observe(canvas);
         resize();
         requestAnimationFrame(frame);
     })();
@@ -1406,7 +1411,7 @@
     <script>
     function applyTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('maplesilicon-theme', theme);
+        try { localStorage.setItem('maplesilicon-theme', theme); } catch (error) {}
         document.getElementById('themeLabel').textContent = theme === 'dark' ? 'Light' : 'Dark';
     }
 
